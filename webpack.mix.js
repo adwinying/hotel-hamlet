@@ -11,6 +11,12 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.webpackConfig({
+  output: {
+    chunkFilename: 'js/chunks/[name].js?id=[chunkhash]',
+  },
+})
+
 mix.js('resources/js/app.js', 'public/js')
   .postCss('resources/css/app.css', 'public/css', [])
   .vue();
