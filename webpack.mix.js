@@ -17,7 +17,7 @@ mix.webpackConfig({
   },
 })
 
-mix.js('resources/js/app.js', 'public/js')
+mix.ts('resources/js/app.ts', 'public/js')
   .postCss('resources/css/app.css', 'public/css', [
     require('tailwindcss'),
   ])
