@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::prefix('admin')->group(function() {
+    Route::redirect('/', '/admin/login');
+
+    Route::get('/login', [AuthController::class, 'show']);
+});
 
 Route::get('/', function () {
     return view('welcome');
