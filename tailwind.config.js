@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
   purge: [
     './storage/framework/views/*.php',
@@ -8,6 +10,10 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
+    fontFamily: {
+      display: ['Gabriela', ...defaultTheme.fontFamily.serif],
+      body: ['"Open Sans"', ...defaultTheme.fontFamily.sans],
+    },
   },
   variants: {
     extend: {},
