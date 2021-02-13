@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,9 +16,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('admin')->group(function() {
-    Route::redirect('/', '/admin/login');
+    Route::middleware('auth')->group(function() {
+        Route::get('/', [HomeController::class, 'show']);
+    });
 
-    Route::get('/login', [AuthController::class, 'show']);
+    Route::middleware('guest')->group(function() {
+        Route::get('/login', [AuthController::class, 'show'])->name('login');
+        Route::post('/login', [AuthController::class, 'store']);
+    });
 });
 
 Route::get('/', function () {
