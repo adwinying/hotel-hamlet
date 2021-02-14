@@ -29,9 +29,11 @@ class AuthTest extends TestCase
 
     public function testShowsLoginPage()
     {
-        $this->get('/admin/login')->assertInertia(function ($page) {
-            $page->component('Auth/Login');
-        });
+        $this->get('/admin/login')
+            ->assertExactJson([])
+            ->assertInertia(function ($page) {
+                $page->component('Auth/Login');
+            });
     }
 
     public function testAbleToLoginWithValidCredentials()
