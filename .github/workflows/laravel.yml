@@ -118,3 +118,99 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
+
+
+  build_image:
+    name: Docker Image Build
+    runs-on: ubuntu-latest
+    needs: build_frontend
+    if: github.ref == 'refs/heads/master'
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v2
+
+    - name: Retrieve compiled frontend build
+      uses: actions/download-artifact@v2
+      with:
+        name: frontend
+        path: public/
+
+    - name: Get composer cache directory
+      id: composer-cache
+      run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+    - name: Cache PHP dependencies
+      uses: actions/cache@v2
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: ${{ runner.os }}-composer-
+
+    - name: Install PHP dependencies
+      run: composer install -q --no-interaction --no-progress --no-scripts --prefer-dist
+
+    - name: Create database
+      run: |
+        mkdir -p database
+        touch database/database.sqlite
+
+    - name: Copy .env
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+    - name: Run DB migrations
+      env:
+        DB_CONNECTION: sqlite
+        DB_DATABASE: database/database.sqlite
+      run: php artisan migrate --force --seed
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./docker/Dockerfile
+        platforms: linux/amd64,linux/arm64,linux/arm/v7
+        push: true
+        tags: |
+          adwinying/hotel-hamlet:${{ github.sha }}
+          adwinying/hotel-hamlet:latest
+
+    - name: Image digest
+      run: echo ${{ steps.docker_build.outputs.digest }}
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build_image
+    if: github.ref == 'refs/heads/master'
+    steps:
+    - name: Login to Heroku Container registry
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:login
+
+    - name: Pull built image from docker hub
+      run: docker pull adwinying/hotel-hamlet
+
+    - name: Prepare docker image for Heroku
+      run: docker tag adwinying/hotel-hamlet registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web
+
+    - name: Push docker image to Heroku
+      run: docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web
+
+    - name: Release image
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} web
