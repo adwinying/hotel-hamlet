@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
+const colors = require('tailwindcss/colors')
 
 module.exports = {
   purge: [
@@ -9,7 +10,11 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        cyan: colors.cyan,
+      },
+    },
     fontFamily: {
       display: ['Gabriela', ...defaultTheme.fontFamily.serif],
       body: ['"Open Sans"', ...defaultTheme.fontFamily.sans],
