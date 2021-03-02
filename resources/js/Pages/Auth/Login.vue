@@ -70,6 +70,8 @@ import { defineComponent } from 'vue'
 import { useForm } from '@inertiajs/inertia-vue3'
 
 export default defineComponent({
+  layout: null,
+
   props: {
     errors: {
       type: Object,
