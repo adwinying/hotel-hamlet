@@ -17,7 +17,7 @@ module.exports = {
     },
     fontFamily: {
       display: ['Gabriela', ...defaultTheme.fontFamily.serif],
-      body: ['"Open Sans"', ...defaultTheme.fontFamily.sans],
+      sans: ['"Open Sans"', ...defaultTheme.fontFamily.sans],
     },
   },
   variants: {
