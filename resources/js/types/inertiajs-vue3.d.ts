@@ -1,19 +1,8 @@
 declare module '@inertiajs/inertia-vue3' {
   import * as Inertia from '@inertiajs/inertia'
-  import {
-    Component,
-    FunctionalComponent,
-    Plugin,
-    Ref,
-  } from 'vue'
+  import { Ref, ComputedRef, App, Component, DefineComponent } from 'vue'
 
-  interface AppData<PageProps extends Inertia.PageProps = Inertia.PageProps> {
-    component: Component | null
-    key: number | null
-    props: PageProps | {}
-  }
-
-  interface AppProps<
+  interface InertiaAppProps<
     PagePropsBeforeTransform extends Inertia.PagePropsBeforeTransform = Inertia.PagePropsBeforeTransform,
     PageProps extends Inertia.PageProps = Inertia.PageProps
   > {
@@ -22,15 +11,10 @@ declare module '@inertiajs/inertia-vue3' {
     transformProps?: (props: PagePropsBeforeTransform) => PageProps
   }
 
-  type App<
+  type InertiaApp<
     PagePropsBeforeTransform extends Inertia.PagePropsBeforeTransform = Inertia.PagePropsBeforeTransform,
     PageProps extends Inertia.PageProps = Inertia.PageProps
-  > = FunctionalComponent<
-    AppData<PageProps>,
-    never,
-    never,
-    AppProps<PagePropsBeforeTransform, PageProps>
-  >
+  > = DefineComponent<InertiaAppProps<PagePropsBeforeTransform, PageProps>>
 
   interface InertiaLinkProps {
     as?: string
@@ -52,37 +36,74 @@ declare module '@inertiajs/inertia-vue3' {
     onSuccess?: () => void
   }
 
-  interface Form {
-    errors: Record<string, unknown>;
-    hasErrors: boolean,
-    processing: boolean,
-    progress: null,
-    wasSuccessful: boolean,
-    recentlySuccessful: boolean,
+  type InertiaLink = DefineComponent<InertiaLinkProps>
 
-    data(): Record<string, unknown>;
-    transform(callback: (data: Record<string, unknown>) => Record<string, unknown>): Form;
-    reset(...fields: string[]): Form;
-    clearErrors(...fields: string[]): Form;
-    submit(method: string, url: string, options?: Record<string, unknown>): void;
-    get(url: string, options?: Record<string, unknown>): void;
-    post(url: string, options?: Record<string, unknown>): void;
-    put(url: string, options?: Record<string, unknown>): void;
-    patch(url: string, options?: Record<string, unknown>): void;
-    delete(url: string, options?: Record<string, unknown>): void;
+  type ProgressEvent = {
+    percentage: number
+    [key: string]: any
   }
 
-  type UseForm = Ref<Form>
+  interface Form<Data> {
+    errors: { [K in keyof Data]: string | undefined }
+    hasErrors: boolean
+    processing: boolean
+    progress: ProgressEvent | null
+    wasSuccessful: boolean
+    recentlySuccessful: boolean
+    data(): Data
+    transform(callback: (data: Data) => object): this
+    reset(...fields: (keyof Data)[]): this
+    clearErrors(...fields: (keyof Data)[]): this
+    serialize(): {
+      errors: { [K in keyof Data]: string | undefined }
+      [key: string]: any
+    }
+    unserialize(data: object): this
+    submit(method: string, url: string, options?: Inertia.VisitOptions): void
+    get(url: string, options?: Inertia.VisitOptions): void
+    post(url: string, options?: Inertia.VisitOptions): void
+    put(url: string, options?: Inertia.VisitOptions): void
+    patch(url: string, options?: Inertia.VisitOptions): void
+    delete(url: string, options?: Inertia.VisitOptions): void
+  }
 
-  type InertiaLink = FunctionalComponent<InertiaLinkProps>
+  type FormWithData<Data> = Data & Form<Data>
 
-  export const InertiaLink: InertiaLink
+  export const App: InertiaApp
 
-  export const InertiaApp: App
+  export const Link: InertiaLink
 
-  export const App: App
+  export const plugin: {
+    install(app: App): void
+  }
 
-  export const plugin: Plugin
+  export declare function usePage<
+    CustomPageProps extends Inertia.PageProps = Inertia.PageProps
+  >(): {
+    props: ComputedRef<CustomPageProps>
+    url: ComputedRef<string>
+    component: ComputedRef<string>
+    version: ComputedRef<string | null>
+  }
 
-  export function useForm(data: Record<string, unknown>): UseForm
+  export declare function useRemember(data: object, key?: string): Ref<object>
+
+  export declare function useForm<Data>(data: Data): Ref<FormWithData<Data>>
+
+  declare module '@vue/runtime-core' {
+    export interface ComponentCustomProperties {
+      $inertia: Inertia.Inertia
+      $page: Inertia.Page
+    }
+
+    export interface ComponentCustomOptions {
+      remember?:
+        | string
+        | string[]
+        | {
+            data: string | string[]
+            key?: string | (() => string)
+          }
+    }
+  }
 }
