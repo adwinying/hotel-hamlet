@@ -35,6 +35,8 @@ import { defineComponent, PropType } from 'vue'
 import SidebarItem from '../types/SidebarItem'
 
 export default defineComponent({
+  name: 'PageSidebar',
+
   props: {
     isActive: {
       type: Boolean,

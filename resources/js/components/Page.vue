@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-50">
-    <Sidebar
+    <page-sidebar
       :items="sidebarItems"
       :is-active="isActive"
       :active-item="activeItem"
@@ -20,7 +20,7 @@ import {
 } from 'vue'
 import { usePage } from '@inertiajs/inertia-vue3'
 import SidebarItem from '../types/SidebarItem'
-import Sidebar from './Sidebar.vue'
+import PageSidebar from './PageSidebar.vue'
 
 interface CommonPageProps {
   sidebarItems?: SidebarItem[];
@@ -29,7 +29,7 @@ export default defineComponent({
   name: 'Page',
 
   components: {
-    Sidebar,
+    PageSidebar,
   },
 
   setup() {
