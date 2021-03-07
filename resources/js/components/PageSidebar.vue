@@ -43,7 +43,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import SidebarItem from '../types/SidebarItem'
+import SidebarItem from '../interfaces/SidebarItem'
 import PageSidebarItem from './PageSidebarItem.vue'
 
 export default defineComponent({
