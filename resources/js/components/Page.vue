@@ -12,7 +12,12 @@
       </page-title>
 
       <page-content>
-        <slot />
+        <page-card v-if="card">
+          <slot />
+        </page-card>
+        <template v-else>
+          <slot />
+        </template>
       </page-content>
     </div>
   </div>
@@ -29,6 +34,7 @@ import SidebarItem from '../types/SidebarItem'
 import PageSidebar from './PageSidebar.vue'
 import PageTitle from './PageTitle.vue'
 import PageContent from './PageContent.vue'
+import PageCard from './PageCard.vue'
 
 interface CommonPageProps {
   sidebarItems?: SidebarItem[];
@@ -40,12 +46,18 @@ export default defineComponent({
     PageSidebar,
     PageTitle,
     PageContent,
+    PageCard,
   },
 
   props: {
     title: {
       type: String,
       default: null,
+    },
+
+    card: {
+      type: Boolean,
+      default: true,
     },
   },
 
