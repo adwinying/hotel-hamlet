@@ -1,18 +1,13 @@
 <template>
-  <page title="Dashboard">
-    hello from dashboard
-  </page>
+  <main class="container mx-auto -mt-24 px-10">
+    <slot />
+  </main>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'DashboardIndex',
-
-  setup() {
-    return {
-    }
-  },
+  name: 'PageContent',
 })
 </script>
