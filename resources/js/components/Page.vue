@@ -7,6 +7,10 @@
       class="fixed top-0 left-0 z-50" />
 
     <div class="pl-72 min-h-screen">
+      <page-title v-if="title">
+        {{ title }}
+      </page-title>
+
       <slot />
     </div>
   </div>
@@ -21,6 +25,7 @@ import {
 import { usePage } from '@inertiajs/inertia-vue3'
 import SidebarItem from '../types/SidebarItem'
 import PageSidebar from './PageSidebar.vue'
+import PageTitle from './PageTitle.vue'
 
 interface CommonPageProps {
   sidebarItems?: SidebarItem[];
@@ -30,6 +35,14 @@ export default defineComponent({
 
   components: {
     PageSidebar,
+    PageTitle,
+  },
+
+  props: {
+    title: {
+      type: String,
+      default: null,
+    },
   },
 
   setup() {
