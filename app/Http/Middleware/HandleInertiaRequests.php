@@ -41,6 +41,9 @@ class HandleInertiaRequests extends Middleware
             'sidebarItems' => auth()->check()
                 ? $getSidebarItems(auth()->user())
                 : null,
+            'userInfo' => [
+                'name' => auth()->user()->name ?? null,
+            ],
         ]);
     }
 }
