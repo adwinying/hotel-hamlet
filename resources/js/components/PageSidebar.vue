@@ -1,5 +1,19 @@
 <template>
-  <div class="w-72 h-screen bg-white border-r border-gray-200">
+  <div
+    v-if="isActive"
+    class="md:hidden fixed inset-0 z-10 bg-black bg-opacity-30"
+    @click.prevent="onCloseClick" />
+  <div
+    v-bind="$attrs"
+    class="w-72 h-screen bg-white border-r border-gray-200 transition-all">
+    <div class="md:hidden absolute top-0 right-0 w-8 mx-4 my-8">
+      <a
+        href="#"
+        @click.prevent="onCloseClick">
+        <img src="/img/icons/cross.svg">
+      </a>
+    </div>
+
     <div class="flex items-center h-14 m-6 space-x-2">
       <img
         class="h-full"
@@ -54,11 +68,19 @@ export default defineComponent({
     },
   },
 
-  setup(props) {
+  emits: [
+    'hide',
+  ],
+
+  setup(props, { emit }) {
     const isActiveItem = (item: SidebarItem) => item.name === props.activeItem
+
+    const hideSidebar = () => emit('hide')
+    const onCloseClick = () => { hideSidebar() }
 
     return {
       isActiveItem,
+      onCloseClick,
     }
   },
 })
