@@ -24,22 +24,11 @@
     </div>
 
     <div class="w-full my-3 px-3">
-      <div
+      <page-sidebar-item
         v-for="(item, i) in items"
-        :key="i">
-        <inertia-link
-          :href="item.url"
-          :class="{ 'bg-gray-200': isActiveItem(item) }"
-          class="flex items-center p-3 space-x-2 rounded hover:bg-cyan-100">
-          <img
-            :src="item.imgSrc"
-            :alt="item.name"
-            class="w-8">
-          <span>
-            {{ item.name }}
-          </span>
-        </inertia-link>
-      </div>
+        v-bind="item"
+        :key="i"
+        :is-active="isActiveItem(item)" />
     </div>
   </div>
 </template>
@@ -47,9 +36,14 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import SidebarItem from '../types/SidebarItem'
+import PageSidebarItem from './PageSidebarItem.vue'
 
 export default defineComponent({
   name: 'PageSidebar',
+
+  components: {
+    PageSidebarItem,
+  },
 
   props: {
     isActive: {
