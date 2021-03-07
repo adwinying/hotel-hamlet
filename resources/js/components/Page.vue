@@ -2,11 +2,17 @@
   <div class="bg-gray-50">
     <page-sidebar
       :items="sidebarItems"
-      :is-active="isActive"
-      :active-item="activeItem"
-      class="fixed top-0 left-0 z-50" />
+      :is-active="isSidebarActive"
+      :active-item="activeSidebarItem"
+      class="fixed top-0 md:left-0 z-50"
+      :class="isSidebarActive ? 'left-0' : '-left-72'"
+      @hide="hideSidebar" />
 
-    <div class="pl-72 min-h-screen">
+    <div class="md:pl-72 min-h-screen">
+      <page-navbar
+        class="md:hidden"
+        @show-sidebar="showSidebar" />
+
       <page-header v-if="header">
         {{ title }}
 
@@ -40,6 +46,7 @@ import {
 import { usePage } from '@inertiajs/inertia-vue3'
 import SidebarItem from '../types/SidebarItem'
 import PageSidebar from './PageSidebar.vue'
+import PageNavbar from './PageNavbar.vue'
 import PageHeader from './PageHeader.vue'
 import PageContent from './PageContent.vue'
 import PageCard from './PageCard.vue'
@@ -52,6 +59,7 @@ export default defineComponent({
 
   components: {
     PageSidebar,
+    PageNavbar,
     PageHeader,
     PageContent,
     PageCard,
@@ -81,7 +89,7 @@ export default defineComponent({
       () => (pageProps.value as CommonPageProps).sidebarItems ?? [],
     )
 
-    const activeItem = computed(() => {
+    const activeSidebarItem = computed(() => {
       const path = url.value
 
       if (/^\/admin\/hotels.*$/.test(path)) return 'Hotels'
@@ -92,12 +100,16 @@ export default defineComponent({
       return null
     })
 
-    const isActive = ref(true)
+    const isSidebarActive = ref(true)
+    const showSidebar = () => { isSidebarActive.value = true }
+    const hideSidebar = () => { isSidebarActive.value = false }
 
     return {
       sidebarItems,
-      isActive,
-      activeItem,
+      activeSidebarItem,
+      isSidebarActive,
+      showSidebar,
+      hideSidebar,
     }
   },
 })
