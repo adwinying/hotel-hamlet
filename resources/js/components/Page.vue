@@ -7,9 +7,17 @@
       class="fixed top-0 left-0 z-50" />
 
     <div class="pl-72 min-h-screen">
-      <page-title v-if="title">
+      <page-header v-if="header">
         {{ title }}
-      </page-title>
+
+        <template #pre-title>
+          <slot name="pre-title" />
+        </template>
+
+        <template #post-title>
+          <slot name="post-title" />
+        </template>
+      </page-header>
 
       <page-content>
         <page-card v-if="card">
@@ -32,7 +40,7 @@ import {
 import { usePage } from '@inertiajs/inertia-vue3'
 import SidebarItem from '../types/SidebarItem'
 import PageSidebar from './PageSidebar.vue'
-import PageTitle from './PageTitle.vue'
+import PageHeader from './PageHeader.vue'
 import PageContent from './PageContent.vue'
 import PageCard from './PageCard.vue'
 
@@ -44,12 +52,17 @@ export default defineComponent({
 
   components: {
     PageSidebar,
-    PageTitle,
+    PageHeader,
     PageContent,
     PageCard,
   },
 
   props: {
+    header: {
+      type: Boolean,
+      default: true,
+    },
+
     title: {
       type: String,
       default: null,
@@ -81,13 +94,10 @@ export default defineComponent({
 
     const isActive = ref(true)
 
-    const pageTitle = computed(() => url)
-
     return {
       sidebarItems,
       isActive,
       activeItem,
-      pageTitle,
     }
   },
 })
