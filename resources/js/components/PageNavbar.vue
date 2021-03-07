@@ -12,7 +12,7 @@
 
     <div class="flex h-full justify-center items-center space-x-2">
       <img
-        class="h-full py-3"
+        class="w-8 h-full py-3"
         src="/img/logo.svg">
       <span class="text-2xl font-display">
         Admin
