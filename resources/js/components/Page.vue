@@ -15,7 +15,6 @@
 <script lang="ts">
 import {
   computed,
-  ComputedRef,
   defineComponent,
   ref,
 } from 'vue'
@@ -27,21 +26,21 @@ interface CommonPageProps {
   sidebarItems?: SidebarItem[];
 }
 export default defineComponent({
+  name: 'Page',
+
   components: {
     Sidebar,
   },
 
   setup() {
-    const commonPageProps: ComputedRef<CommonPageProps> = computed(
-      () => usePage().props.value,
-    )
+    const { props: pageProps, url } = usePage()
 
     const sidebarItems = computed(
-      () => commonPageProps.value.sidebarItems ?? [],
+      () => (pageProps.value as CommonPageProps).sidebarItems ?? [],
     )
 
     const activeItem = computed(() => {
-      const path = window.location.pathname
+      const path = url.value
 
       if (/^\/admin\/hotels.*$/.test(path)) return 'Hotels'
       if (/^\/admin\/rooms.*$/.test(path)) return 'Rooms'
@@ -53,10 +52,13 @@ export default defineComponent({
 
     const isActive = ref(true)
 
+    const pageTitle = computed(() => url)
+
     return {
       sidebarItems,
       isActive,
       activeItem,
+      pageTitle,
     }
   },
 })
