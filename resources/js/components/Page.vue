@@ -11,7 +11,9 @@
         {{ title }}
       </page-title>
 
-      <slot />
+      <page-content>
+        <slot />
+      </page-content>
     </div>
   </div>
 </template>
@@ -26,6 +28,7 @@ import { usePage } from '@inertiajs/inertia-vue3'
 import SidebarItem from '../types/SidebarItem'
 import PageSidebar from './PageSidebar.vue'
 import PageTitle from './PageTitle.vue'
+import PageContent from './PageContent.vue'
 
 interface CommonPageProps {
   sidebarItems?: SidebarItem[];
@@ -36,6 +39,7 @@ export default defineComponent({
   components: {
     PageSidebar,
     PageTitle,
+    PageContent,
   },
 
   props: {
