@@ -28,7 +28,15 @@
         v-for="(item, i) in items"
         v-bind="item"
         :key="i"
-        :is-active="isActiveItem(item)" />
+        :is-active="isActiveItem(item.name)" />
+
+      <hr class="m-3">
+
+      <page-sidebar-item
+        :name="userName"
+        img-src="/img/icons/user_circle.svg"
+        url="/admin/profile"
+        :is-active="isActiveItem('Profile')" />
     </div>
   </div>
 </template>
@@ -60,6 +68,11 @@ export default defineComponent({
       type: String,
       default: null,
     },
+
+    userName: {
+      type: String,
+      default: null,
+    },
   },
 
   emits: [
@@ -67,7 +80,7 @@ export default defineComponent({
   ],
 
   setup(props, { emit }) {
-    const isActiveItem = (item: SidebarItem) => item.name === props.activeItem
+    const isActiveItem = (itemName: string) => itemName === props.activeItem
 
     const hideSidebar = () => emit('hide')
     const onCloseClick = () => { hideSidebar() }

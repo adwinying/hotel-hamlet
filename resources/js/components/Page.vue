@@ -4,6 +4,7 @@
       :items="sidebarItems"
       :is-active="isSidebarActive"
       :active-item="activeSidebarItem"
+      :user-name="userName"
       class="fixed top-0 md:left-0 z-50"
       :class="isSidebarActive ? 'left-0' : '-left-72'"
       @hide="hideSidebar" />
@@ -40,6 +41,7 @@
 <script lang="ts">
 import {
   computed,
+  ComputedRef,
   defineComponent,
   ref,
 } from 'vue'
@@ -53,6 +55,9 @@ import PageCard from './PageCard.vue'
 
 interface CommonPageProps {
   sidebarItems?: SidebarItem[];
+  userInfo?: {
+    name: string;
+  };
 }
 export default defineComponent({
   name: 'Page',
@@ -83,10 +88,11 @@ export default defineComponent({
   },
 
   setup() {
-    const { props: pageProps, url } = usePage()
+    const { props, url } = usePage()
+    const pageProps: ComputedRef<CommonPageProps> = props
 
     const sidebarItems = computed(
-      () => (pageProps.value as CommonPageProps).sidebarItems ?? [],
+      () => pageProps.value.sidebarItems ?? [],
     )
 
     const activeSidebarItem = computed(() => {
@@ -95,6 +101,7 @@ export default defineComponent({
       if (/^\/admin\/hotels.*$/.test(path)) return 'Hotels'
       if (/^\/admin\/rooms.*$/.test(path)) return 'Rooms'
       if (/^\/admin\/reservations.*$/.test(path)) return 'Reservations'
+      if (/^\/admin\/profile$/.test(path)) return 'Profile'
       if (/^\/admin$/.test(path)) return 'Dashboard'
 
       return null
@@ -104,12 +111,15 @@ export default defineComponent({
     const showSidebar = () => { isSidebarActive.value = true }
     const hideSidebar = () => { isSidebarActive.value = false }
 
+    const userName = computed(() => pageProps.value.userInfo?.name ?? null)
+
     return {
       sidebarItems,
       activeSidebarItem,
       isSidebarActive,
       showSidebar,
       hideSidebar,
+      userName,
     }
   },
 })
