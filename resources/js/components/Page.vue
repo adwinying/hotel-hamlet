@@ -100,7 +100,7 @@ export default defineComponent({
       return null
     })
 
-    const isSidebarActive = ref(true)
+    const isSidebarActive = ref(false)
     const showSidebar = () => { isSidebarActive.value = true }
     const hideSidebar = () => { isSidebarActive.value = false }
 
