@@ -14,7 +14,7 @@
       </a>
     </div>
 
-    <div class="flex items-center h-14 m-6 space-x-2">
+    <div class="flex items-center h-14 mx-3 my-6 space-x-2">
       <img
         class="h-full"
         src="/img/logo.svg">
