@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Inertia\Testing\Assert;
 use Tests\TestCase;
 
 class AuthTest extends TestCase
@@ -29,7 +30,7 @@ class AuthTest extends TestCase
 
     public function testShowsLoginPage()
     {
-        $this->get('/admin/login')->assertInertia(function ($page) {
+        $this->get('/admin/login')->assertInertia(function (Assert $page) {
             $page->component('Auth/Login');
         });
     }
