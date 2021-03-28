@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\User\UpdateUser;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ProfileRequest;
 use Inertia\Inertia;
 
 class ProfileController extends Controller
@@ -15,5 +17,19 @@ class ProfileController extends Controller
                 'email' => auth()->user()->email,
             ],
         ]);
+    }
+
+    public function update(ProfileRequest $request, UpdateUser $update)
+    {
+        $user  = auth()->user();
+        $input = $request->only([
+            'name',
+            'email',
+            'password',
+        ]);
+
+        $update($user, $input);
+
+        return redirect()->back()->with('success', 'Profile updated.');
     }
 }

@@ -20,6 +20,7 @@ Route::prefix('admin')->group(function () {
     Route::middleware('auth')->group(function () {
         Route::get('/', [HomeController::class, 'show']);
         Route::get('/profile', [ProfileController::class, 'edit']);
+        Route::post('/profile', [ProfileController::class, 'update']);
     });
 
     Route::middleware('guest')->group(function () {
