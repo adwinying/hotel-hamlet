@@ -1,6 +1,6 @@
 declare module '@inertiajs/inertia-vue3' {
   import * as Inertia from '@inertiajs/inertia'
-  import { Ref, ComputedRef, App, Component, DefineComponent } from 'vue'
+  import { Ref, ComputedRef, App, Component, DefineComponent, UnwrapRef } from 'vue'
 
   interface InertiaAppProps<
     PagePropsBeforeTransform extends Inertia.PagePropsBeforeTransform = Inertia.PagePropsBeforeTransform,
@@ -88,7 +88,7 @@ declare module '@inertiajs/inertia-vue3' {
 
   export declare function useRemember(data: object, key?: string): Ref<object>
 
-  export declare function useForm<Data>(data: Data): Ref<FormWithData<Data>>
+  export declare function useForm<Data>(data: Data): UnwrapRef<FormWithData<Data>>
 
   declare module '@vue/runtime-core' {
     export interface ComponentCustomProperties {

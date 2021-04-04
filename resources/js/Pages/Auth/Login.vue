@@ -87,8 +87,8 @@ export default defineComponent({
     })
 
     const onFormSubmit = () => {
-      form.value.clearErrors()
-      form.value.post('/admin/login')
+      form.clearErrors()
+      form.post('/admin/login')
     }
 
     return {
