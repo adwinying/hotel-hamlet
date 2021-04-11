@@ -10,7 +10,7 @@ class GetUserSidebar
      * Get user's sidebar items
      * @param User $user Target user
      */
-    public function __invoke(User $user): array
+    public function execute(User $user): array
     {
         return [
             [

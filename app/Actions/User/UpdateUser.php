@@ -13,7 +13,7 @@ class UpdateUser
      * @param User  $user  Target user
      * @param array $input Data to update
      */
-    public function __invoke(User $user, array $input): bool
+    public function execute(User $user, array $input): bool
     {
         // Hash password before saving to DB
         if ($password = Arr::pull($input, 'password')) {

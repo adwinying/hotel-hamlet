@@ -13,7 +13,7 @@ class GetUserSidebarTest extends TestCase
         $user = new User();
 
         $get    = app(GetUserSidebar::class);
-        $result = $get($user);
+        $result = $get->execute($user);
 
         $expected = [
             [

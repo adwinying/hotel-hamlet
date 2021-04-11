@@ -18,7 +18,7 @@ class UpdateUserTest extends TestCase
         $input = ['name' => 'John Doe'];
 
         $update = app(UpdateUser::class);
-        $result = $update($user, $input);
+        $result = $update->execute($user, $input);
 
         $this->assertTrue($result);
         $this->assertDatabaseHas('users', $input);
@@ -30,7 +30,7 @@ class UpdateUserTest extends TestCase
         $input = ['password' => 'secret'];
 
         $update = app(UpdateUser::class);
-        $result = $update($user, $input);
+        $result = $update->execute($user, $input);
 
         $this->assertTrue($result);
         $this->assertDatabaseMissing('users', $input);
