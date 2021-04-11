@@ -28,7 +28,7 @@ class ProfileController extends Controller
             'password',
         ]);
 
-        $update($user, $input);
+        $update->execute($user, $input);
 
         return redirect()->back()->with('success', 'Profile updated.');
     }

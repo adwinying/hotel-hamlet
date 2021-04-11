@@ -39,7 +39,7 @@ class HandleInertiaRequests extends Middleware
 
         return array_merge(parent::share($request), [
             'sidebarItems' => auth()->check()
-                ? $getSidebarItems(auth()->user())
+                ? $getSidebarItems->execute(auth()->user())
                 : null,
             'userInfo' => [
                 'name' => auth()->user()->name ?? null,
