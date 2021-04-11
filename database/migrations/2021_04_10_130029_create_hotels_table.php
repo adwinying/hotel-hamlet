@@ -18,6 +18,7 @@ class CreateHotelsTable extends Migration
             $table->string('name')->unique();
             $table->boolean('is_hidden')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
