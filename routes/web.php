@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\HotelController;
 use App\Http\Controllers\Admin\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [HomeController::class, 'show']);
         Route::get('/profile', [ProfileController::class, 'edit']);
         Route::post('/profile', [ProfileController::class, 'update']);
+
+        Route::get('/hotels', [HotelController::class, 'index']);
     });
 
     Route::middleware('guest')->group(function () {

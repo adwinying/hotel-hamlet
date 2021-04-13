@@ -23,7 +23,7 @@ class HotelFactory extends Factory
     public function definition()
     {
         return [
-            'name'      => 'Hotel' . Str::ucfirst($this->faker->word),
+            'name'      => 'Hotel ' . Str::ucfirst($this->faker->word),
             'is_hidden' => false,
         ];
     }
