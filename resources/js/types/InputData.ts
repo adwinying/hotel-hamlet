@@ -1,3 +1,3 @@
-type InputData = string | number
+type InputData = string | number | boolean
 
 export default InputData
