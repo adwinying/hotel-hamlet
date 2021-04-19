@@ -46,7 +46,7 @@ import {
   ref,
 } from 'vue'
 import { usePage } from '@inertiajs/inertia-vue3'
-import SidebarItem from '../interfaces/SidebarItem'
+import SidebarItem from '../types/SidebarItem'
 import PageSidebar from './PageSidebar.vue'
 import PageNavbar from './PageNavbar.vue'
 import PageHeader from './PageHeader.vue'
