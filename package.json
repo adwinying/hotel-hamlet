@@ -11,6 +11,7 @@
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.2.1",
+        "@types/lodash": "^4.14.168",
         "@typescript-eslint/eslint-plugin": "^4.14.2",
         "@typescript-eslint/parser": "^4.14.2",
         "@vue/compiler-sfc": "^3.0.5",
@@ -31,6 +32,7 @@
         "@inertiajs/inertia": "^0.8.4",
         "@inertiajs/inertia-vue3": "^0.3.10",
         "@inertiajs/progress": "^0.2.4",
+        "lodash": "^4.17.21",
         "sweetalert2": "^10.15.7",
         "vue": "^3.0.5",
         "vue-inline-svg": "^3.0.0-beta.2"
