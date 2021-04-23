@@ -24,6 +24,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/profile', [ProfileController::class, 'update']);
 
         Route::get('/hotels', [HotelController::class, 'index']);
+        Route::get('/hotels/{hotel}', [HotelController::class, 'show']);
     });
 
     Route::middleware('guest')->group(function () {

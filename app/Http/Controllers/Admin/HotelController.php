@@ -63,6 +63,12 @@ class HotelController extends Controller
      */
     public function show(Hotel $hotel)
     {
+        return Inertia::render('Hotel/Form', [
+            'hotel' => [
+                'name'      => $hotel->name,
+                'is_hidden' => $hotel->is_hidden,
+            ],
+        ]);
     }
 
     /**
