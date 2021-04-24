@@ -24,6 +24,7 @@ class HotelEditTest extends TestCase
             ->assertInertia(fn (Assert $page) => $page
                 ->component('Hotel/Form')
                 ->has('hotel', fn (Assert $page) => $page
+                    ->where('id', $hotel->id)
                     ->where('name', $hotel->name)
                     ->where('is_hidden', $hotel->is_hidden)));
     }
