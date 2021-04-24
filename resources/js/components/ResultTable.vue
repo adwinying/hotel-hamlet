@@ -31,6 +31,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
+import { usePage } from '@inertiajs/inertia-vue3'
 import InlineSvg from 'vue-inline-svg'
 import ResultTableField from '../types/ResultTableField'
 import ResultDataFormatter from '../types/ResultDataFormatter'
@@ -68,7 +69,7 @@ export default defineComponent({
 
     basePath: {
       type: [String, Function],
-      default: window.location.pathname,
+      default: () => usePage().url.value,
     },
   },
 
