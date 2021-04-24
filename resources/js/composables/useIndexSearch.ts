@@ -1,18 +1,21 @@
 import { Ref, ref, watch } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
 import debounce from 'lodash/debounce'
+import SearchParams from '../types/SearchParams'
+import InputData from '../types/InputData'
 
 interface UseIndexSearch {
-  searchParams: Ref<Record<string, unknown>>
+  searchParams: Ref<SearchParams>
 }
 export default function useIndexSearch(
   query: Record<string, unknown>,
-  initialSearchParams: Record<string, unknown>,
+  initialSearchParams: SearchParams,
 ): UseIndexSearch {
   const searchParams = ref({ ...initialSearchParams })
 
   Object.keys(searchParams.value).forEach((key) => {
-    searchParams.value[key] = query[key] ?? searchParams.value[key]
+    searchParams.value[key] = (query[key] as InputData)
+      ?? searchParams.value[key]
   })
 
   const applySearchParams = () => {
