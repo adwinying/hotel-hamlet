@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
 import InputData from '../types/InputData'
 
 export default defineComponent({
@@ -34,7 +34,7 @@ export default defineComponent({
 
   props: {
     modelValue: {
-      type: [String, Number],
+      type: [String, Number, Boolean] as PropType<InputData>,
       default: '',
     },
 

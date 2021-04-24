@@ -42,7 +42,7 @@ export default defineComponent({
 
   props: {
     modelValue: {
-      type: [String, Number, Boolean],
+      type: [String, Number, Boolean] as PropType<InputData>,
       default: '',
     },
 
