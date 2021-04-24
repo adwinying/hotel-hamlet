@@ -69,7 +69,7 @@ export default defineComponent({
 
     basePath: {
       type: [String, Function],
-      default: () => usePage().url.value,
+      default: () => usePage().url.value.replace(/\?.*$/, ''),
     },
   },
 
