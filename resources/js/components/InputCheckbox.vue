@@ -13,7 +13,7 @@
       :name="name"
       type="checkbox"
       :class="errors ? 'border-red-500' : 'border-gray-300'"
-      class="border rounded
+      class="border rounded text-cyan-600
       focus:outline-none focus:ring-cyan-500 focus:border-cyan-600
       sm:text-sm">
 
