@@ -28,4 +28,52 @@ class HotelEditTest extends TestCase
                     ->where('name', $hotel->name)
                     ->where('is_hidden', $hotel->is_hidden)));
     }
+
+    public function testCanUpdateHotelName()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $hotel   = Hotel::factory()->create();
+        $hotelId = $hotel->id;
+
+        $input = [
+            'name'      => 'new name',
+            'is_hidden' => $hotel->is_hidden,
+        ];
+
+        $this->from("/admin/hotels/$hotelId")
+            ->put("/admin/hotels/$hotelId", $input)
+            ->assertRedirect("/admin/hotels/$hotelId")
+            ->assertSessionHas('success', 'Hotel updated.');
+
+        $this->assertDatabaseHas('hotels', [
+            'id'   => $hotelId,
+            'name' => $input['name'],
+        ]);
+    }
+
+    public function testCanUpdateIsHiddenFlag()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $hotel   = Hotel::factory()->create();
+        $hotelId = $hotel->id;
+
+        $input = [
+            'name'      => $hotel->name,
+            'is_hidden' => !$hotel->is_hidden,
+        ];
+
+        $this->from("/admin/hotels/$hotelId")
+            ->put("/admin/hotels/$hotelId", $input)
+            ->assertRedirect("/admin/hotels/$hotelId")
+            ->assertSessionHas('success', 'Hotel updated.');
+
+        $this->assertDatabaseHas('hotels', [
+            'id'        => $hotelId,
+            'is_hidden' => $input['is_hidden'],
+        ]);
+    }
 }

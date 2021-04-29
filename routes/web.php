@@ -23,8 +23,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit']);
         Route::post('/profile', [ProfileController::class, 'update']);
 
-        Route::get('/hotels', [HotelController::class, 'index']);
-        Route::get('/hotels/{hotel}', [HotelController::class, 'show']);
+        Route::resource('/hotels', HotelController::class);
     });
 
     Route::middleware('guest')->group(function () {
