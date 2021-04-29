@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Hotel\UpdateHotel;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\HotelRequest;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -86,8 +88,16 @@ class HotelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Hotel $hotel)
-    {
+    public function update(
+        HotelRequest $request,
+        Hotel $hotel,
+        UpdateHotel $updateHotel
+    ) {
+        $input = $request->validated();
+
+        $updateHotel->execute($hotel, $input);
+
+        return redirect()->back()->with('success', 'Hotel updated.');
     }
 
     /**

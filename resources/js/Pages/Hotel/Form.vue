@@ -4,12 +4,14 @@
       <div class="grid grid-cols-6 gap-6">
         <input-text
           v-model="form.name"
+          :errors="form.errors.name"
           name="name"
           label="Name"
           class="lg:col-span-4" />
 
         <input-checkbox
           v-model="form.is_hidden"
+          :errors="form.errors.is_hidden"
           name="is_hidden"
           label="Is Hidden?"
           class="lg:col-span-4" />
@@ -73,7 +75,7 @@ export default defineComponent({
 
     const onFormSubmit = () => {
       form.clearErrors()
-      form.post(`/admin/hotel/${hotelId.value}`, {
+      form.put(`/admin/hotels/${hotelId.value}`, {
         onSuccess: () => {
           showToast('Hotel successfully updated', 'success')
         },
