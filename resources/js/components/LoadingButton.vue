@@ -3,6 +3,7 @@
     :disabled="isLoading"
     :class="`flex items-center px-6 py-2 rounded-md
       bg-${color}-600 hover:bg-${color}-800 text-gray-50 font-semibold
+      disabled:bg-${color}-300 disabled:cursor-auto
       focus:outline-none focus:ring-4 focus:ring-${color}-500 focus:ring-opacity-60`">
     <div
       v-if="isLoading"

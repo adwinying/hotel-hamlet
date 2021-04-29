@@ -43,7 +43,7 @@
       <loading-button
         class="mt-6"
         type="submit"
-        :is-loading="form.loading">
+        :is-loading="form.processing">
         Update Settings
       </loading-button>
     </form>
