@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
-import InputData from '../types/InputData'
+import InputData from '@/types/InputData'
 
 export default defineComponent({
   name: 'InputCheckbox',

@@ -29,13 +29,13 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
-import Hotel from '../../types/Models/Hotel'
-import { showToast } from '../../composables/useAlert'
-import useForm from '../../composables/useForm'
+import Hotel from '@/types/Models/Hotel'
+import { showToast } from '@/composables/useAlert'
+import useForm from '@/composables/useForm'
 
-import InputText from '../../components/InputText.vue'
-import InputCheckbox from '../../components/InputCheckbox.vue'
-import LoadingButton from '../../components/LoadingButton.vue'
+import InputText from '@/components/InputText.vue'
+import InputCheckbox from '@/components/InputCheckbox.vue'
+import LoadingButton from '@/components/LoadingButton.vue'
 
 export default defineComponent({
   name: 'HotelForm',

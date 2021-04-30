@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const path = require('path');
 
 /*
  |--------------------------------------------------------------------------
@@ -14,6 +15,11 @@ const mix = require('laravel-mix');
 mix.webpackConfig({
   output: {
     chunkFilename: 'js/chunks/[name].js?id=[chunkhash]',
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve('resources/js'),
+    },
   },
 })
 

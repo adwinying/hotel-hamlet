@@ -33,12 +33,14 @@
 import { defineComponent, PropType } from 'vue'
 import { usePage } from '@inertiajs/inertia-vue3'
 import InlineSvg from 'vue-inline-svg'
-import ResultTableField from '../types/ResultTableField'
-import ResultDataFormatter from '../types/ResultDataFormatter'
-import ResultTableCell from './ResultTableCell.vue'
-import ResultTableHeader from './ResultTableHeader.vue'
-import ResultTableRow from './ResultTableRow.vue'
-import ResultTableWrapper from './ResultTableWrapper.vue'
+
+import ResultTableField from '@/types/ResultTableField'
+import ResultDataFormatter from '@/types/ResultDataFormatter'
+
+import ResultTableCell from '@/components/ResultTableCell.vue'
+import ResultTableHeader from '@/components/ResultTableHeader.vue'
+import ResultTableRow from '@/components/ResultTableRow.vue'
+import ResultTableWrapper from '@/components/ResultTableWrapper.vue'
 
 export default defineComponent({
   name: 'ResultTable',

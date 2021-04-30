@@ -34,8 +34,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
-import InputData from '../types/InputData'
-import DropdownOption from '../types/DropdownOption'
+import InputData from '@/types/InputData'
+import DropdownOption from '@/types/DropdownOption'
 
 export default defineComponent({
   name: 'InputDropdown',

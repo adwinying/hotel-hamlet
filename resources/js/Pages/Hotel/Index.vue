@@ -24,14 +24,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import ResultTableField from '../../types/ResultTableField'
-import DropdownOption from '../../types/DropdownOption'
-import useIndexSearch from '../../composables/useIndexSearch'
+import ResultTableField from '@/types/ResultTableField'
+import DropdownOption from '@/types/DropdownOption'
+import useIndexSearch from '@/composables/useIndexSearch'
 
-import IndexSearchWrapper from '../../components/IndexSearchWrapper.vue'
-import InputText from '../../components/InputText.vue'
-import InputDropdown from '../../components/InputDropdown.vue'
-import ResultTable from '../../components/ResultTable.vue'
+import IndexSearchWrapper from '@/components/IndexSearchWrapper.vue'
+import InputText from '@/components/InputText.vue'
+import InputDropdown from '@/components/InputDropdown.vue'
+import ResultTable from '@/components/ResultTable.vue'
 
 export default defineComponent({
   name: 'ProfileIndex',

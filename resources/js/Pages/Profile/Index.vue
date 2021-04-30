@@ -53,9 +53,10 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { useForm } from '@inertiajs/inertia-vue3'
-import { showToast } from '../../composables/useAlert'
-import InputText from '../../components/InputText.vue'
-import LoadingButton from '../../components/LoadingButton.vue'
+import { showToast } from '@/composables/useAlert'
+
+import InputText from '@/components/InputText.vue'
+import LoadingButton from '@/components/LoadingButton.vue'
 
 interface Profile {
   name: string;
