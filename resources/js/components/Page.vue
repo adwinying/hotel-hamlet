@@ -46,12 +46,13 @@ import {
   ref,
 } from 'vue'
 import { usePage } from '@inertiajs/inertia-vue3'
-import SidebarItem from '../types/SidebarItem'
-import PageSidebar from './PageSidebar.vue'
-import PageNavbar from './PageNavbar.vue'
-import PageHeader from './PageHeader.vue'
-import PageContent from './PageContent.vue'
-import PageCard from './PageCard.vue'
+import SidebarItem from '@/types/SidebarItem'
+
+import PageSidebar from '@/components/PageSidebar.vue'
+import PageNavbar from '@/components/PageNavbar.vue'
+import PageHeader from '@/components/PageHeader.vue'
+import PageContent from '@/components/PageContent.vue'
+import PageCard from '@/components/PageCard.vue'
 
 interface CommonPageProps {
   sidebarItems?: SidebarItem[];

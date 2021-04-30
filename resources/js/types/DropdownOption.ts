@@ -1,4 +1,4 @@
-import InputData from './InputData'
+import InputData from '@/types/InputData'
 
 interface DropdownOption {
   value: InputData

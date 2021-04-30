@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["resources/js/*"]
+    },
     "target": "esnext",
     "module": "esnext",
     "strict": true,
@@ -12,5 +16,7 @@
     "resources/js/**/*.vue"
   ],
   "exclude": [
+    "node_modules",
+    "public"
   ]
 }

@@ -1,8 +1,9 @@
 import { Ref, ref, watch } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
 import debounce from 'lodash/debounce'
-import SearchParams from '../types/SearchParams'
-import InputData from '../types/InputData'
+
+import SearchParams from '@/types/SearchParams'
+import InputData from '@/types/InputData'
 
 interface UseIndexSearch {
   searchParams: Ref<SearchParams>

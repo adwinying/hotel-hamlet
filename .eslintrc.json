@@ -15,7 +15,11 @@
     "sourceType": "module",
     "extraFileExtensions": [".vue"]
   },
-  "plugins": ["vue", "@typescript-eslint"],
+  "plugins": [
+    "vue",
+    "@typescript-eslint",
+    "import"
+  ],
   "rules": {
     "semi": ["error", "never"],
     "@typescript-eslint/semi": ["error", "never"],
@@ -23,5 +27,10 @@
       "singleline": "never",
       "multiline": "never"
     }]
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
   }
 }

@@ -1,7 +1,8 @@
 import { computed, ComputedRef } from 'vue'
 import { InertiaForm, useForm as useInertiaForm } from '@inertiajs/inertia-vue3'
-import Model from '../types/Models/Model'
-import FormData from '../types/FormData'
+
+import Model from '@/types/Models/Model'
+import FormData from '@/types/FormData'
 
 interface UseForm {
   form: InertiaForm<FormData>
