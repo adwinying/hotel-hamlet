@@ -17,12 +17,15 @@
           class="lg:col-span-4" />
       </div>
 
-      <loading-button
-        class="mt-6"
-        type="submit"
-        :is-loading="form.processing">
-        {{ submitText }}
-      </loading-button>
+      <hr class="my-6 border-t">
+
+      <div class="flex justify-end">
+        <loading-button
+          type="submit"
+          :is-loading="form.processing">
+          {{ submitText }}
+        </loading-button>
+      </div>
     </form>
   </page>
 </template>
