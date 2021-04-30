@@ -1,6 +1,6 @@
 import { Ref, ref, watch } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
-import debounce from 'lodash/debounce'
+import { debouncedWatch } from '@vueuse/core'
 
 import SearchParams from '@/types/SearchParams'
 import InputData from '@/types/InputData'
@@ -27,7 +27,11 @@ export default function useIndexSearch(
     })
   }
 
-  watch(searchParams, debounce(applySearchParams, 500), { deep: true })
+  debouncedWatch(
+    searchParams,
+    applySearchParams,
+    { debounce: 500, deep: true },
+  )
 
   return {
     searchParams,
