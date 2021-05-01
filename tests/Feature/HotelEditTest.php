@@ -12,11 +12,16 @@ class HotelEditTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testCanShowProfilePage()
+    protected function setUp(): void
     {
+        parent::setUp();
+
         $user = User::factory()->create();
         $this->actingAs($user);
+    }
 
+    public function testCanShowProfilePage()
+    {
         $hotel   = Hotel::factory()->create();
         $hotelId = $hotel->id;
 
@@ -31,9 +36,6 @@ class HotelEditTest extends TestCase
 
     public function testCanUpdateHotelName()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-
         $hotel   = Hotel::factory()->create();
         $hotelId = $hotel->id;
 
@@ -55,9 +57,6 @@ class HotelEditTest extends TestCase
 
     public function testCanUpdateIsHiddenFlag()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-
         $hotel   = Hotel::factory()->create();
         $hotelId = $hotel->id;
 
@@ -74,6 +73,22 @@ class HotelEditTest extends TestCase
         $this->assertDatabaseHas('hotels', [
             'id'        => $hotelId,
             'is_hidden' => $input['is_hidden'],
+        ]);
+    }
+
+    public function testCanDelete()
+    {
+        $hotel   = Hotel::factory()->create();
+        $hotelId = $hotel->id;
+
+        $this->from("/admin/hotels/$hotelId")
+            ->delete("/admin/hotels/$hotelId")
+            ->assertRedirect("/admin/hotels/$hotelId")
+            ->assertSessionHas('success', 'Hotel deleted.');
+
+        $this->assertDatabaseMissing('hotels', [
+            'id'         => $hotelId,
+            'deleted_at' => null,
         ]);
     }
 }
