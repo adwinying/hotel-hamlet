@@ -64,8 +64,8 @@ export default defineComponent({
 
     const {
       form,
-      objectId: hotelId,
       isEditForm,
+      onFormSubmit,
     } = useForm(props.hotel, initialFormData)
 
     const pageTitle = computed(() => (
@@ -75,15 +75,6 @@ export default defineComponent({
     const submitText = computed(() => (
       isEditForm.value ? 'Update Hotel' : 'Create Hotel'
     ))
-
-    const onFormSubmit = () => {
-      form.clearErrors()
-      form.put(`/admin/hotels/${hotelId.value}`, {
-        onSuccess: () => {
-          showToast('Hotel successfully updated', 'success')
-        },
-      })
-    }
 
     return {
       pageTitle,
