@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Hotel\DeleteHotel;
 use App\Actions\Hotel\UpdateHotel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\HotelRequest;
@@ -105,7 +106,10 @@ class HotelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Hotel $hotel)
+    public function destroy(Hotel $hotel, DeleteHotel $deleteHotel)
     {
+        $deleteHotel->execute($hotel);
+
+        return redirect()->back()->with('success', 'Hotel deleted.');
     }
 }
