@@ -19,12 +19,26 @@
 
       <hr class="my-6 border-t">
 
-      <div class="flex justify-end">
-        <loading-button
-          type="submit"
-          :is-loading="form.processing">
-          {{ submitText }}
-        </loading-button>
+      <div class="flex justify-between">
+        <div>
+          <loading-button
+            v-if="isEditForm"
+            variant="danger"
+            :is-loading="form.processing"
+            @click.prevent="onDeleteClick">
+            <inline-svg
+              class="w-6"
+              src="/img/icons/trash.svg" />
+          </loading-button>
+        </div>
+
+        <div>
+          <loading-button
+            type="submit"
+            :is-loading="form.processing">
+            {{ submitText }}
+          </loading-button>
+        </div>
       </div>
     </form>
   </page>
@@ -32,8 +46,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
+import InlineSvg from 'vue-inline-svg'
 import Hotel from '@/types/Models/Hotel'
-import { showToast } from '@/composables/useAlert'
 import useForm from '@/composables/useForm'
 
 import InputText from '@/components/InputText.vue'
@@ -44,6 +58,7 @@ export default defineComponent({
   name: 'HotelForm',
 
   components: {
+    InlineSvg,
     InputText,
     InputCheckbox,
     LoadingButton,
@@ -66,6 +81,7 @@ export default defineComponent({
       form,
       isEditForm,
       onFormSubmit,
+      onDeleteClick,
     } = useForm(props.hotel, initialFormData)
 
     const pageTitle = computed(() => (
@@ -79,8 +95,10 @@ export default defineComponent({
     return {
       pageTitle,
       submitText,
+      isEditForm,
       form,
       onFormSubmit,
+      onDeleteClick,
     }
   },
 })
