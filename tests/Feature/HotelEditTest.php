@@ -83,7 +83,7 @@ class HotelEditTest extends TestCase
 
         $this->from("/admin/hotels/$hotelId")
             ->delete("/admin/hotels/$hotelId")
-            ->assertRedirect("/admin/hotels/$hotelId")
+            ->assertRedirect('/admin/hotels')
             ->assertSessionHas('success', 'Hotel deleted.');
 
         $this->assertDatabaseMissing('hotels', [
