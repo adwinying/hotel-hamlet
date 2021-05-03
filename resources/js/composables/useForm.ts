@@ -10,6 +10,7 @@ interface UseForm {
   objectId: ComputedRef<number | null>
   isEditForm: ComputedRef<boolean>
   onFormSubmit: () => void
+  onDeleteClick: () => void
 }
 export default function useForm(
   object: Model | null,
@@ -33,10 +34,20 @@ export default function useForm(
     })
   }
 
+  const onDeleteClick = () => {
+    form.clearErrors()
+    form.delete(usePage().url.value, {
+      onSuccess: () => {
+        showToast('Successfully deleted.', 'success')
+      },
+    })
+  }
+
   return {
     form,
     objectId,
     isEditForm,
     onFormSubmit,
+    onDeleteClick,
   }
 }
