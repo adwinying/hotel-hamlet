@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class HotelRequest extends FormRequest
 {
@@ -24,7 +25,11 @@ class HotelRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'      => 'required|max:255',
+            'name' => [
+                'required',
+                'max:255',
+                Rule::unique('hotels')->ignore($this->route('hotel')),
+            ],
             'is_hidden' => 'required|boolean',
         ];
     }

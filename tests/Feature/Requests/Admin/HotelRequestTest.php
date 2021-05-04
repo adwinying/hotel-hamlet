@@ -3,12 +3,27 @@
 namespace Tests\Feature\Requests\Admin;
 
 use App\Http\Requests\Admin\HotelRequest;
+use App\Models\Hotel;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\ValidationTestCase;
 
 class HotelRequestTest extends ValidationTestCase
 {
+    use RefreshDatabase;
+
+    protected $hotelName = 'foobar';
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Hotel::factory()->create([
+            'name' => $this->hotelName,
+        ]);
+    }
+
     protected function request(): FormRequest
     {
         return new HotelRequest();
@@ -35,6 +50,10 @@ class HotelRequestTest extends ValidationTestCase
 
             'name exceeds 255 chars' => [
                 false, ['name' => Str::random(256)],
+            ],
+
+            'name is not unique' => [
+                false, ['name' => $this->hotelName],
             ],
 
             'is_hidden is empty' => [
