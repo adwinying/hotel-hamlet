@@ -15,6 +15,17 @@
         class="w-72" />
     </index-search-wrapper>
 
+    <result-cta-wrapper>
+      <loading-button
+        as="inertia-link"
+        :href="createUrl">
+        <inline-svg
+          class="w-6"
+          src="/img/icons/plus.svg" />
+        Create Hotel
+      </loading-button>
+    </result-cta-wrapper>
+
     <result-table
       :fields="fields"
       :formatter="formatter"
@@ -24,6 +35,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import InlineSvg from 'vue-inline-svg'
+import route from 'ziggy-js'
 import ResultTableField from '@/types/ResultTableField'
 import DropdownOption from '@/types/DropdownOption'
 import useIndexSearch from '@/composables/useIndexSearch'
@@ -32,6 +45,8 @@ import IndexSearchWrapper from '@/components/IndexSearchWrapper.vue'
 import InputText from '@/components/InputText.vue'
 import InputDropdown from '@/components/InputDropdown.vue'
 import ResultTable from '@/components/ResultTable.vue'
+import LoadingButton from '@/components/LoadingButton.vue'
+import ResultCtaWrapper from '@/components/ResultCtaWrapper.vue'
 
 export default defineComponent({
   name: 'ProfileIndex',
@@ -41,6 +56,9 @@ export default defineComponent({
     InputText,
     InputDropdown,
     ResultTable,
+    ResultCtaWrapper,
+    InlineSvg,
+    LoadingButton,
   },
 
   props: {
@@ -91,11 +109,14 @@ export default defineComponent({
       name: '',
     })
 
+    const createUrl = route('hotels.create')
+
     return {
       fields,
       searchParams,
       formatter,
       hiddenOptions,
+      createUrl,
     }
   },
 })
