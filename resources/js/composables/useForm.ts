@@ -1,4 +1,5 @@
 import { computed, ComputedRef, Ref } from 'vue'
+import route from 'ziggy-js'
 import { InertiaForm, useForm as useInertiaForm } from '@inertiajs/inertia-vue3'
 
 import { showToast } from '@/composables/useAlert'
@@ -25,23 +26,45 @@ export default function useForm(
   const objectId = computed(() => object.value?.id ?? null)
   const isEditForm = computed(() => objectId.value !== null)
 
-  const onFormSubmit = () => {
+  const currentRoute = route().current()
+
+  const storeObject = () => {
+    const storeRouteName = currentRoute.replace(/[^.]+$/, 'store')
+    const storeUrl = route(storeRouteName)
+
     form.clearErrors()
-    form.put(usePage().url.value, {
+    form.post(storeUrl, {
+      onSuccess: () => {
+        showToast('Successfully created.', 'success')
+      },
+    })
+  }
+  const updateObject = () => {
+    const updateRouteName = currentRoute.replace(/[^.]+$/, 'update')
+    const updateUrl = route(updateRouteName, objectId.value as number)
+
+    form.clearErrors()
+    form.put(updateUrl, {
       onSuccess: () => {
         showToast('Successfully updated.', 'success')
       },
     })
   }
+  const deleteObject = () => {
+    const destroyRouteName = currentRoute.replace(/[^.]+$/, 'destroy')
+    const destroyUrl = route(destroyRouteName, objectId.value as number)
 
-  const onDeleteClick = () => {
     form.clearErrors()
-    form.delete(usePage().url.value, {
+    form.delete(destroyUrl, {
       onSuccess: () => {
         showToast('Successfully deleted.', 'success')
       },
     })
   }
+  const onFormSubmit = () => (
+    isEditForm.value ? updateObject() : storeObject()
+  )
+  const onDeleteClick = () => deleteObject()
 
   return {
     form,
