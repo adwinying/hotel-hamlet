@@ -31,7 +31,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { usePage } from '@inertiajs/inertia-vue3'
+import route from 'ziggy-js'
 import InlineSvg from 'vue-inline-svg'
 
 import ResultTableField from '@/types/ResultTableField'
@@ -71,7 +71,12 @@ export default defineComponent({
 
     basePath: {
       type: [String, Function],
-      default: () => usePage().url.value.replace(/\?.*$/, ''),
+      default: () => (id: number) => {
+        const currRoute = route().current()
+        const showRoute = route(currRoute.replace('index', 'show'), id)
+
+        return showRoute
+      },
     },
   },
 
