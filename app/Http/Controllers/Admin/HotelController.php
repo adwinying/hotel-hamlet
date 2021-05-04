@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Hotel\CreateHotel;
 use App\Actions\Hotel\DeleteHotel;
 use App\Actions\Hotel\UpdateHotel;
 use App\Http\Controllers\Controller;
@@ -55,8 +56,14 @@ class HotelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(HotelRequest $request, CreateHotel $createHotel)
     {
+        $input = $request->validated();
+
+        $hotel = $createHotel->execute($input);
+
+        return redirect()->route('hotels.show', [$hotel])
+            ->with('success', 'Hotel created.');
     }
 
     /**
