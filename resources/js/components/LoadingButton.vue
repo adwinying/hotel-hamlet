@@ -1,5 +1,6 @@
 <template>
-  <button
+  <component
+    :is="as"
     :disabled="isLoading"
     :class="`flex items-center px-6 py-2 rounded-md
       bg-${color}-600 hover:bg-${color}-800 text-gray-50 font-semibold
@@ -9,7 +10,7 @@
       v-if="isLoading"
       class="btn-spinner mr-2" />
     <slot />
-  </button>
+  </component>
 </template>
 
 <script lang="ts">
@@ -17,6 +18,11 @@ import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
   props: {
+    as: {
+      type: String,
+      default: 'button',
+    },
+
     isLoading: {
       type: Boolean,
       default: false,
