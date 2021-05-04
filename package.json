@@ -11,6 +11,7 @@
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.2.1",
+        "@types/ziggy-js": "^1.0.1",
         "@typescript-eslint/eslint-plugin": "^4.14.2",
         "@typescript-eslint/parser": "^4.14.2",
         "@vue/compiler-sfc": "^3.0.5",
@@ -35,6 +36,7 @@
         "@vueuse/core": "^4.9.1",
         "sweetalert2": "^10.15.7",
         "vue": "^3.0.5",
-        "vue-inline-svg": "^3.0.0-beta.2"
+        "vue-inline-svg": "^3.0.0-beta.2",
+        "ziggy-js": "^1.1.0"
     }
 }
