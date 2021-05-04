@@ -45,7 +45,12 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue'
+import {
+  computed,
+  defineComponent,
+  PropType,
+  toRef,
+} from 'vue'
 import InlineSvg from 'vue-inline-svg'
 import Hotel from '@/types/Models/Hotel'
 import useForm from '@/composables/useForm'
@@ -80,9 +85,10 @@ export default defineComponent({
     const {
       form,
       isEditForm,
+      objectId,
       onFormSubmit,
       onDeleteClick,
-    } = useForm(props.hotel, initialFormData)
+    } = useForm(toRef(props, 'hotel'), initialFormData)
 
     const pageTitle = computed(() => (
       isEditForm.value ? 'Edit Hotel' : 'New Hotel'
@@ -99,6 +105,7 @@ export default defineComponent({
       form,
       onFormSubmit,
       onDeleteClick,
+      objectId,
     }
   },
 })
