@@ -21,6 +21,7 @@
   <title>Hotel Hamlet Admin Dashboard</title>
 </head>
 <body>
+  @routes
   @inertia
 </body>
 </html>
