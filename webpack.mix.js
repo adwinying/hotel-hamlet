@@ -1,6 +1,8 @@
 const mix = require('laravel-mix');
 const path = require('path');
 
+require('laravel-mix-eslint')
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -27,4 +29,8 @@ mix.ts('resources/js/app.ts', 'public/js')
   .postCss('resources/css/app.css', 'public/css', [
     require('tailwindcss'),
   ])
-  .vue();
+  .vue()
+  .eslint({
+    extensions: ['js', 'ts', 'vue'],
+    files: ['resources/js/**'],
+  });
