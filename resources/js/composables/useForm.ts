@@ -1,5 +1,5 @@
-import { computed, ComputedRef } from 'vue'
-import { InertiaForm, useForm as useInertiaForm, usePage } from '@inertiajs/inertia-vue3'
+import { computed, ComputedRef, Ref } from 'vue'
+import { InertiaForm, useForm as useInertiaForm } from '@inertiajs/inertia-vue3'
 
 import { showToast } from '@/composables/useAlert'
 import Model from '@/types/Models/Model'
@@ -13,16 +13,16 @@ interface UseForm {
   onDeleteClick: () => void
 }
 export default function useForm(
-  object: Model | null,
+  object: Ref<Model | null>,
   initialFormData: FormData,
 ): UseForm {
   const form = useInertiaForm({ ...initialFormData })
 
   Object.keys(initialFormData).forEach((key) => {
-    form[key] = (object as unknown as FormData)?.[key] ?? form[key]
+    form[key] = (object.value as unknown as FormData)?.[key] ?? form[key]
   })
 
-  const objectId = computed(() => object?.id ?? null)
+  const objectId = computed(() => object.value?.id ?? null)
   const isEditForm = computed(() => objectId.value !== null)
 
   const onFormSubmit = () => {
