@@ -27,4 +27,9 @@ class RoomType extends Model
     {
         return app(FilterRoomType::class)->execute($query, $params);
     }
+
+    public function hotel()
+    {
+        return $this->belongsTo(Hotel::class);
+    }
 }
