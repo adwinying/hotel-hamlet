@@ -1,17 +1,17 @@
 <template>
-  <page title="Hotels">
+  <page title="Room Types">
     <index-search-wrapper>
+      <input-dropdown
+        v-model="searchParams.hotel_id"
+        name="hotel_id"
+        :options="hotelOptions"
+        label="Hotel"
+        class="w-72" />
+
       <input-text
         v-model="searchParams.name"
         name="name"
-        label="Name"
-        class="w-72" />
-
-      <input-dropdown
-        v-model="searchParams.is_hidden"
-        name="is_hidden"
-        :options="hiddenOptions"
-        label="Is Hidden?"
+        label="Room Type"
         class="w-72" />
     </index-search-wrapper>
 
@@ -22,7 +22,7 @@
         <inline-svg
           class="w-6"
           src="/img/icons/plus.svg" />
-        Create Hotel
+        New Room Type
       </loading-button>
     </result-cta-wrapper>
 
@@ -34,11 +34,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import {
+  computed,
+  ComputedRef,
+  defineComponent,
+  PropType,
+} from 'vue'
 import InlineSvg from 'vue-inline-svg'
 import route from 'ziggy-js'
 import ResultTableField from '@/types/ResultTableField'
 import DropdownOption from '@/types/DropdownOption'
+import Hotel from '@/types/Models/Hotel'
 import useIndexSearch from '@/composables/useIndexSearch'
 
 import IndexSearchWrapper from '@/components/IndexSearchWrapper.vue'
@@ -49,7 +55,7 @@ import LoadingButton from '@/components/LoadingButton.vue'
 import ResultCtaWrapper from '@/components/ResultCtaWrapper.vue'
 
 export default defineComponent({
-  name: 'HotelIndex',
+  name: 'RoomTypeIndex',
 
   components: {
     IndexSearchWrapper,
@@ -71,41 +77,38 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+
+    hotels: {
+      type: Array as PropType<Hotel[]>,
+      required: true,
+    },
   },
 
   setup(props) {
     const fields: ResultTableField[] = [
       {
-        key: 'name',
-        label: 'Name',
+        key: 'hotel',
+        label: 'Hotel',
       },
       {
-        key: 'is_hidden',
-        label: 'Is Hidden?',
+        key: 'name',
+        label: 'Room Type',
       },
     ]
 
     const formatter = {
-      is_hidden: (data: boolean) => (data ? 'Yes' : 'No'),
+      hotel: (data: Hotel) => data.name,
     }
 
-    const hiddenOptions: DropdownOption[] = [
-      {
-        value: '',
-        label: '',
-      },
-      {
-        value: 1,
-        label: 'Yes',
-      },
-      {
-        value: 0,
-        label: 'No',
-      },
-    ]
+    const hotelOptions: ComputedRef<DropdownOption[]> = computed(
+      () => props.hotels.reduce((acc, hotel) => [...acc, {
+        value: hotel.id.toString(),
+        label: hotel.name,
+      }], [{ value: '', label: '' }]),
+    )
 
     const { searchParams } = useIndexSearch(props.query, {
-      is_hidden: '',
+      hotel_id: '',
       name: '',
     })
 
@@ -115,7 +118,7 @@ export default defineComponent({
       fields,
       searchParams,
       formatter,
-      hiddenOptions,
+      hotelOptions,
       createUrl,
     }
   },
