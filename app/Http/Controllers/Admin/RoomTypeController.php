@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Actions\Hotel\CreateHotel;
-use App\Actions\Hotel\DeleteHotel;
-use App\Actions\Hotel\UpdateHotel;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\HotelRequest;
 use App\Models\Hotel;
+use App\Models\RoomType;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class HotelController extends Controller
+class RoomTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,20 +22,22 @@ class HotelController extends Controller
         $count = request()->input('count', 20);
 
         $queryParams = [
+            'hotel_id',
             'name',
-            'is_hidden',
         ];
 
-        return Inertia::render('Hotel/Index', [
+        return Inertia::render('RoomType/Index', [
             'query'  => request()->all($queryParams),
-            'result' => Hotel::query()
+            'result' => RoomType::query()
                 ->filter(request()->only($queryParams))
+                ->with('hotel:id,name')
                 ->orderBy($sort, $order)
                 ->paginate($count, [
                     'id',
+                    'hotel_id',
                     'name',
-                    'is_hidden',
                 ]),
+            'hotels' => fn () => Hotel::all(['id', 'name']),
         ]);
     }
 
@@ -48,7 +48,6 @@ class HotelController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Hotel/Form');
     }
 
     /**
@@ -56,14 +55,8 @@ class HotelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(HotelRequest $request, CreateHotel $createHotel)
+    public function store(Request $request)
     {
-        $input = $request->validated();
-
-        $hotel = $createHotel->execute($input);
-
-        return redirect()->route('hotels.show', [$hotel])
-            ->with('success', 'Hotel created.');
     }
 
     /**
@@ -71,15 +64,8 @@ class HotelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Hotel $hotel)
+    public function show(RoomType $roomType)
     {
-        return Inertia::render('Hotel/Form', [
-            'hotel' => [
-                'id'        => $hotel->id,
-                'name'      => $hotel->name,
-                'is_hidden' => $hotel->is_hidden,
-            ],
-        ]);
     }
 
     /**
@@ -87,7 +73,7 @@ class HotelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Hotel $hotel)
+    public function edit(RoomType $roomType)
     {
     }
 
@@ -96,16 +82,8 @@ class HotelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(
-        HotelRequest $request,
-        Hotel $hotel,
-        UpdateHotel $updateHotel
-    ) {
-        $input = $request->validated();
-
-        $updateHotel->execute($hotel, $input);
-
-        return redirect()->back()->with('success', 'Hotel updated.');
+    public function update(Request $request, RoomType $roomType)
+    {
     }
 
     /**
@@ -113,11 +91,7 @@ class HotelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Hotel $hotel, DeleteHotel $deleteHotel)
+    public function destroy(RoomType $roomType)
     {
-        $deleteHotel->execute($hotel);
-
-        return redirect()->route('hotels.index')
-            ->with('success', 'Hotel deleted.');
     }
 }

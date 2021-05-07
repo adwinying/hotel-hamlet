@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\HotelController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\RoomTypeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +25,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/profile', [ProfileController::class, 'update']);
 
         Route::resource('/hotels', HotelController::class);
+        Route::resource('/room_types', RoomTypeController::class);
     });
 
     Route::middleware('guest')->group(function () {
