@@ -27,6 +27,11 @@ class GetUserSidebarTest extends TestCase
                 'imgSrc' => '/img/icons/hotel.svg',
             ],
             [
+                'name'   => 'Room Types',
+                'url'    => '/admin/room_types',
+                'imgSrc' => '/img/icons/swatch.svg',
+            ],
+            [
                 'name'   => 'Rooms',
                 'url'    => '/admin/rooms',
                 'imgSrc' => '/img/icons/key.svg',
