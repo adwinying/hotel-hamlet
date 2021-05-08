@@ -66,6 +66,14 @@ class RoomTypeController extends Controller
      */
     public function show(RoomType $roomType)
     {
+        return Inertia::render('RoomType/Form', [
+            'roomType' => [
+                'id'       => $roomType->id,
+                'hotel_id' => $roomType->hotel_id,
+                'name'     => $roomType->name,
+            ],
+            'hotels' => fn () => Hotel::all(['id', 'name']),
+        ]);
     }
 
     /**
