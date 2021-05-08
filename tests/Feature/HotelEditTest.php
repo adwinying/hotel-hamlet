@@ -20,7 +20,7 @@ class HotelEditTest extends TestCase
         $this->actingAs($user);
     }
 
-    public function testCanShowProfilePage()
+    public function testCanShowPage()
     {
         $hotel   = Hotel::factory()->create();
         $hotelId = $hotel->id;
