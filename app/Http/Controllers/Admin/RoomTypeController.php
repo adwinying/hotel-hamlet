@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Actions\RoomType\DeleteRoomType;
+use App\Actions\RoomType\UpdateRoomType;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\RoomTypeRequest;
 use App\Models\Hotel;
 use App\Models\RoomType;
 use Illuminate\Http\Request;
@@ -78,21 +80,20 @@ class RoomTypeController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(RoomType $roomType)
-    {
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RoomType $roomType)
-    {
+    public function update(
+        RoomTypeRequest $request,
+        RoomType $roomType,
+        UpdateRoomType $updateRoomType
+    ) {
+        $input = $request->validated();
+
+        $updateRoomType->execute($roomType, $input);
+
+        return redirect()->back()->with('success', 'Room type updated.');
     }
 
     /**
