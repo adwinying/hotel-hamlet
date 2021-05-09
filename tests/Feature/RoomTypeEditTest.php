@@ -39,4 +39,20 @@ class RoomTypeEditTest extends TestCase
                     ->where('name', $roomType->name))
                 ->where('hotels', $hotels));
     }
+
+    public function testCanDelete()
+    {
+        $roomType   = RoomType::factory()->create();
+        $roomTypeId = $roomType->id;
+
+        $this->from("/admin/room_types/$roomTypeId")
+            ->delete("/admin/room_types/$roomTypeId")
+            ->assertRedirect('/admin/room_types')
+            ->assertSessionHas('success', 'Room type deleted.');
+
+        $this->assertDatabaseMissing('room_types', [
+            'id'         => $roomTypeId,
+            'deleted_at' => null,
+        ]);
+    }
 }

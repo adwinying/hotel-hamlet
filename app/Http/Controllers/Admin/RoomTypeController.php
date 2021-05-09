@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\RoomType\DeleteRoomType;
 use App\Http\Controllers\Controller;
 use App\Models\Hotel;
 use App\Models\RoomType;
@@ -99,7 +100,11 @@ class RoomTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RoomType $roomType)
+    public function destroy(RoomType $roomType, DeleteRoomType $deleteRoomType)
     {
+        $deleteRoomType->execute($roomType);
+
+        return redirect()->route('room_types.index')
+            ->with('success', 'Room type deleted.');
     }
 }
