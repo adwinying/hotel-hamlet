@@ -112,7 +112,7 @@ export default defineComponent({
       name: '',
     })
 
-    const createUrl = route('hotels.create')
+    const createUrl = route('room_types.create')
 
     return {
       fields,
