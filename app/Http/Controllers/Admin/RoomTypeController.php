@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\RoomType\CreateRoomType;
 use App\Actions\RoomType\DeleteRoomType;
 use App\Actions\RoomType\UpdateRoomType;
 use App\Http\Controllers\Controller;
@@ -61,8 +62,16 @@ class RoomTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(
+        RoomTypeRequest $request,
+        CreateRoomType $createRoomType
+    ) {
+        $input = $request->validated();
+
+        $roomType = $createRoomType->execute($input);
+
+        return redirect()->route('room_types.show', [$roomType])
+            ->with('success', 'Room type created.');
     }
 
     /**
