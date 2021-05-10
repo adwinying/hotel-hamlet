@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Hotel;
+use App\Models\RoomType;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\Assert;
@@ -31,5 +32,20 @@ class RoomTypeCreateTest extends TestCase
                 ->component('RoomType/Form')
                 ->missing('roomType')
                 ->where('hotels', $hotels));
+    }
+
+    public function testCanCreateRoomType()
+    {
+        $roomType = RoomType::factory()->make();
+        $input    = $roomType->only('hotel_id', 'name');
+
+        Hotel::factory()->create(['id' => $roomType->hotel_id]);
+
+        $this->post('/admin/room_types', $input)
+            ->assertRedirect()
+            ->assertSessionMissing('errors')
+            ->assertSessionHas('success', 'Room type created.');
+
+        $this->assertDatabaseHas('room_types', $input);
     }
 }
