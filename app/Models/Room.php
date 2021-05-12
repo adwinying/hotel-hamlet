@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Actions\Room\FilterRoom;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,6 +22,11 @@ class Room extends Model
         'room_type_id',
         'room_no',
     ];
+
+    public function scopeFilter(Builder $query, array $params)
+    {
+        return app(FilterRoom::class)->execute($query, $params);
+    }
 
     public function roomType()
     {
