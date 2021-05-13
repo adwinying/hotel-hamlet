@@ -22,8 +22,8 @@ class RoomFactory extends Factory
     public function definition()
     {
         return [
-            'room_type_id' => $this->faker->randomDigit,
-            'room_no'      => $this->faker->numberBetween(100, 999),
+            'room_type_id' => $this->faker->numberBetween(1, 10),
+            'room_no'      => (string) $this->faker->numberBetween(100, 999),
         ];
     }
 }
