@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\RoomTypeRequest;
 use App\Models\Hotel;
 use App\Models\RoomType;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class RoomTypeController extends Controller
