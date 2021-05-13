@@ -34,6 +34,7 @@ import { defineComponent, PropType } from 'vue'
 import route from 'ziggy-js'
 import InlineSvg from 'vue-inline-svg'
 
+import Model from '@/types/Models/Model'
 import ResultTableField from '@/types/ResultTableField'
 import ResultDataFormatter from '@/types/ResultDataFormatter'
 
@@ -60,7 +61,7 @@ export default defineComponent({
     },
 
     data: {
-      type: Array,
+      type: Array as PropType<Model[]>,
       default: () => [],
     },
 
