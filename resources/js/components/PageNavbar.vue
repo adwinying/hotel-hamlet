@@ -2,11 +2,9 @@
   <div class="fixed w-full h-14 bg-white shadow-md">
     <div class="absolute top-0 left-0 bottom-0 w-14 p-3">
       <a href="#">
-        <img
+        <menu-icon
           class="h-full"
-          alt="Show Sidebar"
-          src="/img/icons/menu.svg"
-          @click.prevent="onMenuClick">
+          @click.prevent="onMenuClick" />
       </a>
     </div>
 
@@ -23,9 +21,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { MenuIcon } from '@heroicons/vue/outline'
 
 export default defineComponent({
   name: 'PageNavbar',
+
+  components: {
+    MenuIcon,
+  },
 
   emits: [
     'showSidebar',

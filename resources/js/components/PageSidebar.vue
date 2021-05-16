@@ -10,7 +10,7 @@
       <a
         href="#"
         @click.prevent="onCloseClick">
-        <img src="/img/icons/cross.svg">
+        <x-icon />
       </a>
     </div>
 
@@ -43,6 +43,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
+import { XIcon } from '@heroicons/vue/outline'
 import SidebarItem from '@/types/SidebarItem'
 import PageSidebarItem from '@/components/PageSidebarItem.vue'
 
@@ -50,6 +51,7 @@ export default defineComponent({
   name: 'PageSidebar',
 
   components: {
+    XIcon,
     PageSidebarItem,
   },
 
