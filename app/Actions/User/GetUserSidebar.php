@@ -14,29 +14,29 @@ class GetUserSidebar
     {
         return [
             [
-                'name'   => 'Dashboard',
-                'url'    => '/admin',
-                'imgSrc' => '/img/icons/home.svg',
+                'name' => 'Dashboard',
+                'url'  => '/admin',
+                'icon' => 'HomeIcon',
             ],
             [
-                'name'   => 'Hotels',
-                'url'    => '/admin/hotels',
-                'imgSrc' => '/img/icons/hotel.svg',
+                'name' => 'Hotels',
+                'url'  => '/admin/hotels',
+                'icon' => 'OfficeBuildingIcon',
             ],
             [
-                'name'   => 'Room Types',
-                'url'    => '/admin/room_types',
-                'imgSrc' => '/img/icons/swatch.svg',
+                'name' => 'Room Types',
+                'url'  => '/admin/room_types',
+                'icon' => 'ColorSwatchIcon',
             ],
             [
-                'name'   => 'Rooms',
-                'url'    => '/admin/rooms',
-                'imgSrc' => '/img/icons/key.svg',
+                'name' => 'Rooms',
+                'url'  => '/admin/rooms',
+                'icon' => 'KeyIcon',
             ],
             [
-                'name'   => 'Reservations',
-                'url'    => '/admin/reservations',
-                'imgSrc' => '/img/icons/book.svg',
+                'name' => 'Reservations',
+                'url'  => '/admin/reservations',
+                'icon' => 'BookOpenIcon',
             ],
         ];
     }

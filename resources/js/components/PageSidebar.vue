@@ -34,7 +34,7 @@
 
       <page-sidebar-item
         :name="userName"
-        img-src="/img/icons/user_circle.svg"
+        icon="UserCircleIcon"
         url="/admin/profile"
         :is-active="isActiveItem('Profile')" />
     </div>
