@@ -19,9 +19,7 @@
       <loading-button
         as="inertia-link"
         :href="createUrl">
-        <inline-svg
-          class="w-6"
-          src="/img/icons/plus.svg" />
+        <plus-icon class="w-6" />
         Create Hotel
       </loading-button>
     </result-cta-wrapper>
@@ -35,8 +33,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import InlineSvg from 'vue-inline-svg'
+import { PlusIcon } from '@heroicons/vue/solid'
 import route from 'ziggy-js'
+
 import ResultTableField from '@/types/ResultTableField'
 import DropdownOption from '@/types/DropdownOption'
 import useIndexSearch from '@/composables/useIndexSearch'
@@ -57,8 +56,8 @@ export default defineComponent({
     InputDropdown,
     ResultTable,
     ResultCtaWrapper,
-    InlineSvg,
     LoadingButton,
+    PlusIcon,
   },
 
   props: {

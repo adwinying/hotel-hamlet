@@ -26,9 +26,7 @@
       <loading-button
         as="inertia-link"
         :href="createUrl">
-        <inline-svg
-          class="w-6"
-          src="/img/icons/plus.svg" />
+        <plus-icon class="w-6" />
         New Room
       </loading-button>
     </result-cta-wrapper>
@@ -48,8 +46,9 @@ import {
   PropType,
   watch,
 } from 'vue'
-import InlineSvg from 'vue-inline-svg'
 import route from 'ziggy-js'
+import { PlusIcon } from '@heroicons/vue/solid'
+
 import ResultTableField from '@/types/ResultTableField'
 import DropdownOption from '@/types/DropdownOption'
 import Hotel from '@/types/Models/Hotel'
@@ -61,8 +60,8 @@ import IndexSearchWrapper from '@/components/IndexSearchWrapper.vue'
 import InputText from '@/components/InputText.vue'
 import InputDropdown from '@/components/InputDropdown.vue'
 import ResultTable from '@/components/ResultTable.vue'
-import LoadingButton from '@/components/LoadingButton.vue'
 import ResultCtaWrapper from '@/components/ResultCtaWrapper.vue'
+import LoadingButton from '@/components/LoadingButton.vue'
 
 export default defineComponent({
   name: 'RoomIndex',
@@ -73,8 +72,8 @@ export default defineComponent({
     InputDropdown,
     ResultTable,
     ResultCtaWrapper,
-    InlineSvg,
     LoadingButton,
+    PlusIcon,
   },
 
   props: {
