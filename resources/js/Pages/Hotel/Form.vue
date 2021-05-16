@@ -26,9 +26,7 @@
             variant="danger"
             :is-loading="form.processing"
             @click.prevent="onDeleteClick">
-            <inline-svg
-              class="w-6"
-              src="/img/icons/trash.svg" />
+            <trash-icon class="w-6" />
           </loading-button>
         </div>
 
@@ -51,7 +49,8 @@ import {
   PropType,
   toRef,
 } from 'vue'
-import InlineSvg from 'vue-inline-svg'
+import { TrashIcon } from '@heroicons/vue/outline'
+
 import Hotel from '@/types/Models/Hotel'
 import useForm from '@/composables/useForm'
 
@@ -63,10 +62,10 @@ export default defineComponent({
   name: 'HotelForm',
 
   components: {
-    InlineSvg,
     InputText,
     InputCheckbox,
     LoadingButton,
+    TrashIcon,
   },
 
   props: {
