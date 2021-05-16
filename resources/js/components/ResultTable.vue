@@ -21,9 +21,7 @@
       </result-table-cell>
 
       <result-table-cell :href="formatRowUrl(row.id, row)">
-        <inline-svg
-          class="w-6 text-gray-500"
-          src="/img/icons/chevron_right.svg" />
+        <chevron-right-icon class="w-6 text-gray-500" />
       </result-table-cell>
     </result-table-row>
   </result-table-wrapper>
@@ -32,7 +30,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import route from 'ziggy-js'
-import InlineSvg from 'vue-inline-svg'
+import { ChevronRightIcon } from '@heroicons/vue/solid'
 
 import Model from '@/types/Models/Model'
 import ResultTableField from '@/types/ResultTableField'
@@ -47,11 +45,11 @@ export default defineComponent({
   name: 'ResultTable',
 
   components: {
-    InlineSvg,
     ResultTableWrapper,
     ResultTableRow,
     ResultTableHeader,
     ResultTableCell,
+    ChevronRightIcon,
   },
 
   props: {
