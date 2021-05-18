@@ -35,6 +35,8 @@
       :fields="fields"
       :formatter="formatter"
       :data="result.data" />
+
+    <result-pagination :pagination-params="paginationParams" />
   </page>
 </template>
 
@@ -44,6 +46,7 @@ import {
   ComputedRef,
   defineComponent,
   PropType,
+  toRef,
   watch,
 } from 'vue'
 import route from 'ziggy-js'
@@ -54,12 +57,14 @@ import DropdownOption from '@/types/DropdownOption'
 import Hotel from '@/types/Models/Hotel'
 import RoomType from '@/types/Models/RoomType'
 import Room from '@/types/Models/Room'
+import usePagination from '@/composables/usePagination'
 import useIndexSearch from '@/composables/useIndexSearch'
 
 import IndexSearchWrapper from '@/components/IndexSearchWrapper.vue'
 import InputText from '@/components/InputText.vue'
 import InputDropdown from '@/components/InputDropdown.vue'
 import ResultTable from '@/components/ResultTable.vue'
+import ResultPagination from '@/components/ResultPagination.vue'
 import ResultCtaWrapper from '@/components/ResultCtaWrapper.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 
@@ -71,6 +76,7 @@ export default defineComponent({
     InputText,
     InputDropdown,
     ResultTable,
+    ResultPagination,
     ResultCtaWrapper,
     LoadingButton,
     PlusIcon,
@@ -119,6 +125,8 @@ export default defineComponent({
       hotel: (_: undefined, rowData: Room) => rowData.room_type?.hotel?.name,
     }
 
+    const { paginationParams } = usePagination(toRef(props, 'result'))
+
     const { searchParams } = useIndexSearch(props.query, {
       hotel_id: '',
       room_type_id: '',
@@ -156,6 +164,7 @@ export default defineComponent({
     return {
       fields,
       searchParams,
+      paginationParams,
       formatter,
       hotelOptions,
       roomTypeOptions,

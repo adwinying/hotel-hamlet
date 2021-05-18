@@ -28,24 +28,29 @@
       :fields="fields"
       :formatter="formatter"
       :data="result.data" />
+
+    <result-pagination :pagination-params="paginationParams" />
   </page>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, toRef } from 'vue'
 import { PlusIcon } from '@heroicons/vue/solid'
 import route from 'ziggy-js'
 
 import ResultTableField from '@/types/ResultTableField'
 import DropdownOption from '@/types/DropdownOption'
+import usePagination from '@/composables/usePagination'
 import useIndexSearch from '@/composables/useIndexSearch'
 
 import IndexSearchWrapper from '@/components/IndexSearchWrapper.vue'
 import InputText from '@/components/InputText.vue'
 import InputDropdown from '@/components/InputDropdown.vue'
 import ResultTable from '@/components/ResultTable.vue'
-import LoadingButton from '@/components/LoadingButton.vue'
+import ResultPagination from '@/components/ResultPagination.vue'
 import ResultCtaWrapper from '@/components/ResultCtaWrapper.vue'
+
+import LoadingButton from '@/components/LoadingButton.vue'
 
 export default defineComponent({
   name: 'HotelIndex',
@@ -55,6 +60,7 @@ export default defineComponent({
     InputText,
     InputDropdown,
     ResultTable,
+    ResultPagination,
     ResultCtaWrapper,
     LoadingButton,
     PlusIcon,
@@ -103,6 +109,8 @@ export default defineComponent({
       },
     ]
 
+    const { paginationParams } = usePagination(toRef(props, 'result'))
+
     const { searchParams } = useIndexSearch(props.query, {
       is_hidden: '',
       name: '',
@@ -113,6 +121,7 @@ export default defineComponent({
     return {
       fields,
       searchParams,
+      paginationParams,
       formatter,
       hiddenOptions,
       createUrl,
