@@ -9,13 +9,13 @@ interface UseIndexSearch {
   searchParams: UnwrapRef<SearchParams>
 }
 export default function useIndexSearch(
-  query: Record<string, unknown>,
+  query: Record<string, InputData>,
   initialSearchParams: SearchParams,
 ): UseIndexSearch {
   const searchParams = reactive({ ...initialSearchParams })
 
   Object.keys(searchParams).forEach((key) => {
-    searchParams[key] = (query[key] as InputData) ?? searchParams[key]
+    searchParams[key] = query[key] ?? searchParams[key]
   })
 
   const applySearchParams = () => {
