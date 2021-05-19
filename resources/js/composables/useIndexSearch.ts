@@ -1,21 +1,21 @@
-import { reactive, UnwrapRef } from 'vue'
+import { reactive } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
 import { debouncedWatch } from '@vueuse/core'
 
 import SearchParams from '@/types/SearchParams'
 import InputData from '@/types/InputData'
 
-interface UseIndexSearch {
-  searchParams: UnwrapRef<SearchParams>
+interface UseIndexSearch<TParams> {
+  searchParams: TParams
 }
-export default function useIndexSearch(
+export default function useIndexSearch<TParams extends SearchParams>(
   query: Record<string, InputData>,
-  initialSearchParams: SearchParams,
-): UseIndexSearch {
-  const searchParams = reactive({ ...initialSearchParams })
+  initialSearchParams: TParams,
+): UseIndexSearch<TParams> {
+  const searchParams = reactive({ ...initialSearchParams }) as TParams
 
   Object.keys(searchParams).forEach((key) => {
-    searchParams[key] = query[key] ?? searchParams[key]
+    (searchParams as SearchParams)[key] = query[key] ?? searchParams[key]
   })
 
   const applySearchParams = () => {
