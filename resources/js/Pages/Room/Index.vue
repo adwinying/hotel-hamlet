@@ -130,7 +130,7 @@ export default defineComponent({
     const { searchParams } = useIndexSearch(props.query, {
       hotel_id: '',
       room_type_id: '',
-      name: '',
+      room_no: '',
     })
 
     watch(
