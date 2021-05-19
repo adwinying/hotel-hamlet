@@ -1,4 +1,4 @@
-import { Ref, ref } from 'vue'
+import { reactive, UnwrapRef } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
 import { debouncedWatch } from '@vueuse/core'
 
@@ -6,22 +6,21 @@ import SearchParams from '@/types/SearchParams'
 import InputData from '@/types/InputData'
 
 interface UseIndexSearch {
-  searchParams: Ref<SearchParams>
+  searchParams: UnwrapRef<SearchParams>
 }
 export default function useIndexSearch(
   query: Record<string, unknown>,
   initialSearchParams: SearchParams,
 ): UseIndexSearch {
-  const searchParams = ref({ ...initialSearchParams })
+  const searchParams = reactive({ ...initialSearchParams })
 
-  Object.keys(searchParams.value).forEach((key) => {
-    searchParams.value[key] = (query[key] as InputData)
-      ?? searchParams.value[key]
+  Object.keys(searchParams).forEach((key) => {
+    searchParams[key] = (query[key] as InputData) ?? searchParams[key]
   })
 
   const applySearchParams = () => {
     Inertia.visit(window.location.pathname, {
-      data: searchParams.value,
+      data: searchParams,
       replace: true,
       preserveState: true,
     })

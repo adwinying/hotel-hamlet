@@ -134,8 +134,8 @@ export default defineComponent({
     })
 
     watch(
-      () => searchParams.value.hotel_id,
-      () => { searchParams.value.room_type_id = '' },
+      () => searchParams.hotel_id,
+      () => { searchParams.room_type_id = '' },
     )
 
     const hotelOptions: ComputedRef<DropdownOption[]> = computed(
@@ -146,9 +146,9 @@ export default defineComponent({
     )
 
     const filteredRoomTypes: ComputedRef<RoomType[]> = computed(() => (
-      searchParams.value.hotel_id
+      searchParams.hotel_id
         ? props.roomTypes.filter((roomType) => (
-          roomType.hotel_id === parseInt(searchParams.value.hotel_id as string, 10)
+          roomType.hotel_id === parseInt(searchParams.hotel_id as string, 10)
         ))
         : props.roomTypes
     ))
