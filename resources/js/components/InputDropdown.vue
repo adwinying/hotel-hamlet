@@ -33,7 +33,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue'
+import { defineComponent, PropType } from 'vue'
+import { useVModel } from '@vueuse/core'
 import InputData from '@/types/InputData'
 import DropdownOption from '@/types/DropdownOption'
 
@@ -72,10 +73,7 @@ export default defineComponent({
   ],
 
   setup(props, { emit }) {
-    const value = computed({
-      get: (): InputData => props.modelValue,
-      set: (val: InputData) => emit('update:modelValue', val),
-    })
+    const value = useVModel(props, 'modelValue', emit)
 
     return {
       value,
