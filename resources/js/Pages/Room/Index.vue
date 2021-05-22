@@ -159,7 +159,7 @@ export default defineComponent({
       }], [{ value: '', label: '' }]),
     )
 
-    const createUrl = route('room_types.create')
+    const createUrl = route('rooms.create')
 
     return {
       fields,
