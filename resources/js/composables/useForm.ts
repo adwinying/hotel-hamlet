@@ -6,21 +6,21 @@ import { showToast } from '@/composables/useAlert'
 import Model from '@/types/Models/Model'
 import FormData from '@/types/FormData'
 
-interface UseForm {
-  form: InertiaForm<FormData>
+interface UseForm<TForm> {
+  form: InertiaForm<TForm>
   objectId: ComputedRef<number | null>
   isEditForm: ComputedRef<boolean>
   onFormSubmit: () => void
   onDeleteClick: () => void
 }
-export default function useForm(
+export default function useForm<TForm extends FormData>(
   object: Ref<Model | null>,
-  initialFormData: FormData,
-): UseForm {
-  const form = useInertiaForm({ ...initialFormData })
+  initialFormData: TForm,
+): UseForm<TForm> {
+  const form = useInertiaForm({ ...initialFormData }) as InertiaForm<TForm>
 
   Object.keys(initialFormData).forEach((key) => {
-    form[key] = (object.value as unknown as FormData)?.[key] ?? form[key]
+    (form as FormData)[key] = (object.value as unknown as FormData)?.[key] ?? form[key]
   })
 
   const objectId = computed(() => object.value?.id ?? null)
