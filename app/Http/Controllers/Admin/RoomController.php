@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Room\CreateRoom;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\RoomRequest;
 use App\Models\Hotel;
 use App\Models\Room;
 use App\Models\RoomType;
@@ -54,6 +56,10 @@ class RoomController extends Controller
      */
     public function create()
     {
+        return Inertia::render('Room/Form', [
+            'hotels'    => fn ()    => Hotel::all(['id', 'name']),
+            'roomTypes' => fn () => RoomType::all(['id', 'hotel_id', 'name']),
+        ]);
     }
 
     /**
@@ -61,8 +67,14 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoomRequest $request, CreateRoom $createRoom)
     {
+        $input = $request->validated();
+
+        $room = $createRoom->execute($input);
+
+        return redirect()->route('rooms.show', [$room])
+            ->with('success', 'Room created.');
     }
 
     /**
