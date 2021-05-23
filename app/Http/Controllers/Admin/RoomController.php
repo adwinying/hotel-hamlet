@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Actions\Room\CreateRoom;
+use App\Actions\Room\DeleteRoom;
+use App\Actions\Room\UpdateRoom;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\RoomRequest;
 use App\Models\Hotel;
@@ -84,6 +86,16 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
+        return Inertia::render('Room/Form', [
+            'room' => [
+                'id'           => $room->id,
+                'hotel_id'     => $room->roomType->hotel_id,
+                'room_type_id' => $room->room_type_id,
+                'room_no'      => $room->room_no,
+            ],
+            'hotels'    => fn ()    => Hotel::all(['id', 'name']),
+            'roomTypes' => fn () => RoomType::all(['id', 'hotel_id', 'name']),
+        ]);
     }
 
     /**
@@ -91,8 +103,16 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Room $room)
-    {
+    public function update(
+        RoomRequest $request,
+        Room $room,
+        UpdateRoom $updateRoom
+    ) {
+        $input = $request->validated();
+
+        $updateRoom->execute($room, $input);
+
+        return redirect()->back()->with('success', 'Room updated.');
     }
 
     /**
@@ -100,7 +120,11 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Room $room)
+    public function destroy(Room $room, DeleteRoom $deleteRoom)
     {
+        $deleteRoom->execute($room);
+
+        return redirect()->route('rooms.index')
+            ->with('success', 'Room deleted.');
     }
 }

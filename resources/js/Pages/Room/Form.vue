@@ -12,6 +12,7 @@
 
         <input-dropdown
           v-model="form.room_type_id"
+          :disabled="isRoomTypeDropdownDisabled"
           :errors="form.errors.room_type_id"
           :options="roomTypeOptions"
           name="room_type_id"
@@ -127,6 +128,8 @@ export default defineComponent({
       () => { form.room_type_id = 0 },
     )
 
+    const isRoomTypeDropdownDisabled = computed(() => form.hotel_id === 0)
+
     const hotelOptions: ComputedRef<DropdownOption[]> = computed(
       () => props.hotels.reduce((acc, hotel) => [...acc, {
         value: hotel.id,
@@ -154,6 +157,7 @@ export default defineComponent({
       hotelOptions,
       roomTypeOptions,
       form,
+      isRoomTypeDropdownDisabled,
       onFormSubmit,
       onDeleteClick,
       objectId,
