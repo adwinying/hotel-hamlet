@@ -95,4 +95,20 @@ class RoomEditTest extends TestCase
             'room_no' => $input['room_no'],
         ]);
     }
+
+    public function testCanDelete()
+    {
+        $room   = Room::factory()->create();
+        $roomId = $room->id;
+
+        $this->from("/admin/rooms/$roomId")
+            ->delete("/admin/rooms/$roomId")
+            ->assertRedirect('/admin/rooms')
+            ->assertSessionHas('success', 'Room deleted.');
+
+        $this->assertDatabaseMissing('rooms', [
+            'id'         => $roomId,
+            'deleted_at' => null,
+        ]);
+    }
 }

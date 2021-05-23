@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Actions\Room\CreateRoom;
+use App\Actions\Room\DeleteRoom;
 use App\Actions\Room\UpdateRoom;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\RoomRequest;
@@ -119,7 +120,11 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Room $room)
+    public function destroy(Room $room, DeleteRoom $deleteRoom)
     {
+        $deleteRoom->execute($room);
+
+        return redirect()->route('rooms.index')
+            ->with('success', 'Room deleted.');
     }
 }
