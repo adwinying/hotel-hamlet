@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Actions\Room\CreateRoom;
+use App\Actions\Room\UpdateRoom;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\RoomRequest;
 use App\Models\Hotel;
@@ -101,8 +102,16 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Room $room)
-    {
+    public function update(
+        RoomRequest $request,
+        Room $room,
+        UpdateRoom $updateRoom
+    ) {
+        $input = $request->validated();
+
+        $updateRoom->execute($room, $input);
+
+        return redirect()->back()->with('success', 'Room updated.');
     }
 
     /**

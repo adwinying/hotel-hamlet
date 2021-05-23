@@ -48,4 +48,51 @@ class RoomEditTest extends TestCase
                 ->where('hotels', $hotels)
                 ->where('roomTypes', $roomTypes));
     }
+
+    public function testCanUpdateRoomTypeId()
+    {
+        $room   = Room::factory()->create();
+        $roomId = $room->id;
+
+        $roomTypeId = mt_rand(1, 99);
+        RoomType::factory()->create(['id' => $roomTypeId]);
+
+        $input = [
+            'room_type_id' => $roomTypeId,
+            'room_no'      => $room->room_no,
+        ];
+
+        $this->from("/admin/rooms/$roomId")
+            ->put("/admin/rooms/$roomId", $input)
+            ->assertRedirect("/admin/rooms/$roomId")
+            ->assertSessionHas('success', 'Room updated.');
+
+        $this->assertDatabaseHas('rooms', [
+            'id'           => $roomId,
+            'room_type_id' => $roomTypeId,
+        ]);
+    }
+
+    public function testCanUpdateRoomNo()
+    {
+        $room   = Room::factory()->create();
+        $roomId = $room->id;
+
+        RoomType::factory()->create(['id' => $room->room_type_id]);
+
+        $input = [
+            'room_type_id' => $room->room_type_id,
+            'room_no'      => 'new no',
+        ];
+
+        $this->from("/admin/rooms/$roomId")
+            ->put("/admin/rooms/$roomId", $input)
+            ->assertRedirect("/admin/rooms/$roomId")
+            ->assertSessionHas('success', 'Room updated.');
+
+        $this->assertDatabaseHas('rooms', [
+            'id'      => $roomId,
+            'room_no' => $input['room_no'],
+        ]);
+    }
 }
