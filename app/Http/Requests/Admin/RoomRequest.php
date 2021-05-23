@@ -31,7 +31,7 @@ class RoomRequest extends FormRequest
                 'max:255',
                 Rule::unique('rooms')
                     ->where(fn ($q) => $q->whereRoomTypeId($this->input('room_type_id')))
-                    ->ignore($this->route('room_no')),
+                    ->ignore($this->route('room')),
             ],
         ];
     }

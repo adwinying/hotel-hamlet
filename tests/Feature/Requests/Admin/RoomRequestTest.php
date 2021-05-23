@@ -27,7 +27,7 @@ class RoomRequestTest extends ValidationTestCase
 
         Room::factory()->create([
             'room_type_id' => $this->roomTypeId,
-            'room_no'      => '101',
+            'room_no'      => $this->roomNo,
         ]);
     }
 
