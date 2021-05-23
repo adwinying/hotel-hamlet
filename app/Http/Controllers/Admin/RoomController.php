@@ -84,6 +84,16 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
+        return Inertia::render('Room/Form', [
+            'room' => [
+                'id'           => $room->id,
+                'hotel_id'     => $room->roomType->hotel_id,
+                'room_type_id' => $room->room_type_id,
+                'room_no'      => $room->room_no,
+            ],
+            'hotels'    => fn ()    => Hotel::all(['id', 'name']),
+            'roomTypes' => fn () => RoomType::all(['id', 'hotel_id', 'name']),
+        ]);
     }
 
     /**
