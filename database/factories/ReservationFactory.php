@@ -22,7 +22,7 @@ class ReservationFactory extends Factory
      */
     public function definition()
     {
-        $randomDate = $this->faker->date();
+        $randomDate = $this->faker->dateTimeBetween('-1 year', '1 year');
 
         return [
             'room_id'        => $this->faker->randomDigit,
