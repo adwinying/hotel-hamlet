@@ -34,7 +34,7 @@ import { ChevronRightIcon } from '@heroicons/vue/solid'
 
 import Model from '@/types/Models/Model'
 import ResultTableField from '@/types/ResultTableField'
-import ResultDataFormatter from '@/types/ResultDataFormatter'
+import ResultTableFormatter from '@/types/ResultTableFormatter'
 
 import ResultTableCell from '@/components/ResultTableCell.vue'
 import ResultTableHeader from '@/components/ResultTableHeader.vue'
@@ -64,7 +64,7 @@ export default defineComponent({
     },
 
     formatter: {
-      type: Object,
+      type: Object as PropType<ResultTableFormatter>,
       default: () => ({}),
     },
 
@@ -81,17 +81,17 @@ export default defineComponent({
 
   setup(props) {
     const formatDataCell = (
-      rowData: Record<string, ResultDataFormatter>,
+      rowData: Model,
       key: string,
     ): string | number => (
       props.formatter[key]
         ? props.formatter[key](rowData[key], rowData)
-        : rowData[key]
+        : rowData[key] as string | number
     )
 
     const formatRowUrl = (
       rowId: number,
-      rowData: Record<string, ResultDataFormatter>,
+      rowData: Model,
     ): string => (
       typeof props.basePath === 'function'
         ? props.basePath(rowId, rowData)
