@@ -28,6 +28,16 @@ class Reservation extends Model
     ];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'check_in_date'  => 'date:Y-m-d',
+        'check_out_date' => 'date:Y-m-d',
+    ];
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
