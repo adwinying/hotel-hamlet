@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Actions\Reservation\FilterReservation;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -33,4 +35,14 @@ class Reservation extends Model
     protected $hidden = [
         'pin',
     ];
+
+    public function scopeFilter(Builder $query, array $params)
+    {
+        return app(FilterReservation::class)->execute($query, $params);
+    }
+
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
 }
