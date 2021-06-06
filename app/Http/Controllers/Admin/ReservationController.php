@@ -64,6 +64,10 @@ class ReservationController extends Controller
      */
     public function create()
     {
+        return Inertia::render('Reservation/Form', [
+            'hotels'    => fn ()    => Hotel::all(['id', 'name']),
+            'roomTypes' => fn () => RoomType::all(['id', 'hotel_id', 'name']),
+        ]);
     }
 
     /**
