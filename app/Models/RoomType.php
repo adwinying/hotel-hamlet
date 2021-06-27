@@ -32,4 +32,9 @@ class RoomType extends Model
     {
         return $this->belongsTo(Hotel::class);
     }
+
+    public function rooms()
+    {
+        return $this->hasMany(Room::class);
+    }
 }
