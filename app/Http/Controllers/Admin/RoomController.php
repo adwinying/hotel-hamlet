@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Actions\Room\CreateRoom;
 use App\Actions\Room\DeleteRoom;
+use App\Actions\Room\GetAvailableRooms;
 use App\Actions\Room\UpdateRoom;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\RoomRequest;
@@ -126,5 +127,37 @@ class RoomController extends Controller
 
         return redirect()->route('rooms.index')
             ->with('success', 'Room deleted.');
+    }
+
+    /**
+     * Get list of available rooms available on specified dates
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAvailableRooms(GetAvailableRooms $getAvailableRooms)
+    {
+        $roomTypeId   = request()->input('room_type_id');
+        $checkInDate  = request()->input('check_in_date');
+        $checkOutDate = request()->input('check_out_date');
+
+        if ($roomTypeId === null
+            || $checkInDate === null
+            || $checkOutDate === null) {
+            return response()->json([
+                'errors' => 'room_type_id, check_in_date, check_out_date query params must be specified.',
+            ], 422);
+        }
+
+        $availableRooms = $getAvailableRooms->execute(
+            RoomType::findOrFail($roomTypeId),
+            $checkInDate,
+            $checkOutDate,
+        );
+
+        return response()->json($availableRooms->map(fn ($room) => [
+            'id'           => $room->id,
+            'room_type_id' => $room->room_type_id,
+            'room_no'      => $room->room_no,
+        ]));
     }
 }
