@@ -23,7 +23,7 @@ class RoomTypeFactory extends Factory
     {
         return [
             'hotel_id' => $this->faker->randomDigit,
-            'name'     => ucfirst($this->faker->word),
+            'name'     => ucfirst($this->faker->unique()->word),
         ];
     }
 }
