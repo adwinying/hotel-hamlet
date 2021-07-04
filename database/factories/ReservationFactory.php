@@ -25,7 +25,7 @@ class ReservationFactory extends Factory
         $randomDate = $this->faker->dateTimeBetween('-1 year', '1 year');
 
         return [
-            'room_id'        => $this->faker->randomDigit,
+            'room_id'        => $this->faker->numberBetween(1, 10),
             'check_in_date'  => $randomDate,
             'check_out_date' => Carbon::parse($randomDate)
                 ->addDays($this->faker->numberBetween(1, 10)),
