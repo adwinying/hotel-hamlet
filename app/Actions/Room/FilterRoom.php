@@ -3,8 +3,8 @@
 namespace App\Actions\Room;
 
 use App\Actions\FilterModel;
-use Arr;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Arr;
 
 class FilterRoom
 {

@@ -24,6 +24,7 @@ class Reservation extends Model
         'check_out_date',
         'guest_name',
         'guest_email',
+        'pin',
         'remarks',
     ];
 
