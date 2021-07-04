@@ -22,7 +22,7 @@ class RoomTypeFactory extends Factory
     public function definition()
     {
         return [
-            'hotel_id' => $this->faker->randomDigit,
+            'hotel_id' => $this->faker->numberBetween(1, 10),
             'name'     => ucfirst($this->faker->unique()->word),
         ];
     }
