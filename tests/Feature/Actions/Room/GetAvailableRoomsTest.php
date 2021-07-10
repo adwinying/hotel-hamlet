@@ -185,4 +185,24 @@ class GetAvailableRoomsTest extends TestCase
             $result->pluck('id')
         );
     }
+
+    public function testEmptyReservations()
+    {
+        $checkInDate  = today()->addMonths(mt_rand(1, 5));
+        $checkOutDate = $checkInDate->clone()->addDays(5);
+
+        $roomType = RoomType::factory()->hasRooms(3)->create();
+
+        $getAvailableRooms = app(GetAvailableRooms::class);
+
+        $result = $getAvailableRooms->execute(
+            $roomType,
+            $checkInDate,
+            $checkOutDate
+        );
+        $this->assertEquals(
+            $roomType->rooms->pluck('id'),
+            $result->pluck('id')
+        );
+    }
 }

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Reservation\CreateReservation;
+use App\Exceptions\RoomUnavailableException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ReservationRequest;
 use App\Models\Hotel;
 use App\Models\Reservation;
 use App\Models\RoomType;
@@ -68,8 +71,20 @@ class ReservationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ReservationRequest $request, CreateReservation $create)
     {
+        $input = $request->validated();
+
+        try {
+            $reservation = $create->execute($input);
+        } catch (RoomUnavailableException $e) {
+            return redirect()->back()->withErrors([
+                'room_id' => 'Selected room is unavailable.',
+            ]);
+        }
+
+        return redirect()->route('reservations.show', [$reservation])
+            ->with('success', 'Reservation created.');
     }
 
     /**
