@@ -9,6 +9,7 @@ use App\Actions\Room\UpdateRoom;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\RoomRequest;
 use App\Models\Hotel;
+use App\Models\Reservation;
 use App\Models\Room;
 use App\Models\RoomType;
 use Illuminate\Http\Request;
@@ -136,9 +137,10 @@ class RoomController extends Controller
      */
     public function getAvailableRooms(GetAvailableRooms $getAvailableRooms)
     {
-        $roomTypeId   = request()->input('room_type_id');
-        $checkInDate  = request()->input('check_in_date');
-        $checkOutDate = request()->input('check_out_date');
+        $roomTypeId    = request()->input('room_type_id');
+        $checkInDate   = request()->input('check_in_date');
+        $checkOutDate  = request()->input('check_out_date');
+        $reservationId = request()->input('reservation_id');
 
         if ($roomTypeId === null
             || $checkInDate === null
@@ -148,10 +150,13 @@ class RoomController extends Controller
             ], 422);
         }
 
+        $reservation = Reservation::find($reservationId);
+
         $availableRooms = $getAvailableRooms->execute(
             RoomType::findOrFail($roomTypeId),
             $checkInDate,
             $checkOutDate,
+            $reservation
         );
 
         return response()->json($availableRooms->map(fn ($room) => [

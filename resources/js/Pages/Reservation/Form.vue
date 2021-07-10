@@ -207,6 +207,7 @@ export default defineComponent({
         form.room_type_id,
         form.check_in_date,
         form.check_out_date,
+        props.reservation?.id,
       ).then((rooms) => {
         availableRooms.value = rooms
         isLoadingAvailableRooms.value = false
