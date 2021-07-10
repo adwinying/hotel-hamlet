@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Reservation;
 use App\Models\RoomType;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -80,6 +81,29 @@ class RoomAvailabilityCheckTest extends TestCase
         ])->all();
 
         $this->json('GET', "/api/admin/room_availability?room_type_id=$roomTypeId&check_in_date=$checkInDate&check_out_date=$checkOutDate")
+             ->assertStatus(200)
+             ->assertExactJson($expected);
+    }
+
+    public function testIncludesExistingRoomReservationInResults()
+    {
+        $roomType = RoomType::factory()->hasRooms()->create();
+        $room     = $roomType->rooms->first();
+
+        $reservation = Reservation::factory()->for($room)->create();
+
+        $roomTypeId    = $roomType->id;
+        $checkInDate   = $reservation->check_in_date->format('Y-m-d');
+        $checkOutDate  = $reservation->check_out_date->format('Y-m-d');
+        $reservationId = $reservation->id;
+
+        $expected = [[
+            'id'           => $room->id,
+            'room_type_id' => $room->room_type_id,
+            'room_no'      => $room->room_no,
+        ]];
+
+        $this->json('GET', "/api/admin/room_availability?room_type_id=$roomTypeId&check_in_date=$checkInDate&check_out_date=$checkOutDate&reservation_id=$reservationId")
              ->assertStatus(200)
              ->assertExactJson($expected);
     }

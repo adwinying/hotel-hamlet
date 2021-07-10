@@ -98,15 +98,21 @@ class ReservationController extends Controller
      */
     public function show(Reservation $reservation)
     {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Reservation $reservation)
-    {
+        return Inertia::render('Reservation/Form', [
+            'hotels'      => fn ()      => Hotel::all(['id', 'name']),
+            'roomTypes'   => fn ()   => RoomType::all(['id', 'hotel_id', 'name']),
+            'reservation' => [
+                'id'             => $reservation->id,
+                'check_in_date'  => $reservation->check_in_date->format('Y-m-d'),
+                'check_out_date' => $reservation->check_out_date->format('Y-m-d'),
+                'hotel_id'       => $reservation->room->roomType->hotel_id,
+                'room_type_id'   => $reservation->room->room_type_id,
+                'room_id'        => $reservation->room_id,
+                'guest_name'     => $reservation->guest_name,
+                'guest_email'    => $reservation->guest_email,
+                'remarks'        => $reservation->remarks,
+            ],
+        ]);
     }
 
     /**

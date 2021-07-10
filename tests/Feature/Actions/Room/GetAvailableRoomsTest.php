@@ -205,4 +205,27 @@ class GetAvailableRoomsTest extends TestCase
             $result->pluck('id')
         );
     }
+
+    public function testIncludesExistingReservation()
+    {
+        $roomType = RoomType::factory()->hasRooms()->create();
+        $room     = $roomType->rooms->first();
+
+        $reservation  = Reservation::factory()->for($room)->create();
+        $checkInDate  = $reservation->check_in_date;
+        $checkOutDate = $reservation->check_out_date;
+
+        $getAvailableRooms = app(GetAvailableRooms::class);
+
+        $result = $getAvailableRooms->execute(
+            $roomType,
+            $checkInDate,
+            $checkOutDate,
+            $reservation
+        );
+        $this->assertEquals(
+            $roomType->rooms->pluck('id'),
+            $result->pluck('id')
+        );
+    }
 }
