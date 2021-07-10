@@ -59,4 +59,59 @@ class ReservationEditTest extends TestCase
                 ->where('hotels', $expectedHotels)
                 ->where('roomTypes', $expectedRoomTypes));
     }
+
+    public function testCanUpdateRoomId()
+    {
+        $roomType = RoomType::factory()->hasRooms()->create();
+        $room     = $roomType->rooms->first();
+
+        $reservation   = Reservation::factory()->create();
+        $reservationId = $reservation->id;
+
+        $input = [
+            'check_in_date'  => $reservation->check_in_date->format('Y-m-d'),
+            'check_out_date' => $reservation->check_out_date->format('Y-m-d'),
+            'room_id'        => $room->id,
+            'guest_name'     => $reservation->guest_name,
+            'guest_email'    => $reservation->guest_email,
+            'remarks'        => $reservation->remarks,
+        ];
+
+        $this->from(route('reservations.show', [$reservation]))
+            ->put("/admin/reservations/$reservationId", $input)
+            ->assertRedirect(route('reservations.show', [$reservation]))
+            ->assertSessionHas('success', 'Reservation updated.')
+            ->assertSessionHasNoErrors();
+
+        $this->assertDatabaseHas('reservations', [
+            'id'      => $reservationId,
+            'room_id' => $room->id,
+        ]);
+    }
+
+    public function testCanUpdateOtherParams()
+    {
+        $roomType = RoomType::factory()->hasRooms()->create();
+        $room     = $roomType->rooms->first();
+
+        $reservation   = Reservation::factory()->create();
+        $reservationId = $reservation->id;
+
+        $input = [
+            'check_in_date'  => today()->addMonth()->format('Y-m-d'),
+            'check_out_date' => today()->addMonth()->addDay()->format('Y-m-d'),
+            'room_id'        => $room->id,
+            'guest_name'     => 'foobar',
+            'guest_email'    => 'foo@bar.com',
+            'remarks'        => 'foo bar',
+        ];
+
+        $this->from(route('reservations.show', [$reservation]))
+            ->put("/admin/reservations/$reservationId", $input)
+            ->assertRedirect(route('reservations.show', [$reservation]))
+            ->assertSessionHas('success', 'Reservation updated.')
+            ->assertSessionHasNoErrors();
+
+        $this->assertDatabaseHas('reservations', $input);
+    }
 }
