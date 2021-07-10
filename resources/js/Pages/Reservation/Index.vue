@@ -92,7 +92,7 @@ import ResultCtaWrapper from '@/components/ResultCtaWrapper.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 
 export default defineComponent({
-  name: 'RoomIndex',
+  name: 'ReservationIndex',
 
   components: {
     IndexSearchWrapper,
