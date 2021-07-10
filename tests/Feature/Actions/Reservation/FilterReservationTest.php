@@ -38,6 +38,21 @@ class FilterReservationTest extends TestCase
         $this->assertEquals($expectedBindings, $result->getBindings());
     }
 
+    public function testFilterRoomIdParam()
+    {
+        $query  = Reservation::query();
+        $params = ['room_id' => mt_rand(1, 10)];
+
+        $expectedSql      = 'select * from `reservations` where `reservations`.`room_id` = ? and `reservations`.`deleted_at` is null';
+        $expectedBindings = [$params['room_id']];
+
+        $filter = app(FilterReservation::class);
+        $result = $filter->execute($query, $params);
+
+        $this->assertEquals($expectedSql, $result->toSql());
+        $this->assertEquals($expectedBindings, $result->getBindings());
+    }
+
     public function testFilterCheckInDateParam()
     {
         $query  = Reservation::query();

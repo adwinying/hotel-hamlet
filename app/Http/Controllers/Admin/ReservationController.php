@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Actions\Reservation\CreateReservation;
+use App\Actions\Reservation\DeleteReservation;
 use App\Actions\Reservation\UpdateReservation;
 use App\Exceptions\RoomUnavailableException;
 use App\Http\Controllers\Controller;
@@ -144,7 +145,11 @@ class ReservationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Reservation $reservation)
+    public function destroy(Reservation $reservation, DeleteReservation $deleteReservation)
     {
+        $deleteReservation->execute($reservation);
+
+        return redirect()->route('reservations.index')
+            ->with('success', 'Reservation deleted.');
     }
 }

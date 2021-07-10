@@ -114,4 +114,20 @@ class ReservationEditTest extends TestCase
 
         $this->assertDatabaseHas('reservations', $input);
     }
+
+    public function testCanDelete()
+    {
+        $reservation   = Reservation::factory()->create();
+        $reservationId = $reservation->id;
+
+        $this->from(route('reservations.show', [$reservation]))
+            ->delete("/admin/reservations/$reservationId")
+            ->assertRedirect(route('reservations.index'))
+            ->assertSessionHas('success', 'Reservation deleted.');
+
+        $this->assertDatabaseMissing('reservations', [
+            'id'         => $reservationId,
+            'deleted_at' => null,
+        ]);
+    }
 }

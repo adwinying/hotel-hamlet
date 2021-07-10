@@ -25,6 +25,7 @@ class FilterReservation
         $exactKeys = [
             'check_in_date',
             'check_out_date',
+            'room_id',
         ];
 
         if ($value = Arr::pull($params, 'hotel_id')) {
