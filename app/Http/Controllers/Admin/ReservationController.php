@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Actions\Reservation\CreateReservation;
+use App\Actions\Reservation\UpdateReservation;
 use App\Exceptions\RoomUnavailableException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ReservationRequest;
@@ -120,8 +121,22 @@ class ReservationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Reservation $reservation)
-    {
+    public function update(
+        ReservationRequest $request,
+        Reservation $reservation,
+        UpdateReservation $updateReservation
+    ) {
+        $input = $request->validated();
+
+        try {
+            $updateReservation->execute($reservation, $input);
+        } catch (RoomUnavailableException $e) {
+            return redirect()->back()->withErrors([
+                'room_id' => 'Selected room is unavailable.',
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Reservation updated.');
     }
 
     /**
