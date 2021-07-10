@@ -36,6 +36,7 @@ class ReservationCreateTest extends TestCase
         $this->get('/admin/reservations/create')
             ->assertInertia(fn (Assert $page) => $page
                 ->component('Reservation/Form')
+                ->missing('reservation')
                 ->where('hotels', $hotels)
                 ->where('roomTypes', $roomTypes));
     }
