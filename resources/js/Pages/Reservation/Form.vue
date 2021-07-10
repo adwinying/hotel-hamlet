@@ -116,7 +116,7 @@ import InputTextbox from '@/components/InputTextbox.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 
 export default defineComponent({
-  name: 'RoomForm',
+  name: 'ReservationForm',
 
   components: {
     InputDropdown,
@@ -222,6 +222,7 @@ export default defineComponent({
           && form.check_out_date !== ''
           && form.room_type_id !== 0) updateAvailableRooms()
       },
+      { immediate: true },
     )
     const isRoomDropdownDisabled = computed(() => (
       isRoomTypeDropdownDisabled.value
