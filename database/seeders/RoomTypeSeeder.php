@@ -9,9 +9,9 @@ use Illuminate\Database\Seeder;
 class RoomTypeSeeder extends Seeder
 {
     const ROOM_TYPES = [
-        'Single',
-        'Deluxe',
-        'Suite',
+        ['Single', 80],
+        ['Deluxe', 150],
+        ['Suite', 200],
     ];
 
     /**
@@ -26,10 +26,11 @@ class RoomTypeSeeder extends Seeder
             : Hotel::factory()->count(5)->create();
 
         foreach ($hotels as $hotel) {
-            foreach (self::ROOM_TYPES as $types) {
+            foreach (self::ROOM_TYPES as [$types, $price]) {
                 RoomType::factory()->create([
                     'hotel_id' => $hotel->id,
                     'name'     => $types,
+                    'price'    => $price,
                 ]);
             }
         }

@@ -24,6 +24,7 @@ class RoomTypeFactory extends Factory
         return [
             'hotel_id' => $this->faker->numberBetween(1, 10),
             'name'     => ucfirst($this->faker->unique()->word),
+            'price'    => $this->faker->numberBetween(5, 20) * 100,
         ];
     }
 }
