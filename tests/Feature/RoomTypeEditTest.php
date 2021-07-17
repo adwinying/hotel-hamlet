@@ -36,7 +36,8 @@ class RoomTypeEditTest extends TestCase
                 ->has('roomType', fn (Assert $page) => $page
                     ->where('id', $roomType->id)
                     ->where('hotel_id', $roomType->hotel_id)
-                    ->where('name', $roomType->name))
+                    ->where('name', $roomType->name)
+                    ->where('price', $roomType->price))
                 ->where('hotels', $hotels));
     }
 
@@ -51,6 +52,7 @@ class RoomTypeEditTest extends TestCase
         $input = [
             'hotel_id' => $hotelId,
             'name'     => $roomType->name,
+            'price'    => $roomType->price,
         ];
 
         $this->from("/admin/room_types/$roomTypeId")
@@ -74,6 +76,7 @@ class RoomTypeEditTest extends TestCase
         $input = [
             'hotel_id' => $roomType->hotel_id,
             'name'     => 'new name',
+            'price'    => $roomType->price,
         ];
 
         $this->from("/admin/room_types/$roomTypeId")
@@ -84,6 +87,30 @@ class RoomTypeEditTest extends TestCase
         $this->assertDatabaseHas('room_types', [
             'id'   => $roomTypeId,
             'name' => $input['name'],
+        ]);
+    }
+
+    public function testCanUpdatePrice()
+    {
+        $roomType   = RoomType::factory()->create();
+        $roomTypeId = $roomType->id;
+
+        Hotel::factory()->create(['id' => $roomType->hotel_id]);
+
+        $input = [
+            'hotel_id' => $roomType->hotel_id,
+            'name'     => $roomType->name,
+            'price'    => mt_rand(0, 99999),
+        ];
+
+        $this->from("/admin/room_types/$roomTypeId")
+            ->put("/admin/room_types/$roomTypeId", $input)
+            ->assertRedirect("/admin/room_types/$roomTypeId")
+            ->assertSessionHas('success', 'Room type updated.');
+
+        $this->assertDatabaseHas('room_types', [
+            'id'    => $roomTypeId,
+            'price' => $input['price'],
         ]);
     }
 

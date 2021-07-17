@@ -16,6 +16,13 @@
           name="name"
           label="Name"
           class="lg:col-span-4" />
+
+        <input-text
+          v-model="form.price"
+          :errors="form.errors.price"
+          name="price"
+          label="Price"
+          class="lg:col-span-4" />
       </div>
 
       <hr class="my-6 border-t">
@@ -88,6 +95,7 @@ export default defineComponent({
     const initialFormData = {
       hotel_id: 0,
       name: '',
+      price: '',
     }
 
     const {

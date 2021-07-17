@@ -41,6 +41,7 @@ class RoomTypeRequestTest extends ValidationTestCase
         return [
             'hotel_id' => $this->hotelId,
             'name'     => Str::random(255),
+            'price'    => mt_rand(0, 99999),
         ];
     }
 
@@ -69,6 +70,18 @@ class RoomTypeRequestTest extends ValidationTestCase
 
             'name + hotel_id combo is not unique' => [
                 false, ['name' => $this->roomTypeName],
+            ],
+
+            'price is empty' => [
+                false, [], 'price',
+            ],
+
+            'price is not integer' => [
+                false, ['price' => 123.45],
+            ],
+
+            'price exceeds max value' => [
+                false, ['price' => 100000],
             ],
         ];
     }

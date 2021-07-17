@@ -37,7 +37,7 @@ class RoomTypeCreateTest extends TestCase
     public function testCanCreateRoomType()
     {
         $roomType = RoomType::factory()->make();
-        $input    = $roomType->only('hotel_id', 'name');
+        $input    = $roomType->only('hotel_id', 'name', 'price');
 
         Hotel::factory()->create(['id' => $roomType->hotel_id]);
 

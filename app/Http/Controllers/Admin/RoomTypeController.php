@@ -85,6 +85,7 @@ class RoomTypeController extends Controller
                 'id'       => $roomType->id,
                 'hotel_id' => $roomType->hotel_id,
                 'name'     => $roomType->name,
+                'price'    => $roomType->price,
             ],
             'hotels' => fn () => Hotel::all(['id', 'name']),
         ]);
