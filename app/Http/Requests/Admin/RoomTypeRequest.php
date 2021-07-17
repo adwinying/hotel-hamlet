@@ -33,6 +33,7 @@ class RoomTypeRequest extends FormRequest
                     ->where(fn ($q) => $q->whereHotelId($this->input('hotel_id')))
                     ->ignore($this->route('room_type')),
             ],
+            'price' => 'required|integer|max:99999',
         ];
     }
 

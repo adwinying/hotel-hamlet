@@ -21,6 +21,7 @@ class RoomType extends Model
     protected $fillable = [
         'hotel_id',
         'name',
+        'price',
     ];
 
     public function scopeFilter(Builder $query, array $params)
