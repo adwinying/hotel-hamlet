@@ -105,14 +105,14 @@ export default defineComponent({
       if (/^\/admin\/profile$/.test(path)) return 'Profile'
       if (/^\/admin$/.test(path)) return 'Dashboard'
 
-      return null
+      return undefined
     })
 
     const isSidebarActive = ref(false)
     const showSidebar = () => { isSidebarActive.value = true }
     const hideSidebar = () => { isSidebarActive.value = false }
 
-    const userName = computed(() => pageProps.value.userInfo?.name ?? null)
+    const userName = computed(() => pageProps.value.userInfo?.name)
 
     return {
       sidebarItems,

@@ -28,14 +28,13 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { useVModel } from '@vueuse/core'
-import InputData from '@/types/InputData'
 
 export default defineComponent({
   name: 'InputCheckbox',
 
   props: {
     modelValue: {
-      type: [String, Number, Boolean] as PropType<InputData>,
+      type: [String, Number, Boolean] as PropType<boolean>,
       default: false,
     },
 

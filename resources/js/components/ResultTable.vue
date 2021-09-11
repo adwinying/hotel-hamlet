@@ -64,7 +64,7 @@ export default defineComponent({
     },
 
     formatter: {
-      type: Object as PropType<ResultTableFormatter<Model>>,
+      type: Object,
       default: () => ({}),
     },
 

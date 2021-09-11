@@ -84,7 +84,6 @@ export default defineComponent({
     const {
       form,
       isEditForm,
-      objectId,
       onFormSubmit,
       onDeleteClick,
     } = useForm(toRef(props, 'hotel'), initialFormData)
@@ -104,7 +103,6 @@ export default defineComponent({
       form,
       onFormSubmit,
       onDeleteClick,
-      objectId,
     }
   },
 })
