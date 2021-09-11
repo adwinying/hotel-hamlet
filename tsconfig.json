@@ -1,22 +1,27 @@
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["resources/js/*"]
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "resources/js/*"
+            ]
+        },
+        "target": "esnext",
+        "module": "esnext",
+        "strict": true,
+        "jsx": "preserve",
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "types": [
+          "vite/client"
+        ]
     },
-    "target": "esnext",
-    "module": "esnext",
-    "strict": true,
-    "jsx": "preserve",
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true
-  },
-  "include": [
-    "resources/js/**/*.ts",
-    "resources/js/**/*.vue"
-  ],
-  "exclude": [
-    "node_modules",
-    "public"
-  ]
+    "include": [
+        "resources/js/**/*.ts",
+        "resources/js/**/*.vue"
+    ],
+    "exclude": [
+        "node_modules",
+        "public"
+    ]
 }

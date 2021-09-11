@@ -4,7 +4,6 @@ import { InertiaForm, useForm as useInertiaForm } from '@inertiajs/inertia-vue3'
 
 import { showToast } from '@/composables/useAlert'
 import Model from '@/types/Models/Model'
-import FormData from '@/types/FormData'
 
 interface UseForm<TForm> {
   form: InertiaForm<TForm>
@@ -13,14 +12,14 @@ interface UseForm<TForm> {
   onFormSubmit: () => void
   onDeleteClick: () => void
 }
-export default function useForm<TForm extends FormData>(
+export default function useForm<TForm extends Record<string, unknown>>(
   object: Ref<Model | null>,
   initialFormData: TForm,
 ): UseForm<TForm> {
   const form = useInertiaForm({ ...initialFormData }) as InertiaForm<TForm>
 
   Object.keys(initialFormData).forEach((key) => {
-    (form as FormData)[key] = (object.value as unknown as FormData)?.[key] ?? form[key]
+    (form as Record<string, unknown>)[key] = object.value?.[key] ?? form[key]
   })
 
   const objectId = computed(() => object.value?.id ?? null)
