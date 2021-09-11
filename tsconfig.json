@@ -11,7 +11,10 @@
         "strict": true,
         "jsx": "preserve",
         "moduleResolution": "node",
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "types": [
+          "vite/client"
+        ]
     },
     "include": [
         "resources/js/**/*.ts",
