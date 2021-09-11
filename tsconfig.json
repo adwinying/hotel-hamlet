@@ -13,7 +13,7 @@
         "moduleResolution": "node",
         "allowSyntheticDefaultImports": true,
         "types": [
-          "vite/client"
+            "vite/client"
         ]
     },
     "include": [

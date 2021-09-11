@@ -2,14 +2,14 @@
   <page :title="pageTitle">
     <form @submit.prevent="onFormSubmit">
       <div class="grid grid-cols-6 gap-6">
-        <input-text
+        <InputText
           v-model="form.name"
           :errors="form.errors.name"
           name="name"
           label="Name"
           class="lg:col-span-4" />
 
-        <input-checkbox
+        <InputCheckbox
           v-model="form.is_hidden"
           :errors="form.errors.is_hidden"
           name="is_hidden"
@@ -21,21 +21,21 @@
 
       <div class="flex justify-between">
         <div>
-          <loading-button
+          <LoadingButton
             v-if="isEditForm"
             variant="danger"
             :is-loading="form.processing"
             @click.prevent="onDeleteClick">
-            <trash-icon class="w-6" />
-          </loading-button>
+            <TrashIcon class="w-6" />
+          </LoadingButton>
         </div>
 
         <div>
-          <loading-button
+          <LoadingButton
             type="submit"
             :is-loading="form.processing">
             {{ submitText }}
-          </loading-button>
+          </LoadingButton>
         </div>
       </div>
     </form>

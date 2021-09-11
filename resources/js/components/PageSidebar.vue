@@ -24,7 +24,7 @@
     </div>
 
     <div class="w-full my-3 px-3">
-      <page-sidebar-item
+      <PageSidebarItem
         v-for="(item, i) in items"
         v-bind="item"
         :key="i"
@@ -32,7 +32,7 @@
 
       <hr class="m-3">
 
-      <page-sidebar-item
+      <PageSidebarItem
         :name="userName"
         icon="UserCircleIcon"
         url="/admin/profile"

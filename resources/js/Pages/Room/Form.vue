@@ -2,7 +2,7 @@
   <page :title="pageTitle">
     <form @submit.prevent="onFormSubmit">
       <div class="grid grid-cols-6 gap-6">
-        <input-dropdown
+        <InputDropdown
           v-model="form.hotel_id"
           :errors="form.errors.hotel_id"
           :options="hotelOptions"
@@ -10,7 +10,7 @@
           label="Hotel"
           class="lg:col-span-4" />
 
-        <input-dropdown
+        <InputDropdown
           v-model="form.room_type_id"
           :disabled="isRoomTypeDropdownDisabled"
           :errors="form.errors.room_type_id"
@@ -19,7 +19,7 @@
           label="Room Type"
           class="lg:col-span-4" />
 
-        <input-text
+        <InputText
           v-model="form.room_no"
           :errors="form.errors.room_no"
           name="room_no"
@@ -31,21 +31,21 @@
 
       <div class="flex justify-between">
         <div>
-          <loading-button
+          <LoadingButton
             v-if="isEditForm"
             variant="danger"
             :is-loading="form.processing"
             @click.prevent="onDeleteClick">
-            <trash-icon class="w-6" />
-          </loading-button>
+            <TrashIcon class="w-6" />
+          </LoadingButton>
         </div>
 
         <div>
-          <loading-button
+          <LoadingButton
             type="submit"
             :is-loading="form.processing">
             {{ submitText }}
-          </loading-button>
+          </LoadingButton>
         </div>
       </div>
     </form>

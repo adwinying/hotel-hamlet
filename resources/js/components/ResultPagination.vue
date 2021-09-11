@@ -45,7 +45,7 @@
             rounded-l-md border border-gray-300 bg-white
             text-sm font-medium text-gray-500 hover:bg-gray-50">
             <span class="sr-only">Previous</span>
-            <chevron-left-icon
+            <ChevronLeftIcon
               class="h-5 w-5"
               aria-hidden="true" />
           </component>
@@ -73,7 +73,7 @@
             rounded-r-md border border-gray-300 bg-white text-sm
             font-medium text-gray-500 hover:bg-gray-50">
             <span class="sr-only">Next</span>
-            <chevron-right-icon
+            <ChevronRightIcon
               class="h-5 w-5"
               aria-hidden="true" />
           </component>

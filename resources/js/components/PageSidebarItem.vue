@@ -1,6 +1,6 @@
 <template>
   <div>
-    <inertia-link
+    <InertiaLink
       :href="url"
       :class="{ 'bg-gray-200': isActive, 'text-gray-500': !isActive }"
       class="flex items-center p-3 space-x-2 rounded font-bold hover:bg-cyan-100">
@@ -11,7 +11,7 @@
       <span>
         {{ name }}
       </span>
-    </inertia-link>
+    </InertiaLink>
   </div>
 </template>
 

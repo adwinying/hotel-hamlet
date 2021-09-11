@@ -1,35 +1,35 @@
 <template>
   <page title="Hotels">
-    <index-search-wrapper>
-      <input-text
+    <IndexSearchWrapper>
+      <InputText
         v-model="searchParams.name"
         name="name"
         label="Name"
         class="w-72" />
 
-      <input-dropdown
+      <InputDropdown
         v-model="searchParams.is_hidden"
         name="is_hidden"
         :options="hiddenOptions"
         label="Is Hidden?"
         class="w-72" />
-    </index-search-wrapper>
+    </IndexSearchWrapper>
 
-    <result-cta-wrapper>
-      <loading-button
+    <ResultCtaWrapper>
+      <LoadingButton
         as="inertia-link"
         :href="createUrl">
-        <plus-icon class="w-6" />
+        <PlusIcon class="w-6" />
         Create Hotel
-      </loading-button>
-    </result-cta-wrapper>
+      </LoadingButton>
+    </ResultCtaWrapper>
 
-    <result-table
+    <ResultTable
       :fields="fields"
       :formatter="formatter"
       :data="result.data" />
 
-    <result-pagination :pagination-params="paginationParams" />
+    <ResultPagination :pagination-params="paginationParams" />
   </page>
 </template>
 

@@ -2,7 +2,7 @@
   <div class="fixed w-full h-14 bg-white shadow-md">
     <div class="absolute top-0 left-0 bottom-0 w-14 p-3">
       <a href="#">
-        <menu-icon
+        <MenuIcon
           class="h-full"
           @click.prevent="onMenuClick" />
       </a>

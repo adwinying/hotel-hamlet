@@ -1,35 +1,35 @@
 <template>
   <page title="Room Types">
-    <index-search-wrapper>
-      <input-dropdown
+    <IndexSearchWrapper>
+      <InputDropdown
         v-model="searchParams.hotel_id"
         name="hotel_id"
         :options="hotelOptions"
         label="Hotel"
         class="w-72" />
 
-      <input-text
+      <InputText
         v-model="searchParams.name"
         name="name"
         label="Room Type"
         class="w-72" />
-    </index-search-wrapper>
+    </IndexSearchWrapper>
 
-    <result-cta-wrapper>
-      <loading-button
+    <ResultCtaWrapper>
+      <LoadingButton
         as="inertia-link"
         :href="createUrl">
-        <plus-icon class="w-6" />
+        <PlusIcon class="w-6" />
         New Room Type
-      </loading-button>
-    </result-cta-wrapper>
+      </LoadingButton>
+    </ResultCtaWrapper>
 
-    <result-table
+    <ResultTable
       :fields="fields"
       :formatter="formatter"
       :data="result.data" />
 
-    <result-pagination :pagination-params="paginationParams" />
+    <ResultPagination :pagination-params="paginationParams" />
   </page>
 </template>
 

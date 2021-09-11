@@ -1,64 +1,64 @@
 <template>
   <page title="Reservations">
-    <index-search-wrapper>
-      <input-dropdown
+    <IndexSearchWrapper>
+      <InputDropdown
         v-model="searchParams.hotel_id"
         name="hotel_id"
         :options="hotelOptions"
         label="Hotel"
         class="w-72" />
 
-      <input-dropdown
+      <InputDropdown
         v-model="searchParams.room_type_id"
         name="room_type_id"
         :options="roomTypeOptions"
         label="Room Type"
         class="w-72" />
 
-      <input-text
+      <InputText
         v-model="searchParams.check_in_date"
         name="check_in_date"
         label="Check In Date"
         type="date"
         class="w-72" />
-    </index-search-wrapper>
+    </IndexSearchWrapper>
 
-    <index-search-wrapper>
-      <input-text
+    <IndexSearchWrapper>
+      <InputText
         v-model="searchParams.check_out_date"
         name="check_in_date"
         label="Check Out Date"
         type="date"
         class="w-72" />
 
-      <input-text
+      <InputText
         v-model="searchParams.guest_name"
         name="guest_name"
         label="Guest Name"
         class="w-72" />
 
-      <input-text
+      <InputText
         v-model="searchParams.guest_email"
         name="guest_email"
         label="Guest Email"
         class="w-72" />
-    </index-search-wrapper>
+    </IndexSearchWrapper>
 
-    <result-cta-wrapper>
-      <loading-button
+    <ResultCtaWrapper>
+      <LoadingButton
         as="inertia-link"
         :href="createUrl">
-        <plus-icon class="w-6" />
+        <PlusIcon class="w-6" />
         New Reservation
-      </loading-button>
-    </result-cta-wrapper>
+      </LoadingButton>
+    </ResultCtaWrapper>
 
-    <result-table
+    <ResultTable
       :fields="fields"
       :formatter="formatter"
       :data="result.data" />
 
-    <result-pagination :pagination-params="paginationParams" />
+    <ResultPagination :pagination-params="paginationParams" />
   </page>
 </template>
 
