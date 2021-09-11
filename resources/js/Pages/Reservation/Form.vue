@@ -2,7 +2,7 @@
   <page :title="pageTitle">
     <form @submit.prevent="onFormSubmit">
       <div class="grid grid-cols-6 gap-6">
-        <input-text
+        <InputText
           v-model="form.check_in_date"
           :errors="form.errors.check_in_date"
           name="check_in_date"
@@ -10,7 +10,7 @@
           label="Check In Date"
           class="lg:col-span-4" />
 
-        <input-text
+        <InputText
           v-model="form.check_out_date"
           :errors="form.errors.check_out_date"
           name="check_out_date"
@@ -18,7 +18,7 @@
           label="Check Out Date"
           class="lg:col-span-4" />
 
-        <input-dropdown
+        <InputDropdown
           v-model="form.hotel_id"
           :errors="form.errors.hotel_id"
           :options="hotelOptions"
@@ -26,7 +26,7 @@
           label="Hotel"
           class="lg:col-span-4" />
 
-        <input-dropdown
+        <InputDropdown
           v-model="form.room_type_id"
           :disabled="isRoomTypeDropdownDisabled"
           :errors="form.errors.room_type_id"
@@ -35,7 +35,7 @@
           label="Room Type"
           class="lg:col-span-4" />
 
-        <input-dropdown
+        <InputDropdown
           v-model="form.room_id"
           :disabled="isRoomDropdownDisabled"
           :errors="form.errors.room_id"
@@ -44,21 +44,21 @@
           label="Room No."
           class="lg:col-span-4" />
 
-        <input-text
+        <InputText
           v-model="form.guest_name"
           :errors="form.errors.guest_name"
           name="guest_name"
           label="Guest Name"
           class="lg:col-span-4" />
 
-        <input-text
+        <InputText
           v-model="form.guest_email"
           :errors="form.errors.guest_email"
           name="guest_email"
           label="Guest Email"
           class="lg:col-span-4" />
 
-        <input-textbox
+        <InputTextbox
           v-model="form.remarks"
           :errors="form.errors.remarks"
           name="remarks"
@@ -70,21 +70,21 @@
 
       <div class="flex justify-between">
         <div>
-          <loading-button
+          <LoadingButton
             v-if="isEditForm"
             variant="danger"
             :is-loading="form.processing"
             @click.prevent="onDeleteClick">
-            <trash-icon class="w-6" />
-          </loading-button>
+            <TrashIcon class="w-6" />
+          </LoadingButton>
         </div>
 
         <div>
-          <loading-button
+          <LoadingButton
             type="submit"
             :is-loading="form.processing">
             {{ submitText }}
-          </loading-button>
+          </LoadingButton>
         </div>
       </div>
     </form>

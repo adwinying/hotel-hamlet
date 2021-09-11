@@ -1,30 +1,30 @@
 <template>
-  <result-table-wrapper>
-    <result-table-row>
-      <result-table-header
+  <ResultTableWrapper>
+    <ResultTableRow>
+      <ResultTableHeader
         v-for="field in fields"
         :key="field.key">
         {{ field.label || field.key }}
-      </result-table-header>
+      </ResultTableHeader>
 
-      <result-table-header />
-    </result-table-row>
+      <ResultTableHeader />
+    </ResultTableRow>
 
-    <result-table-row
+    <ResultTableRow
       v-for="row in data"
       :key="row.id">
-      <result-table-cell
+      <ResultTableCell
         v-for="field in fields"
         :key="`${row.id}.${field.key}`"
         :href="formatRowUrl(row.id, row)">
         {{ formatDataCell(row, field.key) }}
-      </result-table-cell>
+      </ResultTableCell>
 
-      <result-table-cell :href="formatRowUrl(row.id, row)">
-        <chevron-right-icon class="w-6 text-gray-500" />
-      </result-table-cell>
-    </result-table-row>
-  </result-table-wrapper>
+      <ResultTableCell :href="formatRowUrl(row.id, row)">
+        <ChevronRightIcon class="w-6 text-gray-500" />
+      </ResultTableCell>
+    </ResultTableRow>
+  </ResultTableWrapper>
 </template>
 
 <script lang="ts">

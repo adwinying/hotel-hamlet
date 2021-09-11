@@ -2,20 +2,20 @@
   <page title="Profile Settings">
     <form @submit.prevent="onFormSubmit">
       <div class="grid grid-cols-6 gap-6">
-        <input-text
+        <InputText
           v-model="form.name"
           name="name"
           label="Name"
           class="lg:col-span-4" />
 
-        <input-text
+        <InputText
           v-model="form.email"
           :errors="form.errors.email"
           name="email"
           label="Email"
           class="lg:col-span-4" />
 
-        <input-text
+        <InputText
           v-model="form.old_password"
           :errors="form.errors.old_password"
           name="old_password"
@@ -23,7 +23,7 @@
           label="Old Password"
           class="lg:col-span-4" />
 
-        <input-text
+        <InputText
           v-model="form.password"
           :errors="form.errors.password"
           name="password"
@@ -31,7 +31,7 @@
           label="New Password"
           class="lg:col-span-4" />
 
-        <input-text
+        <InputText
           v-model="form.password_confirmation"
           :errors="form.errors.password_confirmation"
           name="password_confirmation"
@@ -43,11 +43,11 @@
       <hr class="my-6 border-t">
 
       <div class="flex justify-end">
-        <loading-button
+        <LoadingButton
           type="submit"
           :is-loading="form.processing">
           Update Settings
-        </loading-button>
+        </LoadingButton>
       </div>
     </form>
   </page>

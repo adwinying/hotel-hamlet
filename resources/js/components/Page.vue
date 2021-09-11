@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-50">
-    <page-sidebar
+    <PageSidebar
       :items="sidebarItems"
       :is-active="isSidebarActive"
       :active-item="activeSidebarItem"
@@ -10,11 +10,11 @@
       @hide="hideSidebar" />
 
     <div class="md:pl-72 min-h-screen">
-      <page-navbar
+      <PageNavbar
         class="md:hidden"
         @show-sidebar="showSidebar" />
 
-      <page-header v-if="header">
+      <PageHeader v-if="header">
         {{ title }}
 
         <template #pre-title>
@@ -24,16 +24,16 @@
         <template #post-title>
           <slot name="post-title" />
         </template>
-      </page-header>
+      </PageHeader>
 
-      <page-content>
-        <page-card v-if="card">
+      <PageContent>
+        <PageCard v-if="card">
           <slot />
-        </page-card>
+        </PageCard>
         <template v-else>
           <slot />
         </template>
-      </page-content>
+      </PageContent>
     </div>
   </div>
 </template>

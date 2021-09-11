@@ -1,10 +1,10 @@
 <template>
   <td :class="{ 'border-t': border }">
-    <inertia-link
+    <InertiaLink
       :href="href"
       class="flex items-center p-4">
       <slot />
-    </inertia-link>
+    </InertiaLink>
   </td>
 </template>
 
