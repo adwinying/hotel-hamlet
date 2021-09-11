@@ -8,8 +8,8 @@
       <div>
         <img
           class="mx-auto h-24 w-auto"
-          src="/img/logo.svg"
-          alt="Hotel Hamelet Logo">
+          src="@/../static/img/logo.svg"
+          alt="Hotel Hamlet Logo">
         <h2 class="mt-6 text-center text-3xl font-display text-gray-900">
           Hotel Hamlet Admin Login
         </h2>
