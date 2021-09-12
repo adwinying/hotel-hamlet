@@ -62,11 +62,10 @@
   </page>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
   computed,
   ComputedRef,
-  defineComponent,
   PropType,
   toRef,
   watch,
@@ -91,122 +90,94 @@ import ResultPagination from '@/components/ResultPagination.vue'
 import ResultCtaWrapper from '@/components/ResultCtaWrapper.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 
-export default defineComponent({
-  name: 'ReservationIndex',
-
-  components: {
-    IndexSearchWrapper,
-    InputText,
-    InputDropdown,
-    ResultTable,
-    ResultPagination,
-    ResultCtaWrapper,
-    LoadingButton,
-    PlusIcon,
+const props = defineProps({
+  query: {
+    type: Object,
+    required: true,
   },
 
-  props: {
-    query: {
-      type: Object,
-      required: true,
-    },
-
-    result: {
-      type: Object,
-      required: true,
-    },
-
-    hotels: {
-      type: Array as PropType<Hotel[]>,
-      required: true,
-    },
-
-    roomTypes: {
-      type: Array as PropType<RoomType[]>,
-      required: true,
-    },
+  result: {
+    type: Object,
+    required: true,
   },
 
-  setup(props) {
-    const fields: ResultTableField[] = [
-      {
-        key: 'hotel',
-        label: 'Hotel',
-      },
-      {
-        key: 'room_type',
-        label: 'Room Type',
-      },
-      {
-        key: 'check_in_date',
-        label: 'Check In Date',
-      },
-      {
-        key: 'check_out_date',
-        label: 'Check Out Date',
-      },
-      {
-        key: 'guest_name',
-        label: 'Guest Name',
-      },
-    ]
+  hotels: {
+    type: Array as PropType<Hotel[]>,
+    required: true,
+  },
 
-    const formatter: ResultTableFormatter<Reservation> = {
-      hotel: (_, rowData) => rowData.room?.room_type?.hotel?.name || '',
-      room_type: (_, rowData) => rowData.room?.room_type?.name || '',
-      check_in_date: (date) => (date as string).replace(/-/g, '/'),
-      check_out_date: (date) => (date as string).replace(/-/g, '/'),
-    }
-
-    const { paginationParams } = usePagination(toRef(props, 'result'))
-
-    const { searchParams } = useIndexSearch(props.query, {
-      hotel_id: '',
-      room_type_id: '',
-      check_in_date: '',
-      check_out_date: '',
-      guest_name: '',
-      guest_email: '',
-    })
-
-    watch(
-      () => searchParams.hotel_id,
-      () => { searchParams.room_type_id = '' },
-    )
-
-    const hotelOptions: ComputedRef<DropdownOption[]> = computed(
-      () => props.hotels.reduce((acc, hotel) => [...acc, {
-        value: hotel.id.toString(),
-        label: hotel.name,
-      }], [{ value: '', label: '' }]),
-    )
-
-    const filteredRoomTypes: ComputedRef<RoomType[]> = computed(() => (
-      searchParams.hotel_id
-        ? props.roomTypes.filter((roomType) => (
-          roomType.hotel_id === parseInt(searchParams.hotel_id as string, 10)
-        ))
-        : props.roomTypes
-    ))
-    const roomTypeOptions: ComputedRef<DropdownOption[]> = computed(
-      () => filteredRoomTypes.value.reduce((acc, roomType) => [...acc, {
-        value: roomType.id.toString(),
-        label: roomType.name,
-      }], [{ value: '', label: '' }]),
-    )
-
-    const createUrl = route('reservations.create')
-
-    return {
-      fields,
-      searchParams,
-      paginationParams,
-      formatter,
-      hotelOptions,
-      roomTypeOptions,
-      filteredRoomTypes,
-      createUrl,
-    }
+  roomTypes: {
+    type: Array as PropType<RoomType[]>,
+    required: true,
   },
 })
+
+const fields: ResultTableField[] = [
+  {
+    key: 'hotel',
+    label: 'Hotel',
+  },
+  {
+    key: 'room_type',
+    label: 'Room Type',
+  },
+  {
+    key: 'check_in_date',
+    label: 'Check In Date',
+  },
+  {
+    key: 'check_out_date',
+    label: 'Check Out Date',
+  },
+  {
+    key: 'guest_name',
+    label: 'Guest Name',
+  },
+]
+
+const formatter: ResultTableFormatter<Reservation> = {
+  hotel: (_, rowData) => rowData.room?.room_type?.hotel?.name || '',
+  room_type: (_, rowData) => rowData.room?.room_type?.name || '',
+  check_in_date: (date) => (date as string).replace(/-/g, '/'),
+  check_out_date: (date) => (date as string).replace(/-/g, '/'),
+}
+
+const { paginationParams } = usePagination(toRef(props, 'result'))
+
+const { searchParams } = useIndexSearch(props.query, {
+  hotel_id: '',
+  room_type_id: '',
+  check_in_date: '',
+  check_out_date: '',
+  guest_name: '',
+  guest_email: '',
+})
+
+watch(
+  () => searchParams.hotel_id,
+  () => { searchParams.room_type_id = '' },
+)
+
+const hotelOptions: ComputedRef<DropdownOption[]> = computed(
+  () => props.hotels.reduce((acc, hotel) => [...acc, {
+    value: hotel.id.toString(),
+    label: hotel.name,
+  }], [{ value: '', label: '' }]),
+)
+
+const filteredRoomTypes: ComputedRef<RoomType[]> = computed(() => (
+  searchParams.hotel_id
+    ? props.roomTypes.filter((roomType) => (
+      roomType.hotel_id === parseInt(searchParams.hotel_id as string, 10)
+    ))
+    : props.roomTypes
+))
+const roomTypeOptions: ComputedRef<DropdownOption[]> = computed(
+  () => filteredRoomTypes.value.reduce((acc, roomType) => [...acc, {
+    value: roomType.id.toString(),
+    label: roomType.name,
+  }], [{ value: '', label: '' }]),
+)
+
+const createUrl = route('reservations.create')
 </script>

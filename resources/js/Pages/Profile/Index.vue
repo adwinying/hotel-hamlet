@@ -53,8 +53,8 @@
   </page>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script setup lang="ts">
+import { PropType } from 'vue'
 import { useForm } from '@inertiajs/inertia-vue3'
 import { showToast } from '@/composables/useAlert'
 
@@ -62,47 +62,31 @@ import InputText from '@/components/InputText.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 
 interface Profile {
-  name: string;
-  email: string;
+  name: string
+  email: string
 }
-export default defineComponent({
-  name: 'ProfileIndex',
-
-  components: {
-    InputText,
-    LoadingButton,
-  },
-
-  props: {
-    profile: {
-      type: Object as PropType<Profile>,
-      required: true,
-    },
-  },
-
-  setup(props) {
-    const form = useForm({
-      name: props.profile.name,
-      email: props.profile.email,
-      old_password: '',
-      password: '',
-      password_confirmation: '',
-    })
-
-    const onFormSubmit = () => {
-      form.clearErrors()
-      form.post('/admin/profile', {
-        onSuccess: () => {
-          showToast('Profile successfully updated', 'success')
-          form.reset('old_password', 'password', 'password_confirmation')
-        },
-      })
-    }
-
-    return {
-      form,
-      onFormSubmit,
-    }
+const props = defineProps({
+  profile: {
+    type: Object as PropType<Profile>,
+    required: true,
   },
 })
+
+const form = useForm({
+  name: props.profile.name,
+  email: props.profile.email,
+  old_password: '',
+  password: '',
+  password_confirmation: '',
+})
+
+const onFormSubmit = () => {
+  form.clearErrors()
+  form.post('/admin/profile', {
+    onSuccess: () => {
+      showToast('Profile successfully updated', 'success')
+      form.reset('old_password', 'password', 'password_confirmation')
+    },
+  })
+}
 </script>

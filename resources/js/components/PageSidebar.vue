@@ -41,56 +41,40 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script setup lang="ts">
+import { PropType } from 'vue'
 import { XIcon } from '@heroicons/vue/outline'
 import SidebarItem from '@/types/SidebarItem'
 import PageSidebarItem from '@/components/PageSidebarItem.vue'
 
-export default defineComponent({
-  name: 'PageSidebar',
-
-  components: {
-    XIcon,
-    PageSidebarItem,
+const props = defineProps({
+  isActive: {
+    type: Boolean,
+    required: true,
   },
 
-  props: {
-    isActive: {
-      type: Boolean,
-      required: true,
-    },
-
-    items: {
-      type: Array as PropType<SidebarItem[]>,
-      required: true,
-    },
-
-    activeItem: {
-      type: String,
-      default: null,
-    },
-
-    userName: {
-      type: String,
-      default: null,
-    },
+  items: {
+    type: Array as PropType<SidebarItem[]>,
+    required: true,
   },
 
-  emits: [
-    'hide',
-  ],
+  activeItem: {
+    type: String,
+    default: null,
+  },
 
-  setup(props, { emit }) {
-    const isActiveItem = (itemName: string) => itemName === props.activeItem
-
-    const hideSidebar = () => emit('hide')
-    const onCloseClick = () => { hideSidebar() }
-
-    return {
-      isActiveItem,
-      onCloseClick,
-    }
+  userName: {
+    type: String,
+    default: null,
   },
 })
+
+const emit = defineEmits([
+  'hide',
+])
+
+const isActiveItem = (itemName: string) => itemName === props.activeItem
+
+const hideSidebar = () => emit('hide')
+const onCloseClick = () => { hideSidebar() }
 </script>

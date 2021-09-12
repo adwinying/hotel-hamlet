@@ -27,81 +27,61 @@
   </ResultTableWrapper>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script setup lang="ts">
+import { PropType } from 'vue'
 import route from 'ziggy-js'
 import { ChevronRightIcon } from '@heroicons/vue/solid'
 
 import Model from '@/types/Models/Model'
 import ResultTableField from '@/types/ResultTableField'
-import ResultTableFormatter from '@/types/ResultTableFormatter'
 
 import ResultTableCell from '@/components/ResultTableCell.vue'
 import ResultTableHeader from '@/components/ResultTableHeader.vue'
 import ResultTableRow from '@/components/ResultTableRow.vue'
 import ResultTableWrapper from '@/components/ResultTableWrapper.vue'
 
-export default defineComponent({
-  name: 'ResultTable',
-
-  components: {
-    ResultTableWrapper,
-    ResultTableRow,
-    ResultTableHeader,
-    ResultTableCell,
-    ChevronRightIcon,
+const props = defineProps({
+  fields: {
+    type: Array as PropType<ResultTableField[]>,
+    default: () => [],
   },
 
-  props: {
-    fields: {
-      type: Object as PropType<ResultTableField[]>,
-      default: () => [],
-    },
-
-    data: {
-      type: Array as PropType<Model[]>,
-      default: () => [],
-    },
-
-    formatter: {
-      type: Object,
-      default: () => ({}),
-    },
-
-    basePath: {
-      type: [String, Function],
-      default: () => (id: number) => {
-        const currRoute = route().current()
-        const showRoute = route(currRoute.replace('index', 'show'), id)
-
-        return showRoute
-      },
-    },
+  data: {
+    type: Array as PropType<Model[]>,
+    default: () => [],
   },
 
-  setup(props) {
-    const formatDataCell = (
-      rowData: Model,
-      key: string,
-    ): string | number => (
-      props.formatter[key]
-        ? props.formatter[key](rowData[key], rowData)
-        : rowData[key] as string | number
-    )
+  formatter: {
+    type: Object,
+    default: () => ({}),
+  },
 
-    const formatRowUrl = (
-      rowId: number,
-      rowData: Model,
-    ): string => (
-      typeof props.basePath === 'function'
-        ? props.basePath(rowId, rowData)
-        : `${props.basePath}/${rowId}`
-    )
+  basePath: {
+    type: [String, Function],
+    default: () => (id: number) => {
+      const currRoute = route().current()
+      const showRoute = route(currRoute.replace('index', 'show'), id)
 
-    return {
-      formatDataCell,
-      formatRowUrl,
-    }
+      return showRoute
+    },
   },
 })
+
+const formatDataCell = (
+  rowData: Model,
+  key: string,
+): string | number => (
+  props.formatter[key]
+    ? props.formatter[key](rowData[key], rowData)
+    : rowData[key] as string | number
+)
+
+const formatRowUrl = (
+  rowId: number,
+  rowData: Model,
+): string => (
+  typeof props.basePath === 'function'
+    ? props.basePath(rowId, rowData)
+    : `${props.basePath}/${rowId}`
+)
 </script>

@@ -52,11 +52,10 @@
   </page>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
   computed,
   ComputedRef,
-  defineComponent,
   PropType,
   toRef,
   watch,
@@ -73,95 +72,68 @@ import InputDropdown from '@/components/InputDropdown.vue'
 import InputText from '@/components/InputText.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 
-export default defineComponent({
-  name: 'RoomForm',
-
-  components: {
-    InputDropdown,
-    InputText,
-    LoadingButton,
-    TrashIcon,
+const props = defineProps({
+  room: {
+    type: Object as PropType<Room | null>,
+    default: null,
   },
 
-  props: {
-    room: {
-      type: Object as PropType<Room | null>,
-      default: null,
-    },
-
-    hotels: {
-      type: Array as PropType<Hotel[]>,
-      required: true,
-    },
-
-    roomTypes: {
-      type: Array as PropType<RoomType[]>,
-      required: true,
-    },
+  hotels: {
+    type: Array as PropType<Hotel[]>,
+    required: true,
   },
 
-  setup(props) {
-    const initialFormData = {
-      hotel_id: 0,
-      room_type_id: 0,
-      room_no: '',
-    }
-
-    const {
-      form,
-      isEditForm,
-      objectId,
-      onFormSubmit,
-      onDeleteClick,
-    } = useForm(toRef(props, 'room'), initialFormData)
-
-    const pageTitle = computed(() => (
-      isEditForm.value ? 'Edit Room' : 'New Room'
-    ))
-
-    const submitText = computed(() => (
-      isEditForm.value ? 'Update Room' : 'Create Room'
-    ))
-
-    watch(
-      () => form.hotel_id,
-      () => { form.room_type_id = 0 },
-    )
-
-    const isRoomTypeDropdownDisabled = computed(() => form.hotel_id === 0)
-
-    const hotelOptions: ComputedRef<DropdownOption[]> = computed(
-      () => props.hotels.reduce((acc, hotel) => [...acc, {
-        value: hotel.id,
-        label: hotel.name,
-      }], [{ value: 0, label: '== Select ==' }]),
-    )
-
-    const filteredRoomTypes: ComputedRef<RoomType[]> = computed(() => (
-      form.hotel_id
-        ? props.roomTypes
-          .filter((roomType) => (roomType.hotel_id === form.hotel_id))
-        : props.roomTypes
-    ))
-    const roomTypeOptions: ComputedRef<DropdownOption[]> = computed(
-      () => filteredRoomTypes.value.reduce((acc, roomType) => [...acc, {
-        value: roomType.id.toString(),
-        label: roomType.name,
-      }], [{ value: '', label: '' }]),
-    )
-
-    return {
-      pageTitle,
-      submitText,
-      isEditForm,
-      hotelOptions,
-      roomTypeOptions,
-      form,
-      isRoomTypeDropdownDisabled,
-      onFormSubmit,
-      onDeleteClick,
-      objectId,
-    }
+  roomTypes: {
+    type: Array as PropType<RoomType[]>,
+    required: true,
   },
 })
+
+const initialFormData = {
+  hotel_id: 0,
+  room_type_id: 0,
+  room_no: '',
+}
+
+const {
+  form,
+  isEditForm,
+  onFormSubmit,
+  onDeleteClick,
+} = useForm(toRef(props, 'room'), initialFormData)
+
+const pageTitle = computed(() => (
+  isEditForm.value ? 'Edit Room' : 'New Room'
+))
+
+const submitText = computed(() => (
+  isEditForm.value ? 'Update Room' : 'Create Room'
+))
+
+watch(
+  () => form.hotel_id,
+  () => { form.room_type_id = 0 },
+)
+
+const isRoomTypeDropdownDisabled = computed(() => form.hotel_id === 0)
+
+const hotelOptions: ComputedRef<DropdownOption[]> = computed(
+  () => props.hotels.reduce((acc, hotel) => [...acc, {
+    value: hotel.id,
+    label: hotel.name,
+  }], [{ value: 0, label: '== Select ==' }]),
+)
+
+const filteredRoomTypes: ComputedRef<RoomType[]> = computed(() => (
+  form.hotel_id
+    ? props.roomTypes
+      .filter((roomType) => (roomType.hotel_id === form.hotel_id))
+    : props.roomTypes
+))
+const roomTypeOptions: ComputedRef<DropdownOption[]> = computed(
+  () => filteredRoomTypes.value.reduce((acc, roomType) => [...acc, {
+    value: roomType.id.toString(),
+    label: roomType.name,
+  }], [{ value: '', label: '' }]),
+)
 </script>
