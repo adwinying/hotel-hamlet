@@ -21,9 +21,7 @@
         label="Check In Date"
         type="date"
         class="w-72" />
-    </IndexSearchWrapper>
 
-    <IndexSearchWrapper>
       <InputText
         v-model="searchParams.check_out_date"
         name="check_in_date"
