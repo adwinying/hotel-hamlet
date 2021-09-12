@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('admin')->group(function () {
-    Route::middleware('auth')->group(function () {
+    Route::middleware('auth', 'nocache')->group(function () {
         Route::get('/', [HomeController::class, 'show']);
         Route::get('/profile', [ProfileController::class, 'edit']);
         Route::post('/profile', [ProfileController::class, 'update']);
@@ -33,6 +33,7 @@ Route::prefix('admin')->group(function () {
     });
 
     Route::middleware('guest')->group(function () {
+        Route::get('/login/redirect', [AuthController::class, 'redirectToLogin'])->name('login.redirect');
         Route::get('/login', [AuthController::class, 'show'])->name('login');
         Route::post('/login', [AuthController::class, 'store']);
     });
