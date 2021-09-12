@@ -23,7 +23,7 @@ return [
     | to generate a proper tsconfig.json file.
     */
     'aliases' => [
-        '@' => 'resources',
+        '@' => 'resources/js',
     ],
 
     /*
@@ -80,8 +80,8 @@ return [
     | See: https://github.com/innocenzi/laravel-vite/issues/31
     */
     'asset_plugin' => [
-        'find_regex'   => '@\/\.\.\/(.*)\.(svg|jp?g|png|webp)',
-        'replace_with' => '/resources/$1.$2',
+        'find_regex'   => '\/img/(.*)\.(svg|jp?g|png|webp)',
+        'replace_with' => '/img/$1.$2',
     ],
 
     /*
