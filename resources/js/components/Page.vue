@@ -38,7 +38,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
   computed,
   ComputedRef,
@@ -60,68 +60,46 @@ interface CommonPageProps {
     name: string;
   };
 }
-export default defineComponent({
-  name: 'Page',
 
-  components: {
-    PageSidebar,
-    PageNavbar,
-    PageHeader,
-    PageContent,
-    PageCard,
+defineProps({
+  header: {
+    type: Boolean,
+    default: true,
   },
 
-  props: {
-    header: {
-      type: Boolean,
-      default: true,
-    },
-
-    title: {
-      type: String,
-      default: null,
-    },
-
-    card: {
-      type: Boolean,
-      default: true,
-    },
+  title: {
+    type: String,
+    default: null,
   },
 
-  setup() {
-    const { props, url } = usePage()
-    const pageProps: ComputedRef<CommonPageProps> = props
-
-    const sidebarItems = computed(
-      () => pageProps.value.sidebarItems ?? [],
-    )
-
-    const activeSidebarItem = computed(() => {
-      const path = url.value
-
-      if (/^\/admin\/hotels.*$/.test(path)) return 'Hotels'
-      if (/^\/admin\/rooms.*$/.test(path)) return 'Rooms'
-      if (/^\/admin\/reservations.*$/.test(path)) return 'Reservations'
-      if (/^\/admin\/profile$/.test(path)) return 'Profile'
-      if (/^\/admin$/.test(path)) return 'Dashboard'
-
-      return undefined
-    })
-
-    const isSidebarActive = ref(false)
-    const showSidebar = () => { isSidebarActive.value = true }
-    const hideSidebar = () => { isSidebarActive.value = false }
-
-    const userName = computed(() => pageProps.value.userInfo?.name)
-
-    return {
-      sidebarItems,
-      activeSidebarItem,
-      isSidebarActive,
-      showSidebar,
-      hideSidebar,
-      userName,
-    }
+  card: {
+    type: Boolean,
+    default: true,
   },
 })
+
+const { props, url } = usePage()
+const pageProps: ComputedRef<CommonPageProps> = props
+
+const sidebarItems = computed(
+  () => pageProps.value.sidebarItems ?? [],
+)
+
+const activeSidebarItem = computed(() => {
+  const path = url.value
+
+  if (/^\/admin\/hotels.*$/.test(path)) return 'Hotels'
+  if (/^\/admin\/rooms.*$/.test(path)) return 'Rooms'
+  if (/^\/admin\/reservations.*$/.test(path)) return 'Reservations'
+  if (/^\/admin\/profile$/.test(path)) return 'Profile'
+  if (/^\/admin$/.test(path)) return 'Dashboard'
+
+  return undefined
+})
+
+const isSidebarActive = ref(false)
+const showSidebar = () => { isSidebarActive.value = true }
+const hideSidebar = () => { isSidebarActive.value = false }
+
+const userName = computed(() => pageProps.value.userInfo?.name)
 </script>

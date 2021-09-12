@@ -33,8 +33,8 @@
   </page>
 </template>
 
-<script lang="ts">
-import { defineComponent, toRef } from 'vue'
+<script setup lang="ts">
+import { toRef } from 'vue'
 import { PlusIcon } from '@heroicons/vue/solid'
 import route from 'ziggy-js'
 
@@ -52,80 +52,54 @@ import ResultCtaWrapper from '@/components/ResultCtaWrapper.vue'
 
 import LoadingButton from '@/components/LoadingButton.vue'
 
-export default defineComponent({
-  name: 'HotelIndex',
-
-  components: {
-    IndexSearchWrapper,
-    InputText,
-    InputDropdown,
-    ResultTable,
-    ResultPagination,
-    ResultCtaWrapper,
-    LoadingButton,
-    PlusIcon,
+const props = defineProps({
+  query: {
+    type: Object,
+    required: true,
   },
 
-  props: {
-    query: {
-      type: Object,
-      required: true,
-    },
-
-    result: {
-      type: Object,
-      required: true,
-    },
-  },
-
-  setup(props) {
-    const fields: ResultTableField[] = [
-      {
-        key: 'name',
-        label: 'Name',
-      },
-      {
-        key: 'is_hidden',
-        label: 'Is Hidden?',
-      },
-    ]
-
-    const formatter = {
-      is_hidden: (data: boolean) => (data ? 'Yes' : 'No'),
-    }
-
-    const hiddenOptions: DropdownOption[] = [
-      {
-        value: '',
-        label: '',
-      },
-      {
-        value: 1,
-        label: 'Yes',
-      },
-      {
-        value: 0,
-        label: 'No',
-      },
-    ]
-
-    const { paginationParams } = usePagination(toRef(props, 'result'))
-
-    const { searchParams } = useIndexSearch(props.query, {
-      is_hidden: '',
-      name: '',
-    })
-
-    const createUrl = route('hotels.create')
-
-    return {
-      fields,
-      searchParams,
-      paginationParams,
-      formatter,
-      hiddenOptions,
-      createUrl,
-    }
+  result: {
+    type: Object,
+    required: true,
   },
 })
+
+const fields: ResultTableField[] = [
+  {
+    key: 'name',
+    label: 'Name',
+  },
+  {
+    key: 'is_hidden',
+    label: 'Is Hidden?',
+  },
+]
+
+const formatter = {
+  is_hidden: (data: boolean) => (data ? 'Yes' : 'No'),
+}
+
+const hiddenOptions: DropdownOption[] = [
+  {
+    value: '',
+    label: '',
+  },
+  {
+    value: 1,
+    label: 'Yes',
+  },
+  {
+    value: 0,
+    label: 'No',
+  },
+]
+
+const { paginationParams } = usePagination(toRef(props, 'result'))
+
+const { searchParams } = useIndexSearch(props.query, {
+  is_hidden: '',
+  name: '',
+})
+
+const createUrl = route('hotels.create')
 </script>

@@ -91,10 +91,9 @@
   </page>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
   computed,
-  defineComponent,
   PropType,
   ref,
   toRef,
@@ -115,143 +114,113 @@ import InputText from '@/components/InputText.vue'
 import InputTextbox from '@/components/InputTextbox.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 
-export default defineComponent({
-  name: 'ReservationForm',
-
-  components: {
-    InputDropdown,
-    InputText,
-    InputTextbox,
-    LoadingButton,
-    TrashIcon,
+const props = defineProps({
+  reservation: {
+    type: Object as PropType<Reservation | null>,
+    default: null,
   },
 
-  props: {
-    reservation: {
-      type: Object as PropType<Reservation | null>,
-      default: null,
-    },
-
-    hotels: {
-      type: Array as PropType<Hotel[]>,
-      required: true,
-    },
-
-    roomTypes: {
-      type: Array as PropType<RoomType[]>,
-      required: true,
-    },
+  hotels: {
+    type: Array as PropType<Hotel[]>,
+    required: true,
   },
 
-  setup(props) {
-    const initialFormData = {
-      check_in_date: '',
-      check_out_date: '',
-      hotel_id: 0,
-      room_type_id: 0,
-      room_id: 0,
-      guest_name: '',
-      guest_email: '',
-      remarks: '',
-    }
-
-    const {
-      form,
-      isEditForm,
-      objectId,
-      onFormSubmit,
-      onDeleteClick,
-    } = useForm(toRef(props, 'reservation'), initialFormData)
-
-    const pageTitle = computed(() => (
-      isEditForm.value ? 'Edit Reservation' : 'New Reservation'
-    ))
-
-    const submitText = computed(() => (
-      isEditForm.value ? 'Update Reservation' : 'Create Reservation'
-    ))
-
-    // hotel options
-    const hotelOptions = computed<DropdownOption[]>(
-      () => props.hotels.reduce((acc, hotel) => [...acc, {
-        value: hotel.id,
-        label: hotel.name,
-      }], [{ value: 0, label: '== Select ==' }]),
-    )
-
-    // room type options
-    watch(() => form.hotel_id, () => {
-      form.room_type_id = 0
-      form.room_id = 0
-    })
-    const isRoomTypeDropdownDisabled = computed(() => form.hotel_id === 0)
-    const filteredRoomTypes = computed<RoomType[]>(() => (
-      form.hotel_id
-        ? props.roomTypes
-          .filter((roomType) => (roomType.hotel_id === form.hotel_id))
-        : props.roomTypes
-    ))
-    const roomTypeOptions = computed<DropdownOption[]>(
-      () => filteredRoomTypes.value.reduce((acc, roomType) => [...acc, {
-        value: roomType.id.toString(),
-        label: roomType.name,
-      }], [{ value: '', label: '' }]),
-    )
-
-    // room options
-    const availableRooms = ref<Room[]>([])
-    const isLoadingAvailableRooms = ref(false)
-    const updateAvailableRooms = () => {
-      isLoadingAvailableRooms.value = true
-      fetchAvailableRooms(
-        form.room_type_id,
-        form.check_in_date,
-        form.check_out_date,
-        props.reservation?.id,
-      ).then((rooms) => {
-        availableRooms.value = rooms
-        isLoadingAvailableRooms.value = false
-      }).catch(
-        () => window.location.reload,
-      )
-    }
-    watch(() => form.room_type_id, () => { form.room_id = 0 })
-    watch(
-      () => [form.room_type_id, form.check_in_date, form.check_out_date],
-      () => {
-        if (form.check_in_date !== ''
-          && form.check_out_date !== ''
-          && form.room_type_id !== 0) updateAvailableRooms()
-      },
-      { immediate: true },
-    )
-    const isRoomDropdownDisabled = computed(() => (
-      isRoomTypeDropdownDisabled.value
-        || form.check_in_date === ''
-        || form.check_out_date === ''
-        || form.room_type_id === 0
-    ))
-    const roomOptions = computed<DropdownOption[]>(
-      () => availableRooms.value.reduce((acc, room) => [...acc, {
-        value: room.id.toString(),
-        label: room.room_no,
-      }], [{ value: '', label: '' }]),
-    )
-
-    return {
-      pageTitle,
-      submitText,
-      isEditForm,
-      hotelOptions,
-      roomTypeOptions,
-      roomOptions,
-      form,
-      isRoomTypeDropdownDisabled,
-      isRoomDropdownDisabled,
-      onFormSubmit,
-      onDeleteClick,
-      objectId,
-    }
+  roomTypes: {
+    type: Array as PropType<RoomType[]>,
+    required: true,
   },
 })
+
+const initialFormData = {
+  check_in_date: '',
+  check_out_date: '',
+  hotel_id: 0,
+  room_type_id: 0,
+  room_id: 0,
+  guest_name: '',
+  guest_email: '',
+  remarks: '',
+}
+
+const {
+  form,
+  isEditForm,
+  onFormSubmit,
+  onDeleteClick,
+} = useForm(toRef(props, 'reservation'), initialFormData)
+
+const pageTitle = computed(() => (
+  isEditForm.value ? 'Edit Reservation' : 'New Reservation'
+))
+
+const submitText = computed(() => (
+  isEditForm.value ? 'Update Reservation' : 'Create Reservation'
+))
+
+// hotel options
+const hotelOptions = computed<DropdownOption[]>(
+  () => props.hotels.reduce((acc, hotel) => [...acc, {
+    value: hotel.id,
+    label: hotel.name,
+  }], [{ value: 0, label: '== Select ==' }]),
+)
+
+// room type options
+watch(() => form.hotel_id, () => {
+  form.room_type_id = 0
+  form.room_id = 0
+})
+const isRoomTypeDropdownDisabled = computed(() => form.hotel_id === 0)
+const filteredRoomTypes = computed<RoomType[]>(() => (
+  form.hotel_id
+    ? props.roomTypes
+      .filter((roomType) => (roomType.hotel_id === form.hotel_id))
+    : props.roomTypes
+))
+const roomTypeOptions = computed<DropdownOption[]>(
+  () => filteredRoomTypes.value.reduce((acc, roomType) => [...acc, {
+    value: roomType.id.toString(),
+    label: roomType.name,
+  }], [{ value: '', label: '' }]),
+)
+
+// room options
+const availableRooms = ref<Room[]>([])
+const isLoadingAvailableRooms = ref(false)
+const updateAvailableRooms = () => {
+  isLoadingAvailableRooms.value = true
+  fetchAvailableRooms(
+    form.room_type_id,
+    form.check_in_date,
+    form.check_out_date,
+    props.reservation?.id,
+  ).then((rooms) => {
+    availableRooms.value = rooms
+    isLoadingAvailableRooms.value = false
+  }).catch(
+    () => window.location.reload,
+  )
+}
+watch(() => form.room_type_id, () => { form.room_id = 0 })
+watch(
+  () => [form.room_type_id, form.check_in_date, form.check_out_date],
+  () => {
+    if (form.check_in_date !== ''
+      && form.check_out_date !== ''
+      && form.room_type_id !== 0) updateAvailableRooms()
+  },
+  { immediate: true },
+)
+const isRoomDropdownDisabled = computed(() => (
+  isRoomTypeDropdownDisabled.value
+  || form.check_in_date === ''
+  || form.check_out_date === ''
+  || form.room_type_id === 0
+))
+const roomOptions = computed<DropdownOption[]>(
+  () => availableRooms.value.reduce((acc, room) => [...acc, {
+    value: room.id.toString(),
+    label: room.room_no,
+  }], [{ value: '', label: '' }]),
+)
 </script>

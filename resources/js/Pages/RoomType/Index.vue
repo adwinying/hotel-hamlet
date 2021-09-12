@@ -33,14 +33,8 @@
   </page>
 </template>
 
-<script lang="ts">
-import {
-  computed,
-  ComputedRef,
-  defineComponent,
-  PropType,
-  toRef,
-} from 'vue'
+<script setup lang="ts">
+import { computed, PropType, toRef } from 'vue'
 import route from 'ziggy-js'
 import { PlusIcon } from '@heroicons/vue/solid'
 
@@ -58,77 +52,51 @@ import ResultPagination from '@/components/ResultPagination.vue'
 import ResultCtaWrapper from '@/components/ResultCtaWrapper.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 
-export default defineComponent({
-  name: 'RoomTypeIndex',
-
-  components: {
-    IndexSearchWrapper,
-    InputText,
-    InputDropdown,
-    ResultTable,
-    ResultPagination,
-    ResultCtaWrapper,
-    LoadingButton,
-    PlusIcon,
+const props = defineProps({
+  query: {
+    type: Object,
+    required: true,
   },
 
-  props: {
-    query: {
-      type: Object,
-      required: true,
-    },
-
-    result: {
-      type: Object,
-      required: true,
-    },
-
-    hotels: {
-      type: Array as PropType<Hotel[]>,
-      required: true,
-    },
+  result: {
+    type: Object,
+    required: true,
   },
 
-  setup(props) {
-    const fields: ResultTableField[] = [
-      {
-        key: 'hotel',
-        label: 'Hotel',
-      },
-      {
-        key: 'name',
-        label: 'Room Type',
-      },
-    ]
-
-    const formatter = {
-      hotel: (data: Hotel) => data.name,
-    }
-
-    const hotelOptions: ComputedRef<DropdownOption[]> = computed(
-      () => props.hotels.reduce((acc, hotel) => [...acc, {
-        value: hotel.id.toString(),
-        label: hotel.name,
-      }], [{ value: '', label: '' }]),
-    )
-
-    const { paginationParams } = usePagination(toRef(props, 'result'))
-
-    const { searchParams } = useIndexSearch(props.query, {
-      hotel_id: '',
-      name: '',
-    })
-
-    const createUrl = route('room_types.create')
-
-    return {
-      fields,
-      searchParams,
-      paginationParams,
-      formatter,
-      hotelOptions,
-      createUrl,
-    }
+  hotels: {
+    type: Array as PropType<Hotel[]>,
+    required: true,
   },
 })
+
+const fields: ResultTableField[] = [
+  {
+    key: 'hotel',
+    label: 'Hotel',
+  },
+  {
+    key: 'name',
+    label: 'Room Type',
+  },
+]
+
+const formatter = {
+  hotel: (data: Hotel) => data.name,
+}
+
+const hotelOptions = computed<DropdownOption[]>(
+  () => props.hotels.reduce((acc, hotel) => [...acc, {
+    value: hotel.id.toString(),
+    label: hotel.name,
+  }], [{ value: '', label: '' }]),
+)
+
+const { paginationParams } = usePagination(toRef(props, 'result'))
+
+const { searchParams } = useIndexSearch(props.query, {
+  hotel_id: '',
+  name: '',
+})
+
+const createUrl = route('room_types.create')
 </script>

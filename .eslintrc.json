@@ -3,6 +3,12 @@
     "browser": true,
     "es2021": true
   },
+  "globals": {
+    "defineEmits": "readonly",
+    "defineExpose": "readonly",
+    "defineProps": "readonly",
+    "withDefaults": "readonly"
+  },
   "extends": [
     "airbnb-typescript/base",
     "plugin:vue/vue3-recommended",

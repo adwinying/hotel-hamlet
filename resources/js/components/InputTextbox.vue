@@ -25,46 +25,36 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script setup lang="ts">
+import { PropType } from 'vue'
 import { useVModel } from '@vueuse/core'
 import InputData from '@/types/InputData'
 
-export default defineComponent({
-  name: 'InputTextbox',
-
-  props: {
-    modelValue: {
-      type: [String, Number, Boolean] as PropType<InputData>,
-      default: '',
-    },
-
-    label: {
-      type: String,
-      required: true,
-    },
-
-    name: {
-      type: String,
-      required: true,
-    },
-
-    errors: {
-      type: String,
-      default: null,
-    },
+const props = defineProps({
+  modelValue: {
+    type: [String, Number, Boolean] as PropType<InputData>,
+    default: '',
   },
 
-  emits: [
-    'update:modelValue',
-  ],
+  label: {
+    type: String,
+    required: true,
+  },
 
-  setup(props, { emit }) {
-    const value = useVModel(props, 'modelValue', emit)
+  name: {
+    type: String,
+    required: true,
+  },
 
-    return {
-      value,
-    }
+  errors: {
+    type: String,
+    default: null,
   },
 })
+
+const emit = defineEmits([
+  'update:modelValue',
+])
+
+const value = useVModel(props, 'modelValue', emit)
 </script>

@@ -42,13 +42,8 @@
   </page>
 </template>
 
-<script lang="ts">
-import {
-  computed,
-  defineComponent,
-  PropType,
-  toRef,
-} from 'vue'
+<script setup lang="ts">
+import { computed, PropType, toRef } from 'vue'
 import { TrashIcon } from '@heroicons/vue/outline'
 
 import Hotel from '@/types/Models/Hotel'
@@ -58,52 +53,30 @@ import InputText from '@/components/InputText.vue'
 import InputCheckbox from '@/components/InputCheckbox.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 
-export default defineComponent({
-  name: 'HotelForm',
-
-  components: {
-    InputText,
-    InputCheckbox,
-    LoadingButton,
-    TrashIcon,
-  },
-
-  props: {
-    hotel: {
-      type: Object as PropType<Hotel | null>,
-      default: null,
-    },
-  },
-
-  setup(props) {
-    const initialFormData = {
-      name: '',
-      is_hidden: false,
-    }
-
-    const {
-      form,
-      isEditForm,
-      onFormSubmit,
-      onDeleteClick,
-    } = useForm(toRef(props, 'hotel'), initialFormData)
-
-    const pageTitle = computed(() => (
-      isEditForm.value ? 'Edit Hotel' : 'New Hotel'
-    ))
-
-    const submitText = computed(() => (
-      isEditForm.value ? 'Update Hotel' : 'Create Hotel'
-    ))
-
-    return {
-      pageTitle,
-      submitText,
-      isEditForm,
-      form,
-      onFormSubmit,
-      onDeleteClick,
-    }
+const props = defineProps({
+  hotel: {
+    type: Object as PropType<Hotel | null>,
+    default: null,
   },
 })
+
+const initialFormData = {
+  name: '',
+  is_hidden: false,
+}
+
+const {
+  form,
+  isEditForm,
+  onFormSubmit,
+  onDeleteClick,
+} = useForm(toRef(props, 'hotel'), initialFormData)
+
+const pageTitle = computed(() => (
+  isEditForm.value ? 'Edit Hotel' : 'New Hotel'
+))
+
+const submitText = computed(() => (
+  isEditForm.value ? 'Update Hotel' : 'Create Hotel'
+))
 </script>

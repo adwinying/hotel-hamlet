@@ -50,14 +50,8 @@
   </page>
 </template>
 
-<script lang="ts">
-import {
-  computed,
-  ComputedRef,
-  defineComponent,
-  PropType,
-  toRef,
-} from 'vue'
+<script setup lang="ts">
+import { computed, PropType, toRef } from 'vue'
 import { TrashIcon } from '@heroicons/vue/outline'
 
 import DropdownOption from '@/types/DropdownOption'
@@ -69,68 +63,43 @@ import InputDropdown from '@/components/InputDropdown.vue'
 import InputText from '@/components/InputText.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 
-export default defineComponent({
-  name: 'RoomTypeForm',
-
-  components: {
-    InputDropdown,
-    InputText,
-    LoadingButton,
-    TrashIcon,
+const props = defineProps({
+  roomType: {
+    type: Object as PropType<RoomType | null>,
+    default: null,
   },
 
-  props: {
-    roomType: {
-      type: Object as PropType<RoomType | null>,
-      default: null,
-    },
-
-    hotels: {
-      type: Array as PropType<Hotel[]>,
-      required: true,
-    },
-  },
-
-  setup(props) {
-    const initialFormData = {
-      hotel_id: 0,
-      name: '',
-      price: '',
-    }
-
-    const {
-      form,
-      isEditForm,
-      objectId,
-      onFormSubmit,
-      onDeleteClick,
-    } = useForm(toRef(props, 'roomType'), initialFormData)
-
-    const pageTitle = computed(() => (
-      isEditForm.value ? 'Edit Room Type' : 'New Room Type'
-    ))
-
-    const submitText = computed(() => (
-      isEditForm.value ? 'Update Room Type' : 'Create Room Type'
-    ))
-
-    const hotelOptions: ComputedRef<DropdownOption[]> = computed(
-      () => props.hotels.reduce((acc, hotel) => [...acc, {
-        value: hotel.id.toString(),
-        label: hotel.name,
-      }], [{ value: '', label: '' }]),
-    )
-
-    return {
-      pageTitle,
-      submitText,
-      isEditForm,
-      hotelOptions,
-      form,
-      onFormSubmit,
-      onDeleteClick,
-      objectId,
-    }
+  hotels: {
+    type: Array as PropType<Hotel[]>,
+    required: true,
   },
 })
+
+const initialFormData = {
+  hotel_id: 0,
+  name: '',
+  price: '',
+}
+
+const {
+  form,
+  isEditForm,
+  onFormSubmit,
+  onDeleteClick,
+} = useForm(toRef(props, 'roomType'), initialFormData)
+
+const pageTitle = computed(() => (
+  isEditForm.value ? 'Edit Room Type' : 'New Room Type'
+))
+
+const submitText = computed(() => (
+  isEditForm.value ? 'Update Room Type' : 'Create Room Type'
+))
+
+const hotelOptions = computed<DropdownOption[]>(
+  () => props.hotels.reduce((acc, hotel) => [...acc, {
+    value: hotel.id.toString(),
+    label: hotel.name,
+  }], [{ value: '', label: '' }]),
+)
 </script>

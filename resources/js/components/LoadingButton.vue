@@ -13,35 +13,27 @@
   </component>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent } from 'vue'
+<script setup lang="ts">
+import { computed } from 'vue'
 
-export default defineComponent({
-  props: {
-    as: {
-      type: String,
-      default: 'button',
-    },
-
-    isLoading: {
-      type: Boolean,
-      default: false,
-    },
-
-    variant: {
-      type: String,
-      default: 'primary',
-    },
+const props = defineProps({
+  as: {
+    type: String,
+    default: 'button',
   },
 
-  setup(props) {
-    const color = computed(() => (props.variant === 'primary' ? 'cyan' : 'red'))
+  isLoading: {
+    type: Boolean,
+    default: false,
+  },
 
-    return {
-      color,
-    }
+  variant: {
+    type: String,
+    default: 'primary',
   },
 })
+
+const color = computed(() => (props.variant === 'primary' ? 'cyan' : 'red'))
 </script>
 
 <style scoped>

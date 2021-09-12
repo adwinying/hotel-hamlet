@@ -19,27 +19,12 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
 import { MenuIcon } from '@heroicons/vue/outline'
 
-export default defineComponent({
-  name: 'PageNavbar',
+const emit = defineEmits([
+  'showSidebar',
+])
 
-  components: {
-    MenuIcon,
-  },
-
-  emits: [
-    'showSidebar',
-  ],
-
-  setup(_, { emit }) {
-    const onMenuClick = () => emit('showSidebar')
-
-    return {
-      onMenuClick,
-    }
-  },
-})
+const onMenuClick = () => emit('showSidebar')
 </script>

@@ -52,7 +52,7 @@
 
           <component
             :is="page === '...' ? 'span' : 'inertia-link'"
-            v-for="page in pages"
+            v-for="page in pagesToShow"
             :key="page"
             :href="generatePageHref(page)"
             :aria-current="parseInt(page, 10) === currentPage ? 'page' : null"
@@ -83,89 +83,71 @@
   </div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, PropType } from 'vue'
+<script setup lang="ts">
+import { computed, PropType } from 'vue'
 import { toRefs } from '@vueuse/core'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/solid'
 
 import PaginationParams from '@/types/PaginationParams'
 import { usePage } from '@inertiajs/inertia-vue3'
 
-export default defineComponent({
-  name: 'ResultPagination',
-
-  components: {
-    ChevronLeftIcon,
-    ChevronRightIcon,
+const props = defineProps({
+  paginationParams: {
+    type: Object as PropType<PaginationParams>,
+    required: true,
   },
 
-  props: {
-    paginationParams: {
-      type: Object as PropType<PaginationParams>,
-      required: true,
-    },
-
-    maxShowPages: {
-      type: Number,
-      default: 9,
-    },
-  },
-
-  setup(props) {
-    const { lastPage, currentPage } = toRefs(props.paginationParams)
-
-    const pagesToShow = computed(() => {
-      if (lastPage.value <= 1) return []
-
-      // exclude first, last and current pages
-      const subpagesToShow = props.maxShowPages - 3
-      const subpagesForEachSide = Math.floor(subpagesToShow / 2)
-      const leftmostPage = currentPage.value - subpagesForEachSide
-      const rightmostPage = currentPage.value + subpagesForEachSide
-
-      let result = []
-
-      // push surrounding pages
-      for (let i = leftmostPage; i <= rightmostPage; i += 1) result.push(i.toString())
-
-      // filter out pages that are out of bounds
-      result = result.filter((page) => {
-        const pageNum = parseInt(page, 10)
-
-        return pageNum > 1 && pageNum < lastPage.value
-      })
-
-      // if neccessary, add '...'
-      if (result.length > 0) {
-        if (result[0] !== '2') result.unshift('...')
-        if (result[result.length - 1] !== (lastPage.value - 1).toString()) result.push('...')
-      }
-
-      // append first and last pages
-      result.unshift('1')
-      result.push(lastPage.value.toString())
-
-      return result
-    })
-
-    const generatePageHref = (page: string): string => {
-      const url = usePage().url.value
-      const queryRegexp = /\?/
-      const pageRegexp = /page=\d*/
-
-      if (!queryRegexp.test(url)) return `${url}?page=${page}`
-
-      return pageRegexp.test(url)
-        ? url.replace(pageRegexp, `page=${page}`)
-        : `${url}&page=${page}`
-    }
-
-    return {
-      lastPage,
-      currentPage,
-      pages: pagesToShow,
-      generatePageHref,
-    }
+  maxShowPages: {
+    type: Number,
+    default: 9,
   },
 })
+
+const { lastPage, currentPage } = toRefs(props.paginationParams)
+
+const pagesToShow = computed(() => {
+  if (lastPage.value <= 1) return []
+
+  // exclude first, last and current pages
+  const subpagesToShow = props.maxShowPages - 3
+  const subpagesForEachSide = Math.floor(subpagesToShow / 2)
+  const leftmostPage = currentPage.value - subpagesForEachSide
+  const rightmostPage = currentPage.value + subpagesForEachSide
+
+  let result = []
+
+  // push surrounding pages
+  for (let i = leftmostPage; i <= rightmostPage; i += 1) result.push(i.toString())
+
+  // filter out pages that are out of bounds
+  result = result.filter((page) => {
+    const pageNum = parseInt(page, 10)
+
+    return pageNum > 1 && pageNum < lastPage.value
+  })
+
+  // if neccessary, add '...'
+  if (result.length > 0) {
+    if (result[0] !== '2') result.unshift('...')
+    if (result[result.length - 1] !== (lastPage.value - 1).toString()) result.push('...')
+  }
+
+  // append first and last pages
+  result.unshift('1')
+  result.push(lastPage.value.toString())
+
+  return result
+})
+
+const generatePageHref = (page: string): string => {
+  const url = usePage().url.value
+  const queryRegexp = /\?/
+  const pageRegexp = /page=\d*/
+
+  if (!queryRegexp.test(url)) return `${url}?page=${page}`
+
+  return pageRegexp.test(url)
+    ? url.replace(pageRegexp, `page=${page}`)
+    : `${url}&page=${page}`
+}
 </script>

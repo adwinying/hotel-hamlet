@@ -65,36 +65,24 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
 import { useForm } from '@inertiajs/inertia-vue3'
 
-export default defineComponent({
-  layout: null,
-
-  props: {
-    errors: {
-      type: Object,
-      required: true,
-    },
-  },
-
-  setup() {
-    const form = useForm({
-      email: 'admin@example.com',
-      password: 'password',
-      remember: false,
-    })
-
-    const onFormSubmit = () => {
-      form.clearErrors()
-      form.post('/admin/login')
-    }
-
-    return {
-      form,
-      onFormSubmit,
-    }
+defineProps({
+  errors: {
+    type: Object,
+    required: true,
   },
 })
+
+const form = useForm({
+  email: 'admin@example.com',
+  password: 'password',
+  remember: false,
+})
+
+const onFormSubmit = () => {
+  form.clearErrors()
+  form.post('/admin/login')
+}
 </script>

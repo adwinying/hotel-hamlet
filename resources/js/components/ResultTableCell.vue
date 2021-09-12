@@ -8,22 +8,16 @@
   </td>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+defineProps({
+  href: {
+    type: String,
+    default: '#',
+  },
 
-export default defineComponent({
-  name: 'ResultTableCell',
-
-  props: {
-    href: {
-      type: String,
-      default: '#',
-    },
-
-    border: {
-      type: Boolean,
-      default: true,
-    },
+  border: {
+    type: Boolean,
+    default: true,
   },
 })
 </script>
