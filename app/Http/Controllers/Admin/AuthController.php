@@ -8,9 +8,14 @@ use Inertia\Inertia;
 
 class AuthController extends Controller
 {
+    public function redirectToLogin()
+    {
+        return Inertia::location(route('login'));
+    }
+
     public function show()
     {
-        return Inertia::render('Auth/Login');
+        return view('admin.login');
     }
 
     public function store(LoginRequest $request)
