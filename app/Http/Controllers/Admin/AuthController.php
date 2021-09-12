@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\LoginRequest;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class AuthController extends Controller
@@ -25,5 +26,16 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         return redirect()->intended('/admin');
+    }
+
+    public function logout(Request $request)
+    {
+        auth()->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login');
     }
 }
