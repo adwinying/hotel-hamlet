@@ -19,6 +19,9 @@
   <title>Hotel Hamlet Admin Dashboard</title>
 </head>
 <body>
+  @if(app()->environment('local'))
+    <script>window.global = window;</script>
+  @endif
   @routes
   @inertia
   @vite
