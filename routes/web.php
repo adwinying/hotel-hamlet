@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function () {
     Route::middleware('auth', 'nocache')->group(function () {
+        Route::post('/logout', [AuthController::class, 'logout']);
+
         Route::get('/', [HomeController::class, 'show']);
         Route::get('/profile', [ProfileController::class, 'edit']);
         Route::post('/profile', [ProfileController::class, 'update']);

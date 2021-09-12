@@ -60,4 +60,14 @@ class AuthTest extends TestCase
 
         $this->assertGuest();
     }
+
+    public function testCanLogout()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $this->post('admin/logout')->assertRedirect(route('login'));
+
+        $this->assertGuest();
+    }
 }

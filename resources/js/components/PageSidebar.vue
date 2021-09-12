@@ -37,13 +37,27 @@
         icon="UserCircleIcon"
         url="/admin/profile"
         :is-active="isActiveItem('Profile')" />
+
+      <div>
+        <form
+          method="POST"
+          action="/admin/logout">
+          <button
+            type="submit"
+            class="flex w-full items-center p-3 space-x-2 rounded
+              font-bold text-gray-500 hover:bg-cyan-100">
+            <LogoutIcon class="w-8" />
+            <span>Logout</span>
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { PropType } from 'vue'
-import { XIcon } from '@heroicons/vue/outline'
+import { LogoutIcon, XIcon } from '@heroicons/vue/outline'
 import SidebarItem from '@/types/SidebarItem'
 import PageSidebarItem from '@/components/PageSidebarItem.vue'
 
