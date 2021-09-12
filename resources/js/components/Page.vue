@@ -39,12 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  ComputedRef,
-  defineComponent,
-  ref,
-} from 'vue'
+import { computed, ComputedRef, ref } from 'vue'
 import { usePage } from '@inertiajs/inertia-vue3'
 import SidebarItem from '@/types/SidebarItem'
 
@@ -90,6 +85,7 @@ const activeSidebarItem = computed(() => {
 
   if (/^\/admin\/hotels.*$/.test(path)) return 'Hotels'
   if (/^\/admin\/rooms.*$/.test(path)) return 'Rooms'
+  if (/^\/admin\/room_types.*$/.test(path)) return 'Room Types'
   if (/^\/admin\/reservations.*$/.test(path)) return 'Reservations'
   if (/^\/admin\/profile$/.test(path)) return 'Profile'
   if (/^\/admin$/.test(path)) return 'Dashboard'
