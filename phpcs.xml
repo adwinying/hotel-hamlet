@@ -62,8 +62,6 @@
     <rule ref="PSR2.Namespaces.NamespaceDeclaration"/>
     <rule ref="PSR2.Namespaces.UseDeclaration"/>
     <rule ref="Zend.Files.ClosingTag"/>
-    <rule ref="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps"/>
-    <rule ref="Squiz.NamingConventions.ValidVariableName.StringNotCamelCaps"/>
 
     <file>app</file>
     <file>config</file>
