@@ -31,7 +31,7 @@ $ git clone git@github.com:adwinying/hotel-hamlet.git
 $ cd hotel-hamlet
 $ composer install
 $ npm ci
-$ cp .example.env .env
+$ cp .env.example .env
 $ php artisan key:generate
 $ npm run prod
 ```
