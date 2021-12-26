@@ -2,14 +2,10 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  mode: 'jit',
-  purge: [
+  content: [
     './storage/framework/views/*.php',
-    './resources/**/*.blade.php',
-    './resources/**/*.js',
-    './resources/**/*.vue',
+    './resources/**/*.{blade.php,js,ts,vue}',
   ],
-  darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       colors: {
@@ -19,13 +15,6 @@ module.exports = {
     fontFamily: {
       display: ['Gabriela', ...defaultTheme.fontFamily.serif],
       sans: ['"Open Sans"', ...defaultTheme.fontFamily.sans],
-    },
-  },
-  variants: {
-    extend: {
-      backgroundColor: ['disabled'],
-      opacity: ['disabled'],
-      cursor: ['disabled'],
     },
   },
   plugins: [
