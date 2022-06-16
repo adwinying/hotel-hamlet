@@ -1,0 +1,7 @@
+/.cache
+/.git
+/.github
+/vendor
+/node_modules
+.DS_Store
+*.log
