@@ -67,7 +67,7 @@
         ],
         "phpcs": "phpcs --standard=phpcs.xml",
         "phpcbf": "phpcbf --standard=phpcs.xml",
-        "phpcsfixer": "php-cs-fixer fix -v --diff-format udiff --ansi",
+        "phpcsfixer": "php-cs-fixer fix -v --diff --ansi",
         "lint": [
             "@phpcbf",
             "@phpcs",

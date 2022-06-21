@@ -18,4 +18,5 @@ npm-debug.log
 yarn-error.log
 
 .php_cs.cache
+.php-cs-fixer.cache
 _ide_helper.php

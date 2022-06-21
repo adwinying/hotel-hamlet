@@ -34,7 +34,7 @@ jobs:
       run: vendor/bin/phpcs --standard=phpcs.xml
 
     - name: Run php_cs_fixer linter
-      run: vendor/bin/php-cs-fixer -v fix --diff-format udiff --dry-run
+      run: vendor/bin/php-cs-fixer -v fix --diff --dry-run
 
 
   test:
