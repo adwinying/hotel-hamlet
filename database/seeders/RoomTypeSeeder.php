@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 
 class RoomTypeSeeder extends Seeder
 {
-    const ROOM_TYPES = [
+    public const ROOM_TYPES = [
         ['Single', 80],
         ['Deluxe', 150],
         ['Suite', 200],
