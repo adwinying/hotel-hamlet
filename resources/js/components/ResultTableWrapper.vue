@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white border rounded-md shadow overflow-x-auto">
+  <div class="overflow-x-auto rounded-md border bg-white shadow">
     <table class="w-full">
       <slot />
     </table>

@@ -1,9 +1,9 @@
 <template>
-  <header class="w-full pt-20 md:pt-12 pb-32 bg-cyan-500">
-    <div class="container mx-auto px-4 md:px-10 space-y-4">
+  <header class="w-full bg-cyan-500 pt-20 pb-32 md:pt-12">
+    <div class="container mx-auto space-y-4 px-4 md:px-10">
       <slot name="pre-title" />
 
-      <h1 class="font-bold text-5xl">
+      <h1 class="text-5xl font-bold">
         <slot />
       </h1>
 

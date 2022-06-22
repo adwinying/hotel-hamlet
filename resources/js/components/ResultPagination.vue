@@ -1,24 +1,24 @@
 <template>
-  <div class="bg-white my-5 flex items-center justify-between">
+  <div class="my-5 flex items-center justify-between bg-white">
     <div
       v-if="lastPage > 1"
-      class="flex-1 flex justify-between sm:hidden">
+      class="flex flex-1 justify-between sm:hidden">
       <component
         :is="currentPage === 1 ? 'span' : 'inertia-link'"
         :href="generatePageHref((currentPage - 1).toString())"
-        class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+        class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
         Previous
       </component>
 
       <component
         :is="currentPage === lastPage ? 'span' : 'inertia-link'"
         :href="generatePageHref((currentPage + 1).toString())"
-        class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+        class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
         Next
       </component>
     </div>
 
-    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+    <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
       <div>
         <p class="text-sm text-gray-700">
           Showing
@@ -32,12 +32,12 @@
       </div>
       <div v-if="lastPage > 1">
         <nav
-          class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+          class="relative z-0 inline-flex -space-x-px rounded-md shadow-sm"
           aria-label="Pagination">
           <component
             :is="currentPage === 1 ? 'span' : 'inertia-link'"
             :href="generatePageHref((currentPage - 1).toString())"
-            class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+            class="relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50">
             <span class="sr-only">Previous</span>
             <ChevronLeftIcon
               class="h-5 w-5"
@@ -52,12 +52,12 @@
             :aria-current="parseInt(page, 10) === currentPage ? 'page' : null"
             :class="
               parseInt(page, 10) === currentPage
-                ? `z-10 bg-cyan-600 border-cyan-600 text-white
-              relative inline-flex items-center
-              px-4 py-2 border text-sm font-medium`
-                : `bg-white border-gray-300 text-gray-500
-              hover:bg-gray-50 relative inline-flex items-center
-              px-4 py-2 border text-sm font-medium`
+                ? `relative z-10 inline-flex items-center
+              border border-cyan-600 bg-cyan-600
+              px-4 py-2 text-sm font-medium text-white`
+                : `relative inline-flex items-center
+              border border-gray-300 bg-white px-4
+              py-2 text-sm font-medium text-gray-500 hover:bg-gray-50`
             ">
             {{ page }}
           </component>
@@ -65,7 +65,7 @@
           <component
             :is="currentPage === lastPage ? 'span' : 'inertia-link'"
             :href="generatePageHref((currentPage + 1).toString())"
-            class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+            class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50">
             <span class="sr-only">Next</span>
             <ChevronRightIcon
               class="h-5 w-5"

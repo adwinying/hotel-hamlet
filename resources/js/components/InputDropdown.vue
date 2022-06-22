@@ -12,7 +12,7 @@
       v-bind="$attrs"
       :name="name"
       :class="errors ? 'border-red-500' : 'border-gray-300'"
-      class="block w-full mt-1 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm disabled:bg-gray-200 focus:outline-none focus:ring-cyan-500 focus:border-cyan-600 sm:text-sm">
+      class="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-cyan-600 focus:outline-none focus:ring-cyan-500 disabled:bg-gray-200 sm:text-sm">
       <option
         v-for="option in options"
         :key="option.value"
@@ -23,7 +23,7 @@
 
     <div
       v-if="errors"
-      class="mt-1 text-red-500 text-sm">
+      class="mt-1 text-sm text-red-500">
       {{ errors }}
     </div>
   </div>

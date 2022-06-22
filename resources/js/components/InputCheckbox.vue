@@ -13,11 +13,11 @@
       :name="name"
       type="checkbox"
       :class="errors ? 'border-red-500' : 'border-gray-300'"
-      class="border rounded text-cyan-600 focus:outline-none focus:ring-cyan-500 focus:border-cyan-600 sm:text-sm" />
+      class="rounded border text-cyan-600 focus:border-cyan-600 focus:outline-none focus:ring-cyan-500 sm:text-sm" />
 
     <div
       v-if="errors"
-      class="mt-1 text-red-500 text-sm">
+      class="mt-1 text-sm text-red-500">
       {{ errors }}
     </div>
   </div>

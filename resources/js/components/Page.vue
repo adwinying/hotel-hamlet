@@ -5,11 +5,11 @@
       :is-active="isSidebarActive"
       :active-item="activeSidebarItem"
       :user-name="userName"
-      class="fixed top-0 md:left-0 z-50"
+      class="fixed top-0 z-50 md:left-0"
       :class="isSidebarActive ? 'left-0' : '-left-72'"
       @hide="hideSidebar" />
 
-    <div class="md:pl-72 min-h-screen">
+    <div class="min-h-screen md:pl-72">
       <PageNavbar
         class="md:hidden"
         @show-sidebar="showSidebar" />
