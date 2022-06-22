@@ -1,4 +1,5 @@
 <?php
+
 $finder = PhpCsFixer\Finder::create()
     ->notPath('bootstrap')
     ->notPath('node_modules')

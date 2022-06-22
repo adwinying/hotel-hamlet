@@ -11,7 +11,7 @@ jobs:
     - name: Setup PHP Environment
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.0'
+        php-version: '8.1'
 
     - name: Checkout source code
       uses: actions/checkout@v2
@@ -34,7 +34,7 @@ jobs:
       run: vendor/bin/phpcs --standard=phpcs.xml
 
     - name: Run php_cs_fixer linter
-      run: vendor/bin/php-cs-fixer -v fix --diff-format udiff --dry-run
+      run: vendor/bin/php-cs-fixer -v fix --diff --dry-run
 
 
   test:
@@ -61,7 +61,7 @@ jobs:
     - name: Setup PHP Environment
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.0'
+        php-version: '8.1'
 
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"

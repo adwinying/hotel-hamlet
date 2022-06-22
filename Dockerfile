@@ -1,4 +1,4 @@
-FROM php:8.0-apache AS base
+FROM php:8.1-apache AS base
 
 # Get composer dependencies
 FROM composer:2 AS php_deps
@@ -8,7 +8,7 @@ RUN composer install -q --no-interaction --no-progress --no-scripts --prefer-dis
 
 # Build app
 FROM node:14 AS node
-FROM php:8.0 AS build
+FROM php:8.1 AS build
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=node /usr/local/include/node /usr/local/include/node
 COPY --from=node /usr/local/bin/node /usr/local/bin/node

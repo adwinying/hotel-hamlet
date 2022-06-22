@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 
 class RoomSeeder extends Seeder
 {
-    const ROOM_NO_MAPPING = [
+    public const ROOM_NO_MAPPING = [
         'Single' => 200,
         'Deluxe' => 300,
         'Suite'  => 400,

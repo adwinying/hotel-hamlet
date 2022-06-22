@@ -7,14 +7,14 @@ use Illuminate\Database\Seeder;
 
 class HotelSeeder extends Seeder
 {
-    const AVAILABLE_HOTELS = [
+    public const AVAILABLE_HOTELS = [
         'Hotel Hamlet City',
         'Hotel Hamlet Beachside',
         'Hotel Hamlet Ski Resort',
         'Hotel Hamlet Campgrounds',
     ];
 
-    const UNAVAILABLE_HOTELS = [
+    public const UNAVAILABLE_HOTELS = [
         'Hotel Hamlet Airport Express',
     ];
 

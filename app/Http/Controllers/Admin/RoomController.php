@@ -12,7 +12,6 @@ use App\Models\Hotel;
 use App\Models\Reservation;
 use App\Models\Room;
 use App\Models\RoomType;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class RoomController extends Controller
