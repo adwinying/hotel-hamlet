@@ -137,10 +137,9 @@ const pagesToShow = computed(() => {
 
 const generatePageHref = (page: string): string => {
   const url = usePage().url.value
-  const queryRegexp = /\?/
   const pageRegexp = /page=\d*/
 
-  if (!queryRegexp.test(url)) return `${url}?page=${page}`
+  if (!url.includes('?')) return `${url}?page=${page}`
 
   return pageRegexp.test(url)
     ? url.replace(pageRegexp, `page=${page}`)

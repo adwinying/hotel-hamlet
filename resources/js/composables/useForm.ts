@@ -16,7 +16,7 @@ export default function useForm<TForm extends Record<string, unknown>>(
   object: Ref<Model | null>,
   initialFormData: TForm,
 ): UseForm<TForm> {
-  const form = useInertiaForm({ ...initialFormData }) as InertiaForm<TForm>
+  const form = useInertiaForm({ ...initialFormData })
 
   Object.keys(initialFormData).forEach((key) => {
     ;(form as Record<string, unknown>)[key] = object.value?.[key] ?? form[key]
@@ -39,8 +39,10 @@ export default function useForm<TForm extends Record<string, unknown>>(
     })
   }
   const updateObject = () => {
+    if (objectId.value === null) throw new Error('objectId invalid!')
+
     const updateRouteName = currentRoute.replace(/[^.]+$/, 'update')
-    const updateUrl = route(updateRouteName, objectId.value as number)
+    const updateUrl = route(updateRouteName, objectId.value)
 
     form.clearErrors()
     form.put(updateUrl, {
@@ -50,8 +52,10 @@ export default function useForm<TForm extends Record<string, unknown>>(
     })
   }
   const deleteObject = () => {
+    if (objectId.value === null) throw new Error('objectId invalid!')
+
     const destroyRouteName = currentRoute.replace(/[^.]+$/, 'destroy')
-    const destroyUrl = route(destroyRouteName, objectId.value as number)
+    const destroyUrl = route(destroyRouteName, objectId.value)
 
     form.clearErrors()
     form.delete(destroyUrl, {

@@ -40,7 +40,7 @@
           class="lg:col-span-4" />
       </div>
 
-      <hr class="my-6 border-t">
+      <hr class="my-6 border-t" />
 
       <div class="flex justify-end">
         <LoadingButton

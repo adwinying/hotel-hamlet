@@ -25,7 +25,7 @@
           class="lg:col-span-4" />
       </div>
 
-      <hr class="my-6 border-t">
+      <hr class="my-6 border-t" />
 
       <div class="flex justify-between">
         <div>
@@ -81,25 +81,29 @@ const initialFormData = {
   price: '',
 }
 
-const {
-  form,
-  isEditForm,
-  onFormSubmit,
-  onDeleteClick,
-} = useForm(toRef(props, 'roomType'), initialFormData)
+const { form, isEditForm, onFormSubmit, onDeleteClick } = useForm(
+  toRef(props, 'roomType'),
+  initialFormData,
+)
 
-const pageTitle = computed(() => (
-  isEditForm.value ? 'Edit Room Type' : 'New Room Type'
-))
+const pageTitle = computed(() =>
+  isEditForm.value ? 'Edit Room Type' : 'New Room Type',
+)
 
-const submitText = computed(() => (
-  isEditForm.value ? 'Update Room Type' : 'Create Room Type'
-))
+const submitText = computed(() =>
+  isEditForm.value ? 'Update Room Type' : 'Create Room Type',
+)
 
-const hotelOptions = computed<DropdownOption[]>(
-  () => props.hotels.reduce((acc, hotel) => [...acc, {
-    value: hotel.id.toString(),
-    label: hotel.name,
-  }], [{ value: '', label: '' }]),
+const hotelOptions = computed<DropdownOption[]>(() =>
+  props.hotels.reduce(
+    (acc, hotel) => [
+      ...acc,
+      {
+        value: hotel.id.toString(),
+        label: hotel.name,
+      },
+    ],
+    [{ value: '', label: '' }],
+  ),
 )
 </script>

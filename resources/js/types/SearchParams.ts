@@ -1,7 +1,5 @@
 import InputData from '@/types/InputData'
 
-interface SearchParams {
-  [key: string]: InputData
-}
+type SearchParams = Record<string, InputData>
 
 export default SearchParams

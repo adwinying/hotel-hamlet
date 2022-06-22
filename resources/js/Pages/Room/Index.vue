@@ -41,12 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  PropType,
-  toRef,
-  watch,
-} from 'vue'
+import { computed, PropType, toRef, watch } from 'vue'
 import route from 'ziggy-js'
 import { PlusIcon } from '@heroicons/vue/solid'
 
@@ -118,28 +113,42 @@ const { searchParams } = useIndexSearch(props.query, {
 
 watch(
   () => searchParams.hotel_id,
-  () => { searchParams.room_type_id = '' },
+  () => {
+    searchParams.room_type_id = ''
+  },
 )
 
-const hotelOptions = computed<DropdownOption[]>(
-  () => props.hotels.reduce((acc, hotel) => [...acc, {
-    value: hotel.id.toString(),
-    label: hotel.name,
-  }], [{ value: '', label: '' }]),
+const hotelOptions = computed<DropdownOption[]>(() =>
+  props.hotels.reduce(
+    (acc, hotel) => [
+      ...acc,
+      {
+        value: hotel.id.toString(),
+        label: hotel.name,
+      },
+    ],
+    [{ value: '', label: '' }],
+  ),
 )
 
-const filteredRoomTypes = computed<RoomType[]>(() => (
+const filteredRoomTypes = computed<RoomType[]>(() =>
   searchParams.hotel_id
-    ? props.roomTypes.filter((roomType) => (
-      roomType.hotel_id === parseInt(searchParams.hotel_id as string, 10)
-    ))
-    : props.roomTypes
-))
-const roomTypeOptions = computed<DropdownOption[]>(
-  () => filteredRoomTypes.value.reduce((acc, roomType) => [...acc, {
-    value: roomType.id.toString(),
-    label: roomType.name,
-  }], [{ value: '', label: '' }]),
+    ? props.roomTypes.filter(
+        (roomType) => roomType.hotel_id === parseInt(searchParams.hotel_id, 10),
+      )
+    : props.roomTypes,
+)
+const roomTypeOptions = computed<DropdownOption[]>(() =>
+  filteredRoomTypes.value.reduce(
+    (acc, roomType) => [
+      ...acc,
+      {
+        value: roomType.id.toString(),
+        label: roomType.name,
+      },
+    ],
+    [{ value: '', label: '' }],
+  ),
 )
 
 const createUrl = route('rooms.create')

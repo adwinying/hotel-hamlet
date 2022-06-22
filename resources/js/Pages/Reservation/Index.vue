@@ -61,13 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  ComputedRef,
-  PropType,
-  toRef,
-  watch,
-} from 'vue'
+import { computed, ComputedRef, PropType, toRef, watch } from 'vue'
 import route from 'ziggy-js'
 import { PlusIcon } from '@heroicons/vue/solid'
 
@@ -134,8 +128,8 @@ const fields: ResultTableField[] = [
 ]
 
 const formatter: ResultTableFormatter<Reservation> = {
-  hotel: (_, rowData) => rowData.room?.room_type?.hotel?.name || '',
-  room_type: (_, rowData) => rowData.room?.room_type?.name || '',
+  hotel: (_, rowData) => rowData.room?.room_type?.hotel?.name ?? '',
+  room_type: (_, rowData) => rowData.room?.room_type?.name ?? '',
   check_in_date: (date) => (date as string).replace(/-/g, '/'),
   check_out_date: (date) => (date as string).replace(/-/g, '/'),
 }
@@ -153,28 +147,42 @@ const { searchParams } = useIndexSearch(props.query, {
 
 watch(
   () => searchParams.hotel_id,
-  () => { searchParams.room_type_id = '' },
+  () => {
+    searchParams.room_type_id = ''
+  },
 )
 
-const hotelOptions: ComputedRef<DropdownOption[]> = computed(
-  () => props.hotels.reduce((acc, hotel) => [...acc, {
-    value: hotel.id.toString(),
-    label: hotel.name,
-  }], [{ value: '', label: '' }]),
+const hotelOptions: ComputedRef<DropdownOption[]> = computed(() =>
+  props.hotels.reduce(
+    (acc, hotel) => [
+      ...acc,
+      {
+        value: hotel.id.toString(),
+        label: hotel.name,
+      },
+    ],
+    [{ value: '', label: '' }],
+  ),
 )
 
-const filteredRoomTypes: ComputedRef<RoomType[]> = computed(() => (
+const filteredRoomTypes: ComputedRef<RoomType[]> = computed(() =>
   searchParams.hotel_id
-    ? props.roomTypes.filter((roomType) => (
-      roomType.hotel_id === parseInt(searchParams.hotel_id as string, 10)
-    ))
-    : props.roomTypes
-))
-const roomTypeOptions: ComputedRef<DropdownOption[]> = computed(
-  () => filteredRoomTypes.value.reduce((acc, roomType) => [...acc, {
-    value: roomType.id.toString(),
-    label: roomType.name,
-  }], [{ value: '', label: '' }]),
+    ? props.roomTypes.filter(
+        (roomType) => roomType.hotel_id === parseInt(searchParams.hotel_id, 10),
+      )
+    : props.roomTypes,
+)
+const roomTypeOptions: ComputedRef<DropdownOption[]> = computed(() =>
+  filteredRoomTypes.value.reduce(
+    (acc, roomType) => [
+      ...acc,
+      {
+        value: roomType.id.toString(),
+        label: roomType.name,
+      },
+    ],
+    [{ value: '', label: '' }],
+  ),
 )
 
 const createUrl = route('reservations.create')
