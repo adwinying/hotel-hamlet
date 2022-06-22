@@ -67,21 +67,13 @@ const props = defineProps({
   },
 })
 
-const formatDataCell = (
-  rowData: Model,
-  key: string,
-): string | number => (
+const formatDataCell = (rowData: Model, key: string): string | number =>
   props.formatter[key]
     ? props.formatter[key](rowData[key], rowData)
-    : rowData[key] as string | number
-)
+    : (rowData[key] as string | number)
 
-const formatRowUrl = (
-  rowId: number,
-  rowData: Model,
-): string => (
+const formatRowUrl = (rowId: number, rowData: Model): string =>
   typeof props.basePath === 'function'
     ? props.basePath(rowId, rowData)
     : `${props.basePath}/${rowId}`
-)
 </script>

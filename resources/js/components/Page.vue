@@ -50,10 +50,10 @@ import PageContent from '@/components/PageContent.vue'
 import PageCard from '@/components/PageCard.vue'
 
 interface CommonPageProps {
-  sidebarItems?: SidebarItem[];
+  sidebarItems?: SidebarItem[]
   userInfo?: {
-    name: string;
-  };
+    name: string
+  }
 }
 
 defineProps({
@@ -76,9 +76,7 @@ defineProps({
 const { props, url } = usePage()
 const pageProps: ComputedRef<CommonPageProps> = props
 
-const sidebarItems = computed(
-  () => pageProps.value.sidebarItems ?? [],
-)
+const sidebarItems = computed(() => pageProps.value.sidebarItems ?? [])
 
 const activeSidebarItem = computed(() => {
   const path = url.value
@@ -94,8 +92,12 @@ const activeSidebarItem = computed(() => {
 })
 
 const isSidebarActive = ref(false)
-const showSidebar = () => { isSidebarActive.value = true }
-const hideSidebar = () => { isSidebarActive.value = false }
+const showSidebar = () => {
+  isSidebarActive.value = true
+}
+const hideSidebar = () => {
+  isSidebarActive.value = false
+}
 
 const userName = computed(() => pageProps.value.userInfo?.name)
 </script>

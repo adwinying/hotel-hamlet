@@ -16,16 +16,20 @@ export default function usePagination(
     perPage: 0,
   })
 
-  watch(results, () => {
-    const res = results.value
+  watch(
+    results,
+    () => {
+      const res = results.value
 
-    paginationParams.from = res.from as number
-    paginationParams.to = res.to as number
-    paginationParams.total = res.total as number
-    paginationParams.currentPage = res.current_page as number
-    paginationParams.lastPage = res.last_page as number
-    paginationParams.perPage = res.per_page as number
-  }, { deep: true, immediate: true })
+      paginationParams.from = res.from as number
+      paginationParams.to = res.to as number
+      paginationParams.total = res.total as number
+      paginationParams.currentPage = res.current_page as number
+      paginationParams.lastPage = res.last_page as number
+      paginationParams.perPage = res.per_page as number
+    },
+    { deep: true, immediate: true },
+  )
 
   return {
     paginationParams,

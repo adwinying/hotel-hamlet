@@ -6,18 +6,14 @@
       <component
         :is="currentPage === 1 ? 'span' : 'inertia-link'"
         :href="generatePageHref((currentPage - 1).toString())"
-        class="relative inline-flex items-center px-4 py-2
-        border border-gray-300 text-sm font-medium rounded-md text-gray-700
-        bg-white hover:bg-gray-50">
+        class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
         Previous
       </component>
 
       <component
         :is="currentPage === lastPage ? 'span' : 'inertia-link'"
         :href="generatePageHref((currentPage + 1).toString())"
-        class="ml-3 relative inline-flex items-center px-4 py-2
-        border border-gray-300 text-sm font-medium rounded-md text-gray-700
-        bg-white hover:bg-gray-50">
+        class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
         Next
       </component>
     </div>
@@ -41,9 +37,7 @@
           <component
             :is="currentPage === 1 ? 'span' : 'inertia-link'"
             :href="generatePageHref((currentPage - 1).toString())"
-            class="relative inline-flex items-center px-2 py-2
-            rounded-l-md border border-gray-300 bg-white
-            text-sm font-medium text-gray-500 hover:bg-gray-50">
+            class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
             <span class="sr-only">Previous</span>
             <ChevronLeftIcon
               class="h-5 w-5"
@@ -56,22 +50,22 @@
             :key="page"
             :href="generatePageHref(page)"
             :aria-current="parseInt(page, 10) === currentPage ? 'page' : null"
-            :class="parseInt(page, 10) === currentPage
-              ? `z-10 bg-cyan-600 border-cyan-600 text-white
+            :class="
+              parseInt(page, 10) === currentPage
+                ? `z-10 bg-cyan-600 border-cyan-600 text-white
               relative inline-flex items-center
               px-4 py-2 border text-sm font-medium`
-              : `bg-white border-gray-300 text-gray-500
+                : `bg-white border-gray-300 text-gray-500
               hover:bg-gray-50 relative inline-flex items-center
-              px-4 py-2 border text-sm font-medium`">
+              px-4 py-2 border text-sm font-medium`
+            ">
             {{ page }}
           </component>
 
           <component
             :is="currentPage === lastPage ? 'span' : 'inertia-link'"
             :href="generatePageHref((currentPage + 1).toString())"
-            class="relative inline-flex items-center px-2 py-2
-            rounded-r-md border border-gray-300 bg-white text-sm
-            font-medium text-gray-500 hover:bg-gray-50">
+            class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
             <span class="sr-only">Next</span>
             <ChevronRightIcon
               class="h-5 w-5"
@@ -117,7 +111,8 @@ const pagesToShow = computed(() => {
   let result = []
 
   // push surrounding pages
-  for (let i = leftmostPage; i <= rightmostPage; i += 1) result.push(i.toString())
+  for (let i = leftmostPage; i <= rightmostPage; i += 1)
+    result.push(i.toString())
 
   // filter out pages that are out of bounds
   result = result.filter((page) => {
@@ -129,7 +124,8 @@ const pagesToShow = computed(() => {
   // if neccessary, add '...'
   if (result.length > 0) {
     if (result[0] !== '2') result.unshift('...')
-    if (result[result.length - 1] !== (lastPage.value - 1).toString()) result.push('...')
+    if (result[result.length - 1] !== (lastPage.value - 1).toString())
+      result.push('...')
   }
 
   // append first and last pages

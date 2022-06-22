@@ -8,16 +8,17 @@ import Page from './components/Page.vue'
 const el = document.getElementById('app')
 
 const app = createApp({
-  render: () => h(App, {
-    initialPage: JSON.parse(el?.dataset.page ?? ''),
-    resolveComponent: async (name: string) => {
-      const pages = import.meta.glob('./Pages/**/*.vue')
-      const module = await pages[`./Pages/${name}.vue`]()
-      const page = module.default
+  render: () =>
+    h(App, {
+      initialPage: JSON.parse(el?.dataset.page ?? ''),
+      resolveComponent: async (name: string) => {
+        const pages = import.meta.glob('./Pages/**/*.vue')
+        const module = await pages[`./Pages/${name}.vue`]()
+        const page = module.default
 
-      return page
-    },
-  }),
+        return page
+      },
+    }),
 })
 
 app.use(plugin)

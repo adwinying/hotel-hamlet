@@ -19,7 +19,7 @@ export default function useForm<TForm extends Record<string, unknown>>(
   const form = useInertiaForm({ ...initialFormData }) as InertiaForm<TForm>
 
   Object.keys(initialFormData).forEach((key) => {
-    (form as Record<string, unknown>)[key] = object.value?.[key] ?? form[key]
+    ;(form as Record<string, unknown>)[key] = object.value?.[key] ?? form[key]
   })
 
   const objectId = computed(() => object.value?.id ?? null)
@@ -60,9 +60,7 @@ export default function useForm<TForm extends Record<string, unknown>>(
       },
     })
   }
-  const onFormSubmit = () => (
-    isEditForm.value ? updateObject() : storeObject()
-  )
+  const onFormSubmit = () => (isEditForm.value ? updateObject() : storeObject())
   const onDeleteClick = () => deleteObject()
 
   return {

@@ -17,10 +17,8 @@
     <div class="flex items-center h-14 mx-3 my-6 space-x-2">
       <img
         class="h-full"
-        src="/img/logo.svg">
-      <span class="text-2xl font-display">
-        Admin
-      </span>
+        src="/img/logo.svg" />
+      <span class="text-2xl font-display"> Admin </span>
     </div>
 
     <div class="w-full my-3 px-3">
@@ -30,7 +28,7 @@
         :key="i"
         :is-active="isActiveItem(item.name)" />
 
-      <hr class="m-3">
+      <hr class="m-3" />
 
       <PageSidebarItem
         :name="userName"
@@ -44,8 +42,7 @@
           action="/admin/logout">
           <button
             type="submit"
-            class="flex w-full items-center p-3 space-x-2 rounded
-              font-bold text-gray-500 hover:bg-cyan-100">
+            class="flex w-full items-center p-3 space-x-2 rounded font-bold text-gray-500 hover:bg-cyan-100">
             <LogoutIcon class="w-8" />
             <span>Logout</span>
           </button>
@@ -83,12 +80,12 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits([
-  'hide',
-])
+const emit = defineEmits(['hide'])
 
 const isActiveItem = (itemName: string) => itemName === props.activeItem
 
 const hideSidebar = () => emit('hide')
-const onCloseClick = () => { hideSidebar() }
+const onCloseClick = () => {
+  hideSidebar()
+}
 </script>

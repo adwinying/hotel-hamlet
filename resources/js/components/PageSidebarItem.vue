@@ -48,12 +48,12 @@ defineProps({
   },
 })
 
-const iconMap: Record<string, RenderFunction> = ({
+const iconMap: Record<string, RenderFunction> = {
   HomeIcon,
   OfficeBuildingIcon,
   ColorSwatchIcon,
   KeyIcon,
   BookOpenIcon,
   UserCircleIcon,
-})
+}
 </script>
