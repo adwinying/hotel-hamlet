@@ -1,5 +1,3 @@
 <template>
-  <page title="Dashboard">
-    hello from dashboard
-  </page>
+  <page title="Dashboard"> hello from dashboard </page>
 </template>

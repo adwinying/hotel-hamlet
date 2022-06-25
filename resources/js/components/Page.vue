@@ -5,11 +5,11 @@
       :is-active="isSidebarActive"
       :active-item="activeSidebarItem"
       :user-name="userName"
-      class="fixed top-0 md:left-0 z-50"
+      class="fixed top-0 z-50 md:left-0"
       :class="isSidebarActive ? 'left-0' : '-left-72'"
       @hide="hideSidebar" />
 
-    <div class="md:pl-72 min-h-screen">
+    <div class="min-h-screen md:pl-72">
       <PageNavbar
         class="md:hidden"
         @show-sidebar="showSidebar" />
@@ -50,10 +50,10 @@ import PageContent from '@/components/PageContent.vue'
 import PageCard from '@/components/PageCard.vue'
 
 interface CommonPageProps {
-  sidebarItems?: SidebarItem[];
+  sidebarItems?: SidebarItem[]
   userInfo?: {
-    name: string;
-  };
+    name: string
+  }
 }
 
 defineProps({
@@ -76,9 +76,7 @@ defineProps({
 const { props, url } = usePage()
 const pageProps: ComputedRef<CommonPageProps> = props
 
-const sidebarItems = computed(
-  () => pageProps.value.sidebarItems ?? [],
-)
+const sidebarItems = computed(() => pageProps.value.sidebarItems ?? [])
 
 const activeSidebarItem = computed(() => {
   const path = url.value
@@ -94,8 +92,12 @@ const activeSidebarItem = computed(() => {
 })
 
 const isSidebarActive = ref(false)
-const showSidebar = () => { isSidebarActive.value = true }
-const hideSidebar = () => { isSidebarActive.value = false }
+const showSidebar = () => {
+  isSidebarActive.value = true
+}
+const hideSidebar = () => {
+  isSidebarActive.value = false
+}
 
 const userName = computed(() => pageProps.value.userInfo?.name)
 </script>

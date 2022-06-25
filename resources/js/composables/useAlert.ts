@@ -6,8 +6,7 @@ import Swal, {
 
 import 'sweetalert2/dist/sweetalert2.css'
 
-const commonConfig: SweetAlertOptions = {
-}
+const commonConfig: SweetAlertOptions = {}
 
 const toastConfig: SweetAlertOptions = {
   timer: 5000,
@@ -17,16 +16,20 @@ const toastConfig: SweetAlertOptions = {
   showConfirmButton: false,
 }
 
-type ShowToast = (message: string, type: SweetAlertIcon) => Promise<SweetAlertResult>
-export const showToast:ShowToast = (message, type) => Swal.fire({
-  ...commonConfig,
-  ...toastConfig,
-  title: message,
-  icon: type,
-})
+type ShowToast = (
+  message: string,
+  type: SweetAlertIcon,
+) => Promise<SweetAlertResult>
+export const showToast: ShowToast = (message, type) =>
+  Swal.fire({
+    ...commonConfig,
+    ...toastConfig,
+    title: message,
+    icon: type,
+  })
 
 interface UseAlert {
-  showToast: ShowToast,
+  showToast: ShowToast
 }
 export default function useAlert(): UseAlert {
   return {

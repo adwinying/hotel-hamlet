@@ -17,7 +17,7 @@
           class="lg:col-span-4" />
       </div>
 
-      <hr class="my-6 border-t">
+      <hr class="my-6 border-t" />
 
       <div class="flex justify-between">
         <div>
@@ -65,18 +65,16 @@ const initialFormData = {
   is_hidden: false,
 }
 
-const {
-  form,
-  isEditForm,
-  onFormSubmit,
-  onDeleteClick,
-} = useForm(toRef(props, 'hotel'), initialFormData)
+const { form, isEditForm, onFormSubmit, onDeleteClick } = useForm(
+  toRef(props, 'hotel'),
+  initialFormData,
+)
 
-const pageTitle = computed(() => (
-  isEditForm.value ? 'Edit Hotel' : 'New Hotel'
-))
+const pageTitle = computed(() =>
+  isEditForm.value ? 'Edit Hotel' : 'New Hotel',
+)
 
-const submitText = computed(() => (
-  isEditForm.value ? 'Update Hotel' : 'Create Hotel'
-))
+const submitText = computed(() =>
+  isEditForm.value ? 'Update Hotel' : 'Create Hotel',
+)
 </script>

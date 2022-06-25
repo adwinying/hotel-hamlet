@@ -13,13 +13,11 @@
       :type="type"
       :name="name"
       :class="errors ? 'border-red-500' : 'border-gray-300'"
-      class="block w-full mt-1 rounded-md shadow-sm
-        focus:ring-cyan-500 focus:border-cyan-600 disabled:bg-gray-200
-        sm:text-sm">
+      class="mt-1 block w-full rounded-md shadow-sm focus:border-cyan-600 focus:ring-cyan-500 disabled:bg-gray-200 sm:text-sm" />
 
     <div
       v-if="errors"
-      class="mt-1 text-red-500 text-sm">
+      class="mt-1 text-sm text-red-500">
       {{ errors }}
     </div>
   </div>
@@ -57,9 +55,7 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits([
-  'update:modelValue',
-])
+const emit = defineEmits(['update:modelValue'])
 
 const value = useVModel(props, 'modelValue', emit)
 </script>

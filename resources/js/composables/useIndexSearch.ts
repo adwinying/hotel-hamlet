@@ -15,7 +15,7 @@ export default function useIndexSearch<TParams extends SearchParams>(
   const searchParams = reactive({ ...initialSearchParams }) as TParams
 
   Object.keys(searchParams).forEach((key) => {
-    (searchParams as SearchParams)[key] = query[key] ?? searchParams[key]
+    ;(searchParams as SearchParams)[key] = query[key] ?? searchParams[key]
   })
 
   const applySearchParams = () => {
@@ -26,11 +26,7 @@ export default function useIndexSearch<TParams extends SearchParams>(
     })
   }
 
-  debouncedWatch(
-    searchParams,
-    applySearchParams,
-    { debounce: 500, deep: true },
-  )
+  debouncedWatch(searchParams, applySearchParams, { debounce: 500, deep: true })
 
   return {
     searchParams,

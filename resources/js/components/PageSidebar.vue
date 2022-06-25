@@ -1,12 +1,12 @@
 <template>
   <div
     v-if="isActive"
-    class="md:hidden fixed inset-0 z-10 bg-black bg-opacity-30"
+    class="fixed inset-0 z-10 bg-black bg-opacity-30 md:hidden"
     @click.prevent="onCloseClick" />
   <div
     v-bind="$attrs"
-    class="w-72 h-screen bg-white border-r border-gray-200 transition-all">
-    <div class="md:hidden absolute top-0 right-0 w-8 mx-4 my-8">
+    class="h-screen w-72 border-r border-gray-200 bg-white transition-all">
+    <div class="absolute top-0 right-0 mx-4 my-8 w-8 md:hidden">
       <a
         href="#"
         @click.prevent="onCloseClick">
@@ -14,23 +14,21 @@
       </a>
     </div>
 
-    <div class="flex items-center h-14 mx-3 my-6 space-x-2">
+    <div class="mx-3 my-6 flex h-14 items-center space-x-2">
       <img
         class="h-full"
-        src="/img/logo.svg">
-      <span class="text-2xl font-display">
-        Admin
-      </span>
+        src="/img/logo.svg" />
+      <span class="font-display text-2xl"> Admin </span>
     </div>
 
-    <div class="w-full my-3 px-3">
+    <div class="my-3 w-full px-3">
       <PageSidebarItem
         v-for="(item, i) in items"
         v-bind="item"
         :key="i"
         :is-active="isActiveItem(item.name)" />
 
-      <hr class="m-3">
+      <hr class="m-3" />
 
       <PageSidebarItem
         :name="userName"
@@ -44,8 +42,7 @@
           action="/admin/logout">
           <button
             type="submit"
-            class="flex w-full items-center p-3 space-x-2 rounded
-              font-bold text-gray-500 hover:bg-cyan-100">
+            class="flex w-full items-center space-x-2 rounded p-3 font-bold text-gray-500 hover:bg-cyan-100">
             <LogoutIcon class="w-8" />
             <span>Logout</span>
           </button>
@@ -83,12 +80,12 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits([
-  'hide',
-])
+const emit = defineEmits(['hide'])
 
 const isActiveItem = (itemName: string) => itemName === props.activeItem
 
 const hideSidebar = () => emit('hide')
-const onCloseClick = () => { hideSidebar() }
+const onCloseClick = () => {
+  hideSidebar()
+}
 </script>

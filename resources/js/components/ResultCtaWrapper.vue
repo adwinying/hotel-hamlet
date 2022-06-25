@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-end mt-6 mb-3">
+  <div class="mt-6 mb-3 flex justify-end">
     <slot />
   </div>
 </template>

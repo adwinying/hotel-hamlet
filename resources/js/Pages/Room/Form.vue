@@ -27,7 +27,7 @@
           class="lg:col-span-4" />
       </div>
 
-      <hr class="my-6 border-t">
+      <hr class="my-6 border-t" />
 
       <div class="flex justify-between">
         <div>
@@ -53,13 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  ComputedRef,
-  PropType,
-  toRef,
-  watch,
-} from 'vue'
+import { computed, ComputedRef, PropType, toRef, watch } from 'vue'
 import { TrashIcon } from '@heroicons/vue/outline'
 
 import DropdownOption from '@/types/DropdownOption'
@@ -95,45 +89,54 @@ const initialFormData = {
   room_no: '',
 }
 
-const {
-  form,
-  isEditForm,
-  onFormSubmit,
-  onDeleteClick,
-} = useForm(toRef(props, 'room'), initialFormData)
+const { form, isEditForm, onFormSubmit, onDeleteClick } = useForm(
+  toRef(props, 'room'),
+  initialFormData,
+)
 
-const pageTitle = computed(() => (
-  isEditForm.value ? 'Edit Room' : 'New Room'
-))
+const pageTitle = computed(() => (isEditForm.value ? 'Edit Room' : 'New Room'))
 
-const submitText = computed(() => (
-  isEditForm.value ? 'Update Room' : 'Create Room'
-))
+const submitText = computed(() =>
+  isEditForm.value ? 'Update Room' : 'Create Room',
+)
 
 watch(
   () => form.hotel_id,
-  () => { form.room_type_id = 0 },
+  () => {
+    form.room_type_id = 0
+  },
 )
 
 const isRoomTypeDropdownDisabled = computed(() => form.hotel_id === 0)
 
-const hotelOptions: ComputedRef<DropdownOption[]> = computed(
-  () => props.hotels.reduce((acc, hotel) => [...acc, {
-    value: hotel.id,
-    label: hotel.name,
-  }], [{ value: 0, label: '== Select ==' }]),
+const hotelOptions: ComputedRef<DropdownOption[]> = computed(() =>
+  props.hotels.reduce(
+    (acc, hotel) => [
+      ...acc,
+      {
+        value: hotel.id,
+        label: hotel.name,
+      },
+    ],
+    [{ value: 0, label: '== Select ==' }],
+  ),
 )
 
-const filteredRoomTypes: ComputedRef<RoomType[]> = computed(() => (
+const filteredRoomTypes: ComputedRef<RoomType[]> = computed(() =>
   form.hotel_id
-    ? props.roomTypes
-      .filter((roomType) => (roomType.hotel_id === form.hotel_id))
-    : props.roomTypes
-))
-const roomTypeOptions: ComputedRef<DropdownOption[]> = computed(
-  () => filteredRoomTypes.value.reduce((acc, roomType) => [...acc, {
-    value: roomType.id.toString(),
-    label: roomType.name,
-  }], [{ value: '', label: '' }]),
+    ? props.roomTypes.filter((roomType) => roomType.hotel_id === form.hotel_id)
+    : props.roomTypes,
+)
+const roomTypeOptions: ComputedRef<DropdownOption[]> = computed(() =>
+  filteredRoomTypes.value.reduce(
+    (acc, roomType) => [
+      ...acc,
+      {
+        value: roomType.id.toString(),
+        label: roomType.name,
+      },
+    ],
+    [{ value: '', label: '' }],
+  ),
 )
 </script>

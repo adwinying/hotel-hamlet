@@ -14,10 +14,15 @@ export const fetchAvailableRooms: FetchAvailableRooms = async (
 ) => {
   const endpoint = '/api/admin/room_availability'
 
-  const res = await fetch(`${endpoint}?room_type_id=${roomTypeId}&check_in_date=${checkInDate}&check_out_date=${checkOutDate}&reservation_id=${reservationId}`, {
-    headers: { Accept: 'application/json' },
-  })
-  const rooms = res.json()
+  const res = await fetch(
+    `${endpoint}?room_type_id=${roomTypeId}&check_in_date=${checkInDate}&check_out_date=${checkOutDate}&reservation_id=${
+      reservationId ?? ''
+    }`,
+    {
+      headers: { Accept: 'application/json' },
+    },
+  )
+  const rooms = (await res.json()) as Room[]
 
   return rooms
 }

@@ -3,7 +3,7 @@
     <InertiaLink
       :href="url"
       :class="{ 'bg-gray-200': isActive, 'text-gray-500': !isActive }"
-      class="flex items-center p-3 space-x-2 rounded font-bold hover:bg-cyan-100">
+      class="flex items-center space-x-2 rounded p-3 font-bold hover:bg-cyan-100">
       <component
         :is="iconMap[icon]"
         class="w-8"
@@ -48,12 +48,12 @@ defineProps({
   },
 })
 
-const iconMap: Record<string, RenderFunction> = ({
+const iconMap: Record<string, RenderFunction> = {
   HomeIcon,
   OfficeBuildingIcon,
   ColorSwatchIcon,
   KeyIcon,
   BookOpenIcon,
   UserCircleIcon,
-})
+}
 </script>

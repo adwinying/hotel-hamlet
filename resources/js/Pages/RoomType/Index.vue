@@ -84,11 +84,17 @@ const formatter = {
   hotel: (data: Hotel) => data.name,
 }
 
-const hotelOptions = computed<DropdownOption[]>(
-  () => props.hotels.reduce((acc, hotel) => [...acc, {
-    value: hotel.id.toString(),
-    label: hotel.name,
-  }], [{ value: '', label: '' }]),
+const hotelOptions = computed<DropdownOption[]>(() =>
+  props.hotels.reduce(
+    (acc, hotel) => [
+      ...acc,
+      {
+        value: hotel.id.toString(),
+        label: hotel.name,
+      },
+    ],
+    [{ value: '', label: '' }],
+  ),
 )
 
 const { paginationParams } = usePagination(toRef(props, 'result'))
