@@ -33,8 +33,8 @@ jobs:
     - name: Run phpCS linter
       run: vendor/bin/phpcs --standard=phpcs.xml
 
-    - name: Run php_cs_fixer linter
-      run: vendor/bin/php-cs-fixer -v fix --diff --dry-run
+    - name: Run pint linter
+      run: vendor/bin/pint -v --test
 
 
   test:
