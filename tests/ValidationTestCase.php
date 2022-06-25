@@ -28,6 +28,7 @@ abstract class ValidationTestCase extends TestCase
      * Form Validation Test
      *
      * @dataProvider formData
+     *
      * @param bool   $expected
      * @param array  $input
      * @param string $exceptKey

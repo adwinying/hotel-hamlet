@@ -8,6 +8,7 @@ class UpdateRoom
 {
     /**
      * Update room
+     *
      * @param Room  $room   Room to be updated
      * @param array $params Data to update
      * @return App\Models\Room

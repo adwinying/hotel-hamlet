@@ -8,6 +8,7 @@ class UpdateHotel
 {
     /**
      * Update hotel
+     *
      * @param Hotel $hotel  Hotel to be updated
      * @param array $params Data to update
      * @return App\Models\Hotel

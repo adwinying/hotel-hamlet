@@ -10,6 +10,7 @@ class UpdateUser
 {
     /**
      * Update user info
+     *
      * @param User  $user  Target user
      * @param array $input Data to update
      */

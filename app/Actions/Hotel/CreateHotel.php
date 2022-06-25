@@ -8,6 +8,7 @@ class CreateHotel
 {
     /**
      * Create hotel
+     *
      * @param array $params Data to create
      * @return App\Models\Hotel
      */

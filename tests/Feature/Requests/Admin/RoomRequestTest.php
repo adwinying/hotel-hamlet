@@ -15,7 +15,8 @@ class RoomRequestTest extends ValidationTestCase
     use RefreshDatabase;
 
     protected $roomTypeId = 99;
-    protected $roomNo     = '101';
+
+    protected $roomNo = '101';
 
     protected function setUp(): void
     {
