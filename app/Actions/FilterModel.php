@@ -9,6 +9,7 @@ class FilterModel
 {
     /**
      * Filter Models
+     *
      * @param array $params    Parameters to filter (LIKE search)
      * @param array $exactKeys Parameters to filter (= search)
      * @return Illuminate\Database\Eloquent\Builder

@@ -16,6 +16,7 @@ class FilterHotel
 
     /**
      * Filter hotel params
+     *
      * @param array $params Parameters to filter
      * @return Illuminate\Database\Eloquent\Builder
      */

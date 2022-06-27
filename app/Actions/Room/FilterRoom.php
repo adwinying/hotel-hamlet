@@ -17,6 +17,7 @@ class FilterRoom
 
     /**
      * Filter room params
+     *
      * @param array $params Parameters to filter
      * @return Illuminate\Database\Eloquent\Builder
      */

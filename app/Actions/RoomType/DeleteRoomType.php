@@ -8,6 +8,7 @@ class DeleteRoomType
 {
     /**
      * Delete room type
+     *
      * @param RoomType $roomType Room type to be deleted
      */
     public function execute(RoomType $roomType): bool

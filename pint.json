@@ -1,0 +1,19 @@
+{
+    "preset": "laravel",
+    "rules": {
+      "binary_operator_spaces": {
+        "operators" : {
+          "=": "align_single_space_minimal",
+          "=>": "align_single_space_minimal",
+          "??": "align_single_space_minimal"
+        }
+      },
+      "concat_space": {
+        "spacing": "one"
+      },
+      "phpdoc_align": {
+        "tags": ["param", "property", "throws", "type", "var"]
+      },
+      "not_operator_with_successor_space": false
+    }
+}

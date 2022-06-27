@@ -18,6 +18,7 @@ class CreateReservation
 
     /**
      * Create reservation
+     *
      * @param array $params Data to create
      * @return App\Models\Reservation
      */

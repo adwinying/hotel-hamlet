@@ -8,6 +8,7 @@ class DeleteHotel
 {
     /**
      * Delete hotel
+     *
      * @param Hotel $hotel Hotel to be deleted
      */
     public function execute(Hotel $hotel): bool

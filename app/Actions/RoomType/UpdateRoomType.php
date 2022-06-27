@@ -8,6 +8,7 @@ class UpdateRoomType
 {
     /**
      * Update room type
+     *
      * @param RoomType $roomType Room type to be updated
      * @param array    $params   Data to update
      * @return App\Models\RoomType

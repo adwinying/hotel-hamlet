@@ -15,6 +15,7 @@ class GetAvailableRooms
 
     /**
      * Get available rooms
+     *
      * @param RoomType    $roomType     Room Type
      * @param string      $checkInDate  Check In Date (Y-m-d)
      * @param string      $checkOutDate Check Out Date (Y-m-d)

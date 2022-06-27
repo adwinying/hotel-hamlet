@@ -8,6 +8,7 @@ class CreateRoomType
 {
     /**
      * Create room type
+     *
      * @param array $params Data to create
      * @return App\Models\RoomType
      */

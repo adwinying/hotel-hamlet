@@ -16,6 +16,7 @@ class UpdateReservation
 
     /**
      * Update reservation
+     *
      * @param Reservation $reservation Reservation to be updated
      * @param array       $params      Data to update
      * @return App\Models\Reservation

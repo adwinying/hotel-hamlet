@@ -11,6 +11,7 @@ use Tests\ValidationTestCase;
 class ProfileRequestTest extends ValidationTestCase
 {
     protected $oldPassword = 'password';
+
     protected $newPassword = 'password2';
 
     protected function setUp(): void
