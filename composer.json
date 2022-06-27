@@ -73,7 +73,8 @@
         "lint": [
             "@phpcbf",
             "@phpcs",
-            "@pint"
+            "@pint",
+            "@phpstan"
         ]
     }
 }
