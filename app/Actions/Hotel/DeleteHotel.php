@@ -11,7 +11,7 @@ class DeleteHotel
      *
      * @param Hotel $hotel Hotel to be deleted
      */
-    public function execute(Hotel $hotel): bool
+    public function execute(Hotel $hotel): ?bool
     {
         return $hotel->delete();
     }

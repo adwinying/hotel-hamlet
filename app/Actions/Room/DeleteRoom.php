@@ -11,7 +11,7 @@ class DeleteRoom
      *
      * @param Room $room Room to be deleted
      */
-    public function execute(Room $room): bool
+    public function execute(Room $room): ?bool
     {
         return $room->delete();
     }

@@ -10,6 +10,7 @@ class GetUserSidebar
      * Get user's sidebar items
      *
      * @param User $user Target user
+     * @return array<int, array<string, string>>
      */
     public function execute(User $user): array
     {

@@ -9,8 +9,7 @@ class CreateRoom
     /**
      * Create room
      *
-     * @param array $params Data to create
-     * @return App\Models\Room
+     * @param array<string, mixed> $input Data to create
      */
     public function execute(array $input = []): Room
     {

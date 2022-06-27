@@ -3,22 +3,22 @@
 namespace App\Actions\RoomType;
 
 use App\Actions\FilterModel;
+use App\Models\RoomType;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 
 class FilterRoomType
 {
-    protected $filter;
-
-    public function __construct(FilterModel $filterModel)
-    {
-        $this->filter = $filterModel;
+    public function __construct(
+        protected FilterModel $filter,
+    ) {
     }
 
     /**
      * Filter room type params
      *
-     * @param array $params Parameters to filter
-     * @return Illuminate\Database\Eloquent\Builder
+     * @param QueryBuilder<RoomType> $query  Query builder
+     * @param array<string, ?scalar> $params Parameters to filter
+     * @return QueryBuilder<RoomType>
      */
     public function execute(QueryBuilder $query, array $params = []): QueryBuilder
     {

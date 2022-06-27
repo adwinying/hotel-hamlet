@@ -34,14 +34,14 @@ class HandleInertiaRequests extends Middleware
      *
      * @see https://inertiajs.com/shared-data
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function share(Request $request)
     {
         $getSidebarItems = app(GetUserSidebar::class);
 
         return array_merge(parent::share($request), [
-            'sidebarItems' => auth()->check()
+            'sidebarItems' => auth()->user()
                 ? $getSidebarItems->execute(auth()->user())
                 : null,
             'userInfo' => [

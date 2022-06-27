@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
 class FilterModel
@@ -10,9 +11,12 @@ class FilterModel
     /**
      * Filter Models
      *
-     * @param array $params    Parameters to filter (LIKE search)
-     * @param array $exactKeys Parameters to filter (= search)
-     * @return Illuminate\Database\Eloquent\Builder
+     * @template T of Model
+     *
+     * @param QueryBuilder<T>        $query     QueryBuilder
+     * @param array<string, ?scalar> $params    Parameters to filter (LIKE search)
+     * @param array<int, string>     $exactKeys Parameters to filter (= search)
+     * @return QueryBuilder<T>
      */
     public function execute(QueryBuilder $query, array $params = [], array $exactKeys = []): QueryBuilder
     {
@@ -26,7 +30,12 @@ class FilterModel
         return $query;
     }
 
-    protected function addFilters(QueryBuilder $query, string $table, array $params)
+    /**
+     * @param QueryBuilder<Model>    $query  Query builder
+     * @param string                 $table  Table name
+     * @param array<string, ?scalar> $params Params to filter
+     */
+    protected function addFilters(QueryBuilder $query, string $table, array $params): void
     {
         foreach ($params as $param => $value) {
             if ($value === 'null') {
@@ -43,7 +52,12 @@ class FilterModel
         }
     }
 
-    protected function addExactFilters(QueryBuilder $query, string $table, array $params)
+    /**
+     * @param QueryBuilder<Model>    $query  Query builder
+     * @param string                 $table  Table name
+     * @param array<string, ?scalar> $params Params to filter
+     */
+    protected function addExactFilters(QueryBuilder $query, string $table, array $params): void
     {
         foreach ($params as $param => $value) {
             if ($value === 'null') {

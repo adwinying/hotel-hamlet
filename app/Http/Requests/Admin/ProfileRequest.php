@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Validator;
 
 class ProfileRequest extends FormRequest
 {
@@ -20,7 +21,7 @@ class ProfileRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function rules()
     {
@@ -35,7 +36,7 @@ class ProfileRequest extends FormRequest
     /**
      * Get the attributes for the defined validation rules.
      *
-     * @return array
+     * @return array<string, string>
      */
     public function attributes()
     {
@@ -49,20 +50,24 @@ class ProfileRequest extends FormRequest
      *
      * @param \Illuminate\Validation\Validator $validator
      */
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
         $validator->after(function ($validator) {
-            if ($this->input('old_password')) {
-                $this->checkCurrentPasswordValid($validator);
-            }
+            $this->checkCurrentPasswordValid($validator);
         });
     }
 
-    protected function checkCurrentPasswordValid($validator)
+    protected function checkCurrentPasswordValid(Validator $validator): void
     {
+        $oldPassword = $this->input('old_password');
+
+        if (!is_string($oldPassword)) {
+            return;
+        }
+
         $isPasswordValid = Hash::check(
-            $this->input('old_password'),
-            auth()->user()->password,
+            $oldPassword,
+            auth()->user()?->password ?? '',
         );
 
         if (!$isPasswordValid) {
