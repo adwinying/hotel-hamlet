@@ -24,6 +24,6 @@
   @endif
   @routes
   @inertia
-  @vite
+  @vite('resources/js/app.ts')
 </body>
 </html>

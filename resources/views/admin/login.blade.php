@@ -28,7 +28,7 @@
       <div>
         <img
           class="mx-auto h-24 w-auto"
-          src="{{ vite_asset('/img/logo.svg') }}"
+          src="/img/logo.svg"
           alt="Hotel Hamlet Logo">
         <h2 class="mt-6 text-center text-3xl font-display text-gray-900">
           Hotel Hamlet Admin Login
@@ -94,6 +94,6 @@
   @if(app()->environment('local'))
     <script>window.global = window;</script>
   @endif
-  @vite
+  @vite('resources/css/app.css')
 </body>
 </html>
