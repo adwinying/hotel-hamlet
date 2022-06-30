@@ -23,6 +23,7 @@
         "laravel/pint": "^0.1.7",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^6.1",
+        "nunomaduro/larastan": "^2.0",
         "phpunit/phpunit": "^9.3.3",
         "spatie/laravel-ignition": "^1.0",
         "squizlabs/php_codesniffer": "^3.5"
@@ -68,10 +69,12 @@
         "phpcs": "phpcs --standard=phpcs.xml",
         "phpcbf": "phpcbf --standard=phpcs.xml",
         "pint": "pint -v",
+        "phpstan": "phpstan analyse --memory-limit=256M",
         "lint": [
             "@phpcbf",
             "@phpcs",
-            "@pint"
+            "@pint",
+            "@phpstan"
         ]
     }
 }

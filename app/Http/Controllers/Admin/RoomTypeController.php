@@ -9,19 +9,22 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\RoomTypeRequest;
 use App\Models\Hotel;
 use App\Models\RoomType;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class RoomTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): Response
     {
-        $sort  = request()->input('sort', 'id');
+        /** @var string */
+        $sort = request()->input('sort', 'id');
+        /** @var 'asc'|'desc' */
         $order = request()->input('order', 'asc');
+        /** @var int */
         $count = request()->input('count', 20);
 
         $queryParams = [
@@ -46,10 +49,8 @@ class RoomTypeController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('RoomType/Form', [
             'hotels' => fn () => Hotel::all(['id', 'name']),
@@ -58,13 +59,12 @@ class RoomTypeController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function store(
         RoomTypeRequest $request,
         CreateRoomType $createRoomType
-    ) {
+    ): RedirectResponse {
+        /** @var array<string, mixed> */
         $input = $request->validated();
 
         $roomType = $createRoomType->execute($input);
@@ -75,10 +75,8 @@ class RoomTypeController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function show(RoomType $roomType)
+    public function show(RoomType $roomType): Response
     {
         return Inertia::render('RoomType/Form', [
             'roomType' => [
@@ -93,14 +91,13 @@ class RoomTypeController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function update(
         RoomTypeRequest $request,
         RoomType $roomType,
         UpdateRoomType $updateRoomType
-    ) {
+    ): RedirectResponse {
+        /** @var array<string, mixed> */
         $input = $request->validated();
 
         $updateRoomType->execute($roomType, $input);
@@ -110,11 +107,11 @@ class RoomTypeController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(RoomType $roomType, DeleteRoomType $deleteRoomType)
-    {
+    public function destroy(
+        RoomType $roomType,
+        DeleteRoomType $deleteRoomType,
+    ): RedirectResponse {
         $deleteRoomType->execute($roomType);
 
         return redirect()->route('room_types.index')

@@ -9,9 +9,8 @@ class UpdateHotel
     /**
      * Update hotel
      *
-     * @param Hotel $hotel  Hotel to be updated
-     * @param array $params Data to update
-     * @return App\Models\Hotel
+     * @param Hotel                $hotel Hotel to be updated
+     * @param array<string, mixed> $input Data to update
      */
     public function execute(Hotel $hotel, array $input = []): Hotel
     {

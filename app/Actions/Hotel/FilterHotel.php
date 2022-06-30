@@ -3,22 +3,22 @@
 namespace App\Actions\Hotel;
 
 use App\Actions\FilterModel;
+use App\Models\Hotel;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 
 class FilterHotel
 {
-    protected $filter;
-
-    public function __construct(FilterModel $filterModel)
-    {
-        $this->filter = $filterModel;
+    public function __construct(
+        protected FilterModel $filter,
+    ) {
     }
 
     /**
      * Filter hotel params
      *
-     * @param array $params Parameters to filter
-     * @return Illuminate\Database\Eloquent\Builder
+     * @param QueryBuilder<Hotel>    $query  Query builder
+     * @param array<string, ?scalar> $params Parameters to filter
+     * @return QueryBuilder<Hotel>
      */
     public function execute(QueryBuilder $query, array $params = []): QueryBuilder
     {

@@ -9,8 +9,7 @@ class CreateHotel
     /**
      * Create hotel
      *
-     * @param array $params Data to create
-     * @return App\Models\Hotel
+     * @param array<string, mixed> $input Data to create
      */
     public function execute(array $input = []): Hotel
     {

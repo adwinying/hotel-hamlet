@@ -36,6 +36,9 @@ jobs:
     - name: Run pint linter
       run: vendor/bin/pint -v --test
 
+    - name: Run phpstan static analysis
+      run: vendor/bin/phpstan analyse --memory-limit=256M
+
 
   test:
     name: Test

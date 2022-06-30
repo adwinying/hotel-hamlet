@@ -8,19 +8,22 @@ use App\Actions\Hotel\UpdateHotel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\HotelRequest;
 use App\Models\Hotel;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class HotelController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): Response
     {
-        $sort  = request()->input('sort', 'id');
+        /** @var string */
+        $sort = request()->input('sort', 'id');
+        /** @var 'asc'|'desc' */
         $order = request()->input('order', 'asc');
+        /** @var int */
         $count = request()->input('count', 20);
 
         $queryParams = [
@@ -43,21 +46,20 @@ class HotelController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('Hotel/Form');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(HotelRequest $request, CreateHotel $createHotel)
-    {
+    public function store(
+        HotelRequest $request,
+        CreateHotel $createHotel,
+    ): RedirectResponse {
+        /** @var array<string, mixed> */
         $input = $request->validated();
 
         $hotel = $createHotel->execute($input);
@@ -68,10 +70,8 @@ class HotelController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function show(Hotel $hotel)
+    public function show(Hotel $hotel): Response
     {
         return Inertia::render('Hotel/Form', [
             'hotel' => [
@@ -84,14 +84,13 @@ class HotelController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function update(
         HotelRequest $request,
         Hotel $hotel,
         UpdateHotel $updateHotel
-    ) {
+    ): RedirectResponse {
+        /** @var array<string, mixed> */
         $input = $request->validated();
 
         $updateHotel->execute($hotel, $input);
@@ -101,11 +100,11 @@ class HotelController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(Hotel $hotel, DeleteHotel $deleteHotel)
-    {
+    public function destroy(
+        Hotel $hotel,
+        DeleteHotel $deleteHotel
+    ): RedirectResponse {
         $deleteHotel->execute($hotel);
 
         return redirect()->route('hotels.index')

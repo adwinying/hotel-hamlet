@@ -9,9 +9,8 @@ class UpdateRoom
     /**
      * Update room
      *
-     * @param Room  $room   Room to be updated
-     * @param array $params Data to update
-     * @return App\Models\Room
+     * @param Room                 $room  Room to be updated
+     * @param array<string, mixed> $input Data to update
      */
     public function execute(Room $room, array $input = []): Room
     {

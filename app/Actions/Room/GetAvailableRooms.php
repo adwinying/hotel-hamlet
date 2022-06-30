@@ -20,6 +20,7 @@ class GetAvailableRooms
      * @param string      $checkInDate  Check In Date (Y-m-d)
      * @param string      $checkOutDate Check Out Date (Y-m-d)
      * @param Reservation $reservation  Existing reservation
+     * @return Collection<int, Room>
      */
     public function execute(
         RoomType $roomType,

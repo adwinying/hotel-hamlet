@@ -11,7 +11,7 @@ class DeleteRoomType
      *
      * @param RoomType $roomType Room type to be deleted
      */
-    public function execute(RoomType $roomType): bool
+    public function execute(RoomType $roomType): ?bool
     {
         return $roomType->delete();
     }

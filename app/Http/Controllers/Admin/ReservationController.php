@@ -11,19 +11,22 @@ use App\Http\Requests\Admin\ReservationRequest;
 use App\Models\Hotel;
 use App\Models\Reservation;
 use App\Models\RoomType;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ReservationController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): Response
     {
-        $sort  = request()->input('sort', 'id');
+        /** @var string */
+        $sort = request()->input('sort', 'id');
+        /** @var 'asc'|'desc' */
         $order = request()->input('order', 'asc');
+        /** @var int */
         $count = request()->input('count', 20);
 
         $queryParams = [
@@ -60,10 +63,8 @@ class ReservationController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('Reservation/Form', [
             'hotels'    => fn ()    => Hotel::all(['id', 'name']),
@@ -73,11 +74,12 @@ class ReservationController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(ReservationRequest $request, CreateReservation $create)
-    {
+    public function store(
+        ReservationRequest $request,
+        CreateReservation $create,
+    ): RedirectResponse {
+        /** @var array<string, mixed> */
         $input = $request->validated();
 
         try {
@@ -94,10 +96,8 @@ class ReservationController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function show(Reservation $reservation)
+    public function show(Reservation $reservation): Response
     {
         return Inertia::render('Reservation/Form', [
             'hotels'      => fn ()      => Hotel::all(['id', 'name']),
@@ -106,8 +106,8 @@ class ReservationController extends Controller
                 'id'             => $reservation->id,
                 'check_in_date'  => $reservation->check_in_date->format('Y-m-d'),
                 'check_out_date' => $reservation->check_out_date->format('Y-m-d'),
-                'hotel_id'       => $reservation->room->roomType->hotel_id,
-                'room_type_id'   => $reservation->room->room_type_id,
+                'hotel_id'       => $reservation->room?->roomType?->hotel_id,
+                'room_type_id'   => $reservation->room?->room_type_id,
                 'room_id'        => $reservation->room_id,
                 'guest_name'     => $reservation->guest_name,
                 'guest_email'    => $reservation->guest_email,
@@ -118,14 +118,13 @@ class ReservationController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function update(
         ReservationRequest $request,
         Reservation $reservation,
         UpdateReservation $updateReservation
-    ) {
+    ): RedirectResponse {
+        /** @var array<string, mixed> */
         $input = $request->validated();
 
         try {
@@ -141,11 +140,11 @@ class ReservationController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(Reservation $reservation, DeleteReservation $deleteReservation)
-    {
+    public function destroy(
+        Reservation $reservation,
+        DeleteReservation $deleteReservation,
+    ): RedirectResponse {
         $deleteReservation->execute($reservation);
 
         return redirect()->route('reservations.index')

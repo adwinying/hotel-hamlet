@@ -12,19 +12,23 @@ use App\Models\Hotel;
 use App\Models\Reservation;
 use App\Models\Room;
 use App\Models\RoomType;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class RoomController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): Response
     {
-        $sort  = request()->input('sort', 'id');
+        /** @var string */
+        $sort = request()->input('sort', 'id');
+        /** @var 'asc'|'desc' */
         $order = request()->input('order', 'asc');
+        /** @var int */
         $count = request()->input('count', 20);
 
         $queryParams = [
@@ -54,10 +58,8 @@ class RoomController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('Room/Form', [
             'hotels'    => fn ()    => Hotel::all(['id', 'name']),
@@ -67,11 +69,12 @@ class RoomController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(RoomRequest $request, CreateRoom $createRoom)
-    {
+    public function store(
+        RoomRequest $request,
+        CreateRoom $createRoom
+    ): RedirectResponse {
+        /** @var array<string, mixed> */
         $input = $request->validated();
 
         $room = $createRoom->execute($input);
@@ -82,15 +85,13 @@ class RoomController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function show(Room $room)
+    public function show(Room $room): Response
     {
         return Inertia::render('Room/Form', [
             'room' => [
                 'id'           => $room->id,
-                'hotel_id'     => $room->roomType->hotel_id,
+                'hotel_id'     => $room->roomType?->hotel_id,
                 'room_type_id' => $room->room_type_id,
                 'room_no'      => $room->room_no,
             ],
@@ -101,14 +102,13 @@ class RoomController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function update(
         RoomRequest $request,
         Room $room,
         UpdateRoom $updateRoom
-    ) {
+    ): RedirectResponse {
+        /** @var array<string, mixed> */
         $input = $request->validated();
 
         $updateRoom->execute($room, $input);
@@ -118,11 +118,11 @@ class RoomController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(Room $room, DeleteRoom $deleteRoom)
-    {
+    public function destroy(
+        Room $room,
+        DeleteRoom $deleteRoom,
+    ): RedirectResponse {
         $deleteRoom->execute($room);
 
         return redirect()->route('rooms.index')
@@ -131,14 +131,17 @@ class RoomController extends Controller
 
     /**
      * Get list of available rooms available on specified dates
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function getAvailableRooms(GetAvailableRooms $getAvailableRooms)
-    {
-        $roomTypeId    = request()->input('room_type_id');
-        $checkInDate   = request()->input('check_in_date');
-        $checkOutDate  = request()->input('check_out_date');
+    public function getAvailableRooms(
+        GetAvailableRooms $getAvailableRooms,
+    ): JsonResponse {
+        /** @var ?int */
+        $roomTypeId = request()->input('room_type_id');
+        /** @var ?string */
+        $checkInDate = request()->input('check_in_date');
+        /** @var ?string */
+        $checkOutDate = request()->input('check_out_date');
+        /** @var ?int */
         $reservationId = request()->input('reservation_id');
 
         if ($roomTypeId === null
@@ -158,7 +161,7 @@ class RoomController extends Controller
             $reservation
         );
 
-        return response()->json($availableRooms->map(fn ($room) => [
+        return response()->json($availableRooms->map(fn (Room $room) => [
             'id'           => $room->id,
             'room_type_id' => $room->room_type_id,
             'room_no'      => $room->room_no,

@@ -24,7 +24,7 @@ class LoginRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function rules()
     {
@@ -85,6 +85,9 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey()
     {
-        return Str::lower($this->input('email')) . '|' . $this->ip();
+        /** @var string */
+        $email = $this->input('email');
+
+        return Str::lower($email) . '|' . $this->ip();
     }
 }

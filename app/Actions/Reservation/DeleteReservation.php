@@ -11,7 +11,7 @@ class DeleteReservation
      *
      * @param Reservation $reservation Reservation to be deleted
      */
-    public function execute(Reservation $reservation): bool
+    public function execute(Reservation $reservation): ?bool
     {
         return $reservation->delete();
     }

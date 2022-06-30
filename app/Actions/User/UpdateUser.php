@@ -11,13 +11,14 @@ class UpdateUser
     /**
      * Update user info
      *
-     * @param User  $user  Target user
-     * @param array $input Data to update
+     * @param User                 $user  Target user
+     * @param array<string, mixed> $input Data to update
      */
     public function execute(User $user, array $input): bool
     {
         // Hash password before saving to DB
-        if ($password = Arr::pull($input, 'password')) {
+        $password = Arr::pull($input, 'password');
+        if ($password && is_string($password)) {
             $input['password'] = Hash::make($password);
         }
 
