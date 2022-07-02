@@ -6,25 +6,19 @@ WORKDIR /laravel
 ADD . .
 RUN composer install -q --no-interaction --no-progress --no-scripts --prefer-dist
 
-# Build app
-FROM node:14 AS node
-FROM php:8.1 AS build
-COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
-COPY --from=node /usr/local/include/node /usr/local/include/node
-COPY --from=node /usr/local/bin/node /usr/local/bin/node
-RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
+# Build frontend assets
+FROM node:14 AS js_build
 WORKDIR /laravel
 ADD . .
-COPY --from=php_deps /laravel/vendor /laravel/vendor
 RUN npm ci
-RUN NODE_ENV=production npm run quick-build
+RUN npm run quick-build
 
 # Build slim production image
 FROM base
 WORKDIR /var/www
 ADD . .
-COPY --from=build /laravel/vendor /var/www/vendor
-COPY --from=build /laravel/public/build /var/www/public/build
+COPY --from=php_deps /laravel/vendor /var/www/vendor
+COPY --from=js_build /laravel/public/build /var/www/public/build
 ADD ./.env.example ./.env
 RUN touch /var/www/database/database.db && \
   DB_CONNECTION=sqlite \
