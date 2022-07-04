@@ -7,7 +7,7 @@ ADD . .
 RUN composer install -q --no-interaction --no-progress --no-scripts --prefer-dist
 
 # Build frontend assets
-FROM node:14 AS js_build
+FROM node:16 AS js_build
 WORKDIR /laravel
 ADD . .
 RUN npm ci
