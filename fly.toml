@@ -1,17 +1,20 @@
-# fly.toml file generated for hotel-hamlet on 2022-06-16T10:41:29+09:00
+# fly.toml file generated for hotel-hamlet on 2022-08-20T14:19:18+09:00
 
 app = "hotel-hamlet"
-
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
+[build]
+  [build.args]
+    NODE_VERSION = "16"
+    PHP_VERSION = "8.1"
+
 [env]
-  PORT = "8080"
   APP_ENV = "production"
-  APP_DEBUG = false
-  APP_URL = "https://hotel-hamlet.fly.dev"
-  LOG_CHANNEL = "errorlog"
+  LOG_CHANNEL = "stderr"
+  LOG_LEVEL = "info"
+  LOG_STDERR_FORMATTER = "Monolog\\Formatter\\JsonFormatter"
 
 [experimental]
   allowed_public_ports = []
@@ -23,7 +26,6 @@ processes = []
   processes = ["app"]
   protocol = "tcp"
   script_checks = []
-
   [services.concurrency]
     hard_limit = 25
     soft_limit = 20
