@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  laravel:
+    image: serversideup/php:8.1-fpm-nginx
+    ports:
+      - '${APP_PORT:-8080}:80'
+    environment:
+      PUID: '${UID:-1001}'
+      PGID: '${GID:-1001}'
+      SSL_MODE: off
+      PHP_DATE_TIMEZONE: Asia/Tokyo
+    volumes:
+      - .:/var/www/html
+    networks:
+      - hotelhamletdev
+      - webdev
+
+networks:
+  hotelhamletdev:
+    driver: bridge
+  webdev:
+    external: true
