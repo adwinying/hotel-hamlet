@@ -55,7 +55,7 @@ COPY --from=base /var/www/html/vendor /app/vendor
 # lock file we might find. Defaults to
 # NPM if no lock file is found.
 # Note: We run "production" for Mix and "build" for Vite
-RUN if [ -f "vite.config.js" ]; then \
+RUN if [ -f "vite.config.ts" ]; then \
         ASSET_CMD="build"; \
     else \
         ASSET_CMD="production"; \
