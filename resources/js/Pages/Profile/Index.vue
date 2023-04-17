@@ -1,5 +1,5 @@
 <template>
-  <page title="Profile Settings">
+  <Page title="Profile Settings">
     <form @submit.prevent="onFormSubmit">
       <div class="grid grid-cols-6 gap-6">
         <InputText
@@ -50,14 +50,15 @@
         </LoadingButton>
       </div>
     </form>
-  </page>
+  </Page>
 </template>
 
 <script setup lang="ts">
 import { PropType } from 'vue'
-import { useForm } from '@inertiajs/inertia-vue3'
+import { useForm } from '@inertiajs/vue3'
 import { showToast } from '@/composables/useAlert'
 
+import Page from '@/components/Page.vue'
 import InputText from '@/components/InputText.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 

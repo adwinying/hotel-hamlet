@@ -1,14 +1,16 @@
 <template>
   <td :class="{ 'border-t': border }">
-    <InertiaLink
+    <Link
       :href="href"
       class="flex items-center p-4">
       <slot />
-    </InertiaLink>
+    </Link>
   </td>
 </template>
 
 <script setup lang="ts">
+import { Link } from '@inertiajs/vue3'
+
 defineProps({
   href: {
     type: String,

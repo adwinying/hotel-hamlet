@@ -83,7 +83,7 @@ import { toRefs } from '@vueuse/core'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/solid'
 
 import PaginationParams from '@/types/PaginationParams'
-import { usePage } from '@inertiajs/inertia-vue3'
+import { usePage } from '@inertiajs/vue3'
 
 const props = defineProps({
   paginationParams: {
@@ -136,7 +136,7 @@ const pagesToShow = computed(() => {
 })
 
 const generatePageHref = (page: string): string => {
-  const url = usePage().url.value
+  const { url } = usePage()
   const pageRegexp = /page=\d*/
 
   if (!url.includes('?')) return `${url}?page=${page}`

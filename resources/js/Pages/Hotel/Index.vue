@@ -1,5 +1,5 @@
 <template>
-  <page title="Hotels">
+  <Page title="Hotels">
     <IndexSearchWrapper>
       <InputText
         v-model="searchParams.name"
@@ -30,7 +30,7 @@
       :data="result.data" />
 
     <ResultPagination :pagination-params="paginationParams" />
-  </page>
+  </Page>
 </template>
 
 <script setup lang="ts">
@@ -43,6 +43,7 @@ import DropdownOption from '@/types/DropdownOption'
 import usePagination from '@/composables/usePagination'
 import useIndexSearch from '@/composables/useIndexSearch'
 
+import Page from '@/components/Page.vue'
 import IndexSearchWrapper from '@/components/IndexSearchWrapper.vue'
 import InputText from '@/components/InputText.vue'
 import InputDropdown from '@/components/InputDropdown.vue'

@@ -1,5 +1,5 @@
 <template>
-  <page :title="pageTitle">
+  <Page :title="pageTitle">
     <form @submit.prevent="onFormSubmit">
       <div class="grid grid-cols-6 gap-6">
         <InputText
@@ -39,7 +39,7 @@
         </div>
       </div>
     </form>
-  </page>
+  </Page>
 </template>
 
 <script setup lang="ts">
@@ -49,6 +49,7 @@ import { TrashIcon } from '@heroicons/vue/outline'
 import Hotel from '@/types/Models/Hotel'
 import useForm from '@/composables/useForm'
 
+import Page from '@/components/Page.vue'
 import InputText from '@/components/InputText.vue'
 import InputCheckbox from '@/components/InputCheckbox.vue'
 import LoadingButton from '@/components/LoadingButton.vue'

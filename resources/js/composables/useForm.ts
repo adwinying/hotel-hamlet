@@ -1,11 +1,11 @@
 import { computed, ComputedRef, Ref } from 'vue'
 import route from 'ziggy-js'
-import { InertiaForm, useForm as useInertiaForm } from '@inertiajs/inertia-vue3'
+import { InertiaForm, useForm as useInertiaForm } from '@inertiajs/vue3'
 
 import { showToast } from '@/composables/useAlert'
 import Model from '@/types/Models/Model'
 
-interface UseForm<TForm> {
+interface UseForm<TForm extends Record<string, unknown>> {
   form: InertiaForm<TForm>
   objectId: ComputedRef<number | null>
   isEditForm: ComputedRef<boolean>

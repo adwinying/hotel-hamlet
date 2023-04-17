@@ -1,6 +1,6 @@
 <template>
   <div>
-    <InertiaLink
+    <Link
       :href="url"
       :class="{ 'bg-gray-200': isActive, 'text-gray-500': !isActive }"
       class="flex items-center space-x-2 rounded p-3 font-bold hover:bg-cyan-100">
@@ -11,12 +11,13 @@
       <span>
         {{ name }}
       </span>
-    </InertiaLink>
+    </Link>
   </div>
 </template>
 
 <script setup lang="ts">
 import { RenderFunction } from 'vue'
+import { Link } from '@inertiajs/vue3'
 import {
   HomeIcon,
   OfficeBuildingIcon,
