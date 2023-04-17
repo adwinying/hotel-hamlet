@@ -1,6 +1,6 @@
 <template>
   <div class="fixed h-14 w-full bg-white shadow-md">
-    <div class="absolute top-0 left-0 bottom-0 w-14 p-3">
+    <div class="absolute bottom-0 left-0 top-0 w-14 p-3">
       <a href="#">
         <MenuIcon
           class="h-full"
