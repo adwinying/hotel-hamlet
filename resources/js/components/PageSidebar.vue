@@ -6,7 +6,7 @@
   <div
     v-bind="$attrs"
     class="h-screen w-72 border-r border-gray-200 bg-white transition-all">
-    <div class="absolute top-0 right-0 mx-4 my-8 w-8 md:hidden">
+    <div class="absolute right-0 top-0 mx-4 my-8 w-8 md:hidden">
       <a
         href="#"
         @click.prevent="onCloseClick">
