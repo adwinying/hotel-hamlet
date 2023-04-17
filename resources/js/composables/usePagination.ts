@@ -1,4 +1,5 @@
 import { reactive, Ref, watch } from 'vue'
+
 import PaginationParams from '@/types/PaginationParams'
 
 interface UsePagination {

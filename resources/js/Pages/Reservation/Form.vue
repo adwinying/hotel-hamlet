@@ -92,22 +92,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed, PropType, ref, toRef, watch } from 'vue'
 import { TrashIcon } from '@heroicons/vue/outline'
+import { computed, PropType, ref, toRef, watch } from 'vue'
 
-import DropdownOption from '@/types/DropdownOption'
 import { fetchAvailableRooms } from '@/api/room'
-import Hotel from '@/types/Models/Hotel'
-import RoomType from '@/types/Models/RoomType'
-import Room from '@/types/Models/Room'
-import Reservation from '@/types/Models/Reservation'
-import useForm from '@/composables/useForm'
-
-import Page from '@/components/Page.vue'
 import InputDropdown from '@/components/InputDropdown.vue'
 import InputText from '@/components/InputText.vue'
 import InputTextbox from '@/components/InputTextbox.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
+import Page from '@/components/Page.vue'
+import useForm from '@/composables/useForm'
+import DropdownOption from '@/types/DropdownOption'
+import Hotel from '@/types/Models/Hotel'
+import Reservation from '@/types/Models/Reservation'
+import Room from '@/types/Models/Room'
+import RoomType from '@/types/Models/RoomType'
 
 const props = defineProps({
   reservation: {

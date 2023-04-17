@@ -43,16 +43,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, PropType, toRef } from 'vue'
 import { TrashIcon } from '@heroicons/vue/outline'
+import { computed, PropType, toRef } from 'vue'
 
-import Hotel from '@/types/Models/Hotel'
-import useForm from '@/composables/useForm'
-
-import Page from '@/components/Page.vue'
-import InputText from '@/components/InputText.vue'
 import InputCheckbox from '@/components/InputCheckbox.vue'
+import InputText from '@/components/InputText.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
+import Page from '@/components/Page.vue'
+import useForm from '@/composables/useForm'
+import Hotel from '@/types/Models/Hotel'
 
 const props = defineProps({
   hotel: {

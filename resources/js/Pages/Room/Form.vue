@@ -53,19 +53,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ComputedRef, PropType, toRef, watch } from 'vue'
 import { TrashIcon } from '@heroicons/vue/outline'
+import { computed, ComputedRef, PropType, toRef, watch } from 'vue'
 
-import DropdownOption from '@/types/DropdownOption'
-import Hotel from '@/types/Models/Hotel'
-import RoomType from '@/types/Models/RoomType'
-import Room from '@/types/Models/Room'
-import useForm from '@/composables/useForm'
-
-import Page from '@/components/Page.vue'
 import InputDropdown from '@/components/InputDropdown.vue'
 import InputText from '@/components/InputText.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
+import Page from '@/components/Page.vue'
+import useForm from '@/composables/useForm'
+import DropdownOption from '@/types/DropdownOption'
+import Hotel from '@/types/Models/Hotel'
+import Room from '@/types/Models/Room'
+import RoomType from '@/types/Models/RoomType'
 
 const props = defineProps({
   room: {

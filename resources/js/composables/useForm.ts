@@ -1,6 +1,6 @@
+import { InertiaForm, useForm as useInertiaForm } from '@inertiajs/vue3'
 import { computed, ComputedRef, Ref } from 'vue'
 import route from 'ziggy-js'
-import { InertiaForm, useForm as useInertiaForm } from '@inertiajs/vue3'
 
 import { showToast } from '@/composables/useAlert'
 import Model from '@/types/Models/Model'

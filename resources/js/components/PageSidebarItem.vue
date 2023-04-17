@@ -16,8 +16,6 @@
 </template>
 
 <script setup lang="ts">
-import { RenderFunction } from 'vue'
-import { Link } from '@inertiajs/vue3'
 import {
   HomeIcon,
   OfficeBuildingIcon,
@@ -26,6 +24,8 @@ import {
   BookOpenIcon,
   UserCircleIcon,
 } from '@heroicons/vue/outline'
+import { Link } from '@inertiajs/vue3'
+import { RenderFunction } from 'vue'
 
 defineProps({
   isActive: {

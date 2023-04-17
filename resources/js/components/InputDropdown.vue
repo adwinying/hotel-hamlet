@@ -30,10 +30,11 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue'
 import { useVModel } from '@vueuse/core'
-import InputData from '@/types/InputData'
+import { PropType } from 'vue'
+
 import DropdownOption from '@/types/DropdownOption'
+import InputData from '@/types/InputData'
 
 const props = defineProps({
   modelValue: {

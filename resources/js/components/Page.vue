@@ -39,15 +39,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
 import { usePage } from '@inertiajs/vue3'
-import SidebarItem from '@/types/SidebarItem'
+import { computed, ref } from 'vue'
 
-import PageSidebar from '@/components/PageSidebar.vue'
-import PageNavbar from '@/components/PageNavbar.vue'
-import PageHeader from '@/components/PageHeader.vue'
-import PageContent from '@/components/PageContent.vue'
 import PageCard from '@/components/PageCard.vue'
+import PageContent from '@/components/PageContent.vue'
+import PageHeader from '@/components/PageHeader.vue'
+import PageNavbar from '@/components/PageNavbar.vue'
+import PageSidebar from '@/components/PageSidebar.vue'
+import SidebarItem from '@/types/SidebarItem'
 
 interface CommonPageProps extends Record<string, unknown> {
   sidebarItems?: SidebarItem[]

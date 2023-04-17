@@ -54,13 +54,13 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue'
 import { useForm } from '@inertiajs/vue3'
-import { showToast } from '@/composables/useAlert'
+import { PropType } from 'vue'
 
-import Page from '@/components/Page.vue'
 import InputText from '@/components/InputText.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
+import Page from '@/components/Page.vue'
+import { showToast } from '@/composables/useAlert'
 
 interface Profile {
   name: string
