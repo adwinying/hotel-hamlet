@@ -9,6 +9,8 @@
         "target": "esnext",
         "module": "esnext",
         "strict": true,
+        "noEmit": true,
+        "skipLibCheck": true,
         "jsx": "preserve",
         "moduleResolution": "node",
         "allowSyntheticDefaultImports": true,

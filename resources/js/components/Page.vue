@@ -39,8 +39,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ComputedRef, ref } from 'vue'
-import { usePage } from '@inertiajs/inertia-vue3'
+import { computed, ref } from 'vue'
+import { usePage } from '@inertiajs/vue3'
 import SidebarItem from '@/types/SidebarItem'
 
 import PageSidebar from '@/components/PageSidebar.vue'
@@ -49,7 +49,7 @@ import PageHeader from '@/components/PageHeader.vue'
 import PageContent from '@/components/PageContent.vue'
 import PageCard from '@/components/PageCard.vue'
 
-interface CommonPageProps {
+interface CommonPageProps extends Record<string, unknown> {
   sidebarItems?: SidebarItem[]
   userInfo?: {
     name: string
@@ -73,20 +73,17 @@ defineProps({
   },
 })
 
-const { props, url } = usePage()
-const pageProps: ComputedRef<CommonPageProps> = props
+const { props, url } = usePage<CommonPageProps>()
 
-const sidebarItems = computed(() => pageProps.value.sidebarItems ?? [])
+const sidebarItems = computed(() => props.sidebarItems ?? [])
 
 const activeSidebarItem = computed(() => {
-  const path = url.value
-
-  if (/^\/admin\/hotels.*$/.test(path)) return 'Hotels'
-  if (/^\/admin\/rooms.*$/.test(path)) return 'Rooms'
-  if (/^\/admin\/room_types.*$/.test(path)) return 'Room Types'
-  if (/^\/admin\/reservations.*$/.test(path)) return 'Reservations'
-  if (/^\/admin\/profile$/.test(path)) return 'Profile'
-  if (/^\/admin$/.test(path)) return 'Dashboard'
+  if (/^\/admin\/hotels.*$/.test(url)) return 'Hotels'
+  if (/^\/admin\/rooms.*$/.test(url)) return 'Rooms'
+  if (/^\/admin\/room_types.*$/.test(url)) return 'Room Types'
+  if (/^\/admin\/reservations.*$/.test(url)) return 'Reservations'
+  if (/^\/admin\/profile$/.test(url)) return 'Profile'
+  if (/^\/admin$/.test(url)) return 'Dashboard'
 
   return undefined
 })
@@ -99,5 +96,5 @@ const hideSidebar = () => {
   isSidebarActive.value = false
 }
 
-const userName = computed(() => pageProps.value.userInfo?.name)
+const userName = computed(() => props.userInfo?.name)
 </script>

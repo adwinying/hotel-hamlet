@@ -1,5 +1,5 @@
 <template>
-  <page :title="pageTitle">
+  <Page :title="pageTitle">
     <form @submit.prevent="onFormSubmit">
       <div class="grid grid-cols-6 gap-6">
         <InputDropdown
@@ -49,7 +49,7 @@
         </div>
       </div>
     </form>
-  </page>
+  </Page>
 </template>
 
 <script setup lang="ts">
@@ -62,6 +62,7 @@ import RoomType from '@/types/Models/RoomType'
 import Room from '@/types/Models/Room'
 import useForm from '@/composables/useForm'
 
+import Page from '@/components/Page.vue'
 import InputDropdown from '@/components/InputDropdown.vue'
 import InputText from '@/components/InputText.vue'
 import LoadingButton from '@/components/LoadingButton.vue'

@@ -1,5 +1,5 @@
 import { reactive } from 'vue'
-import { Inertia } from '@inertiajs/inertia'
+import { router } from '@inertiajs/vue3'
 import { debouncedWatch } from '@vueuse/core'
 
 import SearchParams from '@/types/SearchParams'
@@ -19,7 +19,7 @@ export default function useIndexSearch<TParams extends SearchParams>(
   })
 
   const applySearchParams = () => {
-    Inertia.visit(window.location.pathname, {
+    router.visit(window.location.pathname, {
       data: searchParams,
       replace: true,
       preserveState: true,

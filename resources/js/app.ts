@@ -1,33 +1,24 @@
-import { Component, createApp, h } from 'vue'
-import { App, plugin } from '@inertiajs/inertia-vue3'
-import { InertiaProgress } from '@inertiajs/progress'
+import { createApp, DefineComponent, h } from 'vue'
+import { createInertiaApp } from '@inertiajs/vue3'
 
 import '../css/app.css'
-import Page from './components/Page.vue'
 
-const el = document.getElementById('app')
+const app = createInertiaApp({
+  resolve(name: string) {
+    const pages = import.meta.glob<boolean, string, DefineComponent>(
+      './Pages/**/*.vue',
+    )
 
-const app = createApp({
-  render: () =>
-    h(App, {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      initialPage: JSON.parse(el?.dataset.page ?? ''),
-      resolveComponent: async (name: string) => {
-        const pages = import.meta.glob('./Pages/**/*.vue')
-        const module = await pages[`./Pages/${name}.vue`]()
-
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return module.default
-      },
-    }),
-})
-
-app.use(plugin)
-app.mount(el ?? '#app')
-app.component('Page', Page as Component)
-
-InertiaProgress.init({
-  showSpinner: true,
+    return pages[`./Pages/${name}.vue`]()
+  },
+  setup({ el, App, props, plugin }) {
+    createApp({ render: () => h(App, props) })
+      .use(plugin)
+      .mount(el)
+  },
+  progress: {
+    showSpinner: true,
+  },
 })
 
 export default app
