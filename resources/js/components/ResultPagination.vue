@@ -78,12 +78,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, PropType } from 'vue'
-import { toRefs } from '@vueuse/core'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/solid'
+import { usePage } from '@inertiajs/vue3'
+import { toRefs } from '@vueuse/core'
+import { computed, PropType } from 'vue'
 
 import PaginationParams from '@/types/PaginationParams'
-import { usePage } from '@inertiajs/vue3'
 
 const props = defineProps({
   paginationParams: {

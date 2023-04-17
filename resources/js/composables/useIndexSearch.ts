@@ -1,9 +1,9 @@
-import { reactive } from 'vue'
 import { router } from '@inertiajs/vue3'
 import { debouncedWatch } from '@vueuse/core'
+import { reactive } from 'vue'
 
-import SearchParams from '@/types/SearchParams'
 import InputData from '@/types/InputData'
+import SearchParams from '@/types/SearchParams'
 
 interface UseIndexSearch<TParams> {
   searchParams: TParams

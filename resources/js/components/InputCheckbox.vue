@@ -24,8 +24,8 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue'
 import { useVModel } from '@vueuse/core'
+import { PropType } from 'vue'
 
 const props = defineProps({
   modelValue: {

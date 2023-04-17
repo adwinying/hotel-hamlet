@@ -53,10 +53,11 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue'
 import { LogoutIcon, XIcon } from '@heroicons/vue/outline'
-import SidebarItem from '@/types/SidebarItem'
+import { PropType } from 'vue'
+
 import PageSidebarItem from '@/components/PageSidebarItem.vue'
+import SidebarItem from '@/types/SidebarItem'
 
 const props = defineProps({
   isActive: {

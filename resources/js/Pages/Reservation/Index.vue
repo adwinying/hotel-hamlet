@@ -61,27 +61,26 @@
 </template>
 
 <script setup lang="ts">
+import { PlusIcon } from '@heroicons/vue/solid'
 import { computed, ComputedRef, PropType, toRef, watch } from 'vue'
 import route from 'ziggy-js'
-import { PlusIcon } from '@heroicons/vue/solid'
 
-import ResultTableField from '@/types/ResultTableField'
-import ResultTableFormatter from '@/types/ResultTableFormatter'
+import IndexSearchWrapper from '@/components/IndexSearchWrapper.vue'
+import InputDropdown from '@/components/InputDropdown.vue'
+import InputText from '@/components/InputText.vue'
+import LoadingButton from '@/components/LoadingButton.vue'
+import Page from '@/components/Page.vue'
+import ResultCtaWrapper from '@/components/ResultCtaWrapper.vue'
+import ResultPagination from '@/components/ResultPagination.vue'
+import ResultTable from '@/components/ResultTable.vue'
+import useIndexSearch from '@/composables/useIndexSearch'
+import usePagination from '@/composables/usePagination'
 import DropdownOption from '@/types/DropdownOption'
 import Hotel from '@/types/Models/Hotel'
-import RoomType from '@/types/Models/RoomType'
 import Reservation from '@/types/Models/Reservation'
-import usePagination from '@/composables/usePagination'
-import useIndexSearch from '@/composables/useIndexSearch'
-
-import Page from '@/components/Page.vue'
-import IndexSearchWrapper from '@/components/IndexSearchWrapper.vue'
-import InputText from '@/components/InputText.vue'
-import InputDropdown from '@/components/InputDropdown.vue'
-import ResultTable from '@/components/ResultTable.vue'
-import ResultPagination from '@/components/ResultPagination.vue'
-import ResultCtaWrapper from '@/components/ResultCtaWrapper.vue'
-import LoadingButton from '@/components/LoadingButton.vue'
+import RoomType from '@/types/Models/RoomType'
+import ResultTableField from '@/types/ResultTableField'
+import ResultTableFormatter from '@/types/ResultTableFormatter'
 
 const props = defineProps({
   query: {

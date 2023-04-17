@@ -28,17 +28,16 @@
 </template>
 
 <script setup lang="ts">
+import { ChevronRightIcon } from '@heroicons/vue/solid'
 import { PropType } from 'vue'
 import route from 'ziggy-js'
-import { ChevronRightIcon } from '@heroicons/vue/solid'
-
-import Model from '@/types/Models/Model'
-import ResultTableField from '@/types/ResultTableField'
 
 import ResultTableCell from '@/components/ResultTableCell.vue'
 import ResultTableHeader from '@/components/ResultTableHeader.vue'
 import ResultTableRow from '@/components/ResultTableRow.vue'
 import ResultTableWrapper from '@/components/ResultTableWrapper.vue'
+import Model from '@/types/Models/Model'
+import ResultTableField from '@/types/ResultTableField'
 
 const props = defineProps({
   fields: {
