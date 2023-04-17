@@ -8,7 +8,7 @@ processes = []
 [build]
   [build.args]
     NODE_VERSION = "16"
-    PHP_VERSION = "8.1"
+    PHP_VERSION = "8.2"
 
 [env]
   APP_ENV = "production"
@@ -17,10 +17,11 @@ processes = []
   LOG_STDERR_FORMATTER = "Monolog\\Formatter\\JsonFormatter"
 
 [experimental]
-  allowed_public_ports = []
   auto_rollback = true
 
 [[services]]
+  autostart = true
+  autostop = false
   http_checks = []
   internal_port = 8080
   processes = ["app"]

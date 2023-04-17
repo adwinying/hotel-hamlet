@@ -5,42 +5,39 @@
 # Valid version values are PHP 7.4+
 ARG PHP_VERSION=8.2
 ARG NODE_VERSION=16
-FROM serversideup/php:${PHP_VERSION}-fpm-nginx as base
+FROM fideloper/fly-laravel:${PHP_VERSION} as base
+
+# PHP_VERSION needs to be repeated here
+# See https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
+ARG PHP_VERSION
 
 LABEL fly_launch_runtime="laravel"
 
-RUN apt-get update && apt-get install -y \
-    git curl zip unzip rsync ca-certificates vim htop cron \
-    php${DOCKER_VERSION}-swoole php${PHP_VERSION}-xml php${PHP_VERSION}-mbstring php${PHP_VERSION}-sqlite3 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-
-WORKDIR /var/www/html
 # copy application code, skipping files based on .dockerignore
 COPY . /var/www/html
 
-RUN composer install --optimize-autoloader \
+RUN composer install --optimize-autoloader --no-dev \
     && mkdir -p storage/logs \
     && php artisan optimize:clear \
-    && chown -R webuser:webgroup /var/www/html \
+    && chown -R www-data:www-data /var/www/html \
     && sed -i 's/protected \$proxies/protected \$proxies = "*"/g' app/Http/Middleware/TrustProxies.php \
-    && echo "MAILTO=\"\"\n* * * * * webuser /usr/bin/php /var/www/html/artisan schedule:run" > /etc/cron.d/laravel \
-    && rm -rf /etc/cont-init.d/* \
-    && cp docker/nginx-websockets.conf /etc/nginx/conf.d/websockets.conf \
-    && cp docker/nginx-default /etc/nginx/sites-available/default \
-    && cp docker/entrypoint.sh /entrypoint \
+    && echo "MAILTO=\"\"\n* * * * * www-data /usr/bin/php /var/www/html/artisan schedule:run" > /etc/cron.d/laravel \
+    && cp .fly/entrypoint.sh /entrypoint \
     && chmod +x /entrypoint
 
 # If we're using Octane...
 RUN if grep -Fq "laravel/octane" /var/www/html/composer.json; then \
-        rm -rf /etc/services.d/php-fpm; \
+        rm -rf /etc/supervisor/conf.d/fpm.conf; \
         if grep -Fq "spiral/roadrunner" /var/www/html/composer.json; then \
-            mv docker/octane-rr /etc/services.d/octane; \
+            mv /etc/supervisor/octane-rr.conf /etc/supervisor/conf.d/octane-rr.conf; \
             if [ -f ./vendor/bin/rr ]; then ./vendor/bin/rr get-binary; fi; \
             rm -f .rr.yaml; \
         else \
-            mv docker/octane-swoole /etc/services.d/octane; \
-        fi \
+            mv .fly/octane-swoole /etc/services.d/octane; \
+            mv /etc/supervisor/octane-swoole.conf /etc/supervisor/conf.d/octane-swoole.conf; \
+        fi; \
+        rm /etc/nginx/sites-enabled/default; \
+        ln -sf /etc/nginx/sites-available/default-octane /etc/nginx/sites-enabled/default; \
     fi
 
 # Multi-stage build: Build static assets
@@ -52,12 +49,13 @@ RUN mkdir /app
 RUN mkdir -p  /app
 WORKDIR /app
 COPY . .
+COPY --from=base /var/www/html/vendor /app/vendor
 
 # Use yarn or npm depending on what type of
 # lock file we might find. Defaults to
 # NPM if no lock file is found.
 # Note: We run "production" for Mix and "build" for Vite
-RUN if [ -f "vite.config.ts" ]; then \
+RUN if [ -f "vite.config.js" ]; then \
         ASSET_CMD="build"; \
     else \
         ASSET_CMD="production"; \
@@ -84,7 +82,7 @@ FROM base
 COPY --from=node_modules_go_brrr /app/public /var/www/html/public-npm
 RUN rsync -ar /var/www/html/public-npm/ /var/www/html/public/ \
     && rm -rf /var/www/html/public-npm \
-    && chown -R webuser:webgroup /var/www/html/public
+    && chown -R www-data:www-data /var/www/html/public
 
 EXPOSE 8080
 
