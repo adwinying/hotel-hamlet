@@ -13,14 +13,14 @@ class HotelRequestTest extends ValidationTestCase
 {
     use RefreshDatabase;
 
-    protected $hotelName = 'foobar';
+    protected static $hotelName = 'foobar';
 
     protected function setUp(): void
     {
         parent::setUp();
 
         Hotel::factory()->create([
-            'name' => $this->hotelName,
+            'name' => self::$hotelName,
         ]);
     }
 
@@ -37,7 +37,7 @@ class HotelRequestTest extends ValidationTestCase
         ];
     }
 
-    public function formData()
+    public static function formData()
     {
         return [
             'All OK' => [
@@ -53,7 +53,7 @@ class HotelRequestTest extends ValidationTestCase
             ],
 
             'name is not unique' => [
-                false, ['name' => $this->hotelName],
+                false, ['name' => self::$hotelName],
             ],
 
             'is_hidden is empty' => [

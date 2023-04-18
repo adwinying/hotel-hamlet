@@ -14,21 +14,21 @@ class RoomRequestTest extends ValidationTestCase
 {
     use RefreshDatabase;
 
-    protected $roomTypeId = 99;
+    protected static $roomTypeId = 99;
 
-    protected $roomNo = '101';
+    protected static $roomNo = '101';
 
     protected function setUp(): void
     {
         parent::setUp();
 
         RoomType::factory()->create([
-            'id' => $this->roomTypeId,
+            'id' => self::$roomTypeId,
         ]);
 
         Room::factory()->create([
-            'room_type_id' => $this->roomTypeId,
-            'room_no'      => $this->roomNo,
+            'room_type_id' => self::$roomTypeId,
+            'room_no'      => self::$roomNo,
         ]);
     }
 
@@ -40,12 +40,12 @@ class RoomRequestTest extends ValidationTestCase
     protected function baseInput(): array
     {
         return [
-            'room_type_id' => $this->roomTypeId,
+            'room_type_id' => self::$roomTypeId,
             'room_no'      => Str::random(255),
         ];
     }
 
-    public function formData()
+    public static function formData()
     {
         return [
             'All OK' => [
@@ -57,7 +57,7 @@ class RoomRequestTest extends ValidationTestCase
             ],
 
             'room_type_id does not exist in DB' => [
-                false, ['room_type_id' => $this->roomTypeId + 1],
+                false, ['room_type_id' => self::$roomTypeId + 1],
             ],
 
             'room_no is empty' => [
@@ -69,7 +69,7 @@ class RoomRequestTest extends ValidationTestCase
             ],
 
             'room_no + room_type_id combo is not unique' => [
-                false, ['room_no' => $this->roomNo],
+                false, ['room_no' => self::$roomNo],
             ],
         ];
     }

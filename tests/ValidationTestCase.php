@@ -12,7 +12,7 @@ abstract class ValidationTestCase extends TestCase
 
     abstract protected function request(): FormRequest;
 
-    abstract public function formData();
+    abstract public static function formData();
 
     protected function makeInput(array $input = [], string $exceptKey = null)
     {
