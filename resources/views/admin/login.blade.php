@@ -74,11 +74,11 @@
           name="remember"
           value="0">
 
-        @error('email', 'password', 'remember')
+        @if($errors->any())
           <div class="text-red-500 text-center">
             Invalid credentials.
           </div>
-        @enderror
+        @endif
 
         <button
           type="submit"
