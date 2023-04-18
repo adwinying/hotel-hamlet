@@ -40,7 +40,7 @@ class ReservationRequestTest extends ValidationTestCase
         ];
     }
 
-    public function formData()
+    public static function formData()
     {
         return [
             'All OK' => [
