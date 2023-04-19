@@ -2,14 +2,17 @@ import { router } from '@inertiajs/vue3'
 import { debouncedWatch } from '@vueuse/core'
 import { reactive } from 'vue'
 
-import InputData from '@/types/InputData'
 import SearchParams from '@/types/SearchParams'
+
+type Nullable<T> = {
+  [P in keyof T]: T[P] | null
+}
 
 interface UseIndexSearch<TParams> {
   searchParams: TParams
 }
 export default function useIndexSearch<TParams extends SearchParams>(
-  query: Record<string, InputData>,
+  query: Nullable<TParams>,
   initialSearchParams: TParams,
 ): UseIndexSearch<TParams> {
   const searchParams = reactive({ ...initialSearchParams }) as TParams

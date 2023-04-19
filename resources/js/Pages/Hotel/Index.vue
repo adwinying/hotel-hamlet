@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import { PlusIcon } from '@heroicons/vue/solid'
-import { toRef } from 'vue'
+import { PropType, toRef } from 'vue'
 import route from 'ziggy-js'
 
 import IndexSearchWrapper from '@/components/IndexSearchWrapper.vue'
@@ -51,14 +51,15 @@ import usePagination from '@/composables/usePagination'
 import DropdownOption from '@/types/DropdownOption'
 import ResultTableField from '@/types/ResultTableField'
 
+type PageProps = App.Http.Responses.HotelIndexResponse
 const props = defineProps({
   query: {
-    type: Object,
+    type: Object as PropType<PageProps['query']>,
     required: true,
   },
 
   result: {
-    type: Object,
+    type: Object as PropType<PageProps['result']>,
     required: true,
   },
 })

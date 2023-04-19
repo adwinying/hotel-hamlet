@@ -1,5 +1,3 @@
-import InputData from '@/types/InputData'
-
-type SearchParams = Record<string, InputData>
+type SearchParams = Record<string, string | null | undefined>
 
 export default SearchParams
