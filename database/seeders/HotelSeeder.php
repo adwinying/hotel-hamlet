@@ -20,10 +20,8 @@ class HotelSeeder extends Seeder
 
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         foreach (self::AVAILABLE_HOTELS as $hotelName) {
             Hotel::factory()->create([

@@ -8,18 +8,28 @@ use Illuminate\Support\Facades\Validator;
 
 abstract class ValidationTestCase extends TestCase
 {
+    /**
+     * @return array<string, mixed>
+     */
     abstract protected function baseInput(): array;
 
     abstract protected function request(): FormRequest;
 
-    abstract public static function formData();
+    /**
+     * @return array<string, mixed>
+     */
+    abstract public static function formData(): array;
 
-    protected function makeInput(array $input = [], string $exceptKey = null)
+    /**
+     * @param array<string, mixed> $input
+     * @return array<string, mixed>
+     */
+    protected function makeInput(array $input, ?string $exceptKey): array
     {
         $baseInput = $this->baseInput();
 
         $input = array_replace($baseInput, $input);
-        $input = Arr::except($input, $exceptKey);
+        $input = $exceptKey ? Arr::except($input, $exceptKey) : $input;
 
         return $input;
     }
@@ -29,15 +39,13 @@ abstract class ValidationTestCase extends TestCase
      *
      * @dataProvider formData
      *
-     * @param bool   $expected
-     * @param array  $input
-     * @param string $exceptKey
+     * @param array<string, mixed>|null $input
      */
-    public function testFormValidation($expected, ...$inputs)
+    public function testFormValidation(bool $expected, ?array $input = null, ?string $exceptKey = null): void
     {
         $request = $this->request();
         $rules   = $request->rules();
-        $input   = $this->makeInput(...$inputs);
+        $input   = $this->makeInput($input ?? [], $exceptKey);
 
         $request->merge($input);
 

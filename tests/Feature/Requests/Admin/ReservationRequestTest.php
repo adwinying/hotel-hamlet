@@ -12,7 +12,7 @@ class ReservationRequestTest extends ValidationTestCase
 {
     use RefreshDatabase;
 
-    protected $roomId = 101;
+    protected int $roomId = 101;
 
     protected function setUp(): void
     {
@@ -40,7 +40,7 @@ class ReservationRequestTest extends ValidationTestCase
         ];
     }
 
-    public static function formData()
+    public static function formData(): array
     {
         return [
             'All OK' => [

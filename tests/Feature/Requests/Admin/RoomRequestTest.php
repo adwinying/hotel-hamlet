@@ -14,9 +14,9 @@ class RoomRequestTest extends ValidationTestCase
 {
     use RefreshDatabase;
 
-    protected static $roomTypeId = 99;
+    protected static int $roomTypeId = 99;
 
-    protected static $roomNo = '101';
+    protected static string $roomNo = '101';
 
     protected function setUp(): void
     {
@@ -45,7 +45,7 @@ class RoomRequestTest extends ValidationTestCase
         ];
     }
 
-    public static function formData()
+    public static function formData(): array
     {
         return [
             'All OK' => [

@@ -16,12 +16,10 @@ class RoomTypeSeeder extends Seeder
 
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-        $hotels = Hotel::count()
+        $hotels = Hotel::query()->count()
             ? Hotel::all()->random(5)
             : Hotel::factory()->count(5)->create();
 

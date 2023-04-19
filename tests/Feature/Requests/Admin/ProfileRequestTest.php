@@ -10,14 +10,15 @@ use Tests\ValidationTestCase;
 
 class ProfileRequestTest extends ValidationTestCase
 {
-    protected $oldPassword = 'password';
+    protected string $oldPassword = 'password';
 
-    protected $newPassword = 'password2';
+    protected string $newPassword = 'password2';
 
     protected function setUp(): void
     {
         parent::setUp();
 
+        /** @var User $user */
         $user = User::factory()->make([
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ]);
@@ -41,7 +42,7 @@ class ProfileRequestTest extends ValidationTestCase
         ];
     }
 
-    public static function formData()
+    public static function formData(): array
     {
         return [
             'All OK' => [
