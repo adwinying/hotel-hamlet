@@ -24,7 +24,7 @@ class ReservationIndexTest extends TestCase
         $this->actingAs($user);
     }
 
-    public function testCanShowPage()
+    public function testCanShowPage(): void
     {
         $hotels = Hotel::factory()->count(3)->create()
             ->map
@@ -51,7 +51,7 @@ class ReservationIndexTest extends TestCase
             ->where('roomTypes', $roomTypes));
     }
 
-    public function testCanFilterByHotelId()
+    public function testCanFilterByHotelId(): void
     {
         $reservations = Reservation::factory()->count(3)->create();
         $reservation  = $reservations->random();
@@ -80,7 +80,7 @@ class ReservationIndexTest extends TestCase
                 ->map([$this, 'formatReservationResult'])));
     }
 
-    public function testCanFilterByRoomTypeId()
+    public function testCanFilterByRoomTypeId(): void
     {
         $reservations = Reservation::factory()->count(3)->create();
         $reservation  = $reservations->random();
@@ -106,7 +106,7 @@ class ReservationIndexTest extends TestCase
                 ->map([$this, 'formatReservationResult'])));
     }
 
-    public function testCanFilterByCheckInDate()
+    public function testCanFilterByCheckInDate(): void
     {
         $reservations = Reservation::factory()->count(3)->create();
         $reservation  = $reservations->random();
@@ -130,7 +130,7 @@ class ReservationIndexTest extends TestCase
                 ->map([$this, 'formatReservationResult'])));
     }
 
-    public function testCanFilterByCheckOutDate()
+    public function testCanFilterByCheckOutDate(): void
     {
         $reservations = Reservation::factory()->count(3)->create();
         $reservation  = $reservations->random();
@@ -154,7 +154,7 @@ class ReservationIndexTest extends TestCase
                 ->map([$this, 'formatReservationResult'])));
     }
 
-    public function testCanFilterByGuestName()
+    public function testCanFilterByGuestName(): void
     {
         $reservations = Reservation::factory()->count(3)->create();
         $reservation  = $reservations->random();
@@ -176,7 +176,7 @@ class ReservationIndexTest extends TestCase
                 ->map([$this, 'formatReservationResult'])));
     }
 
-    public function testCanFilterByGuestEmail()
+    public function testCanFilterByGuestEmail(): void
     {
         $reservations = Reservation::factory()->count(3)->create();
         $reservation  = $reservations->random();

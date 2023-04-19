@@ -20,7 +20,7 @@ class HotelEditTest extends TestCase
         $this->actingAs($user);
     }
 
-    public function testCanShowPage()
+    public function testCanShowPage(): void
     {
         $hotel   = Hotel::factory()->create();
         $hotelId = $hotel->id;
@@ -34,7 +34,7 @@ class HotelEditTest extends TestCase
                     ->where('is_hidden', $hotel->is_hidden)));
     }
 
-    public function testCanUpdateHotelName()
+    public function testCanUpdateHotelName(): void
     {
         $hotel   = Hotel::factory()->create();
         $hotelId = $hotel->id;
@@ -55,7 +55,7 @@ class HotelEditTest extends TestCase
         ]);
     }
 
-    public function testCanUpdateIsHiddenFlag()
+    public function testCanUpdateIsHiddenFlag(): void
     {
         $hotel   = Hotel::factory()->create();
         $hotelId = $hotel->id;
@@ -76,7 +76,7 @@ class HotelEditTest extends TestCase
         ]);
     }
 
-    public function testCanDelete()
+    public function testCanDelete(): void
     {
         $hotel   = Hotel::factory()->create();
         $hotelId = $hotel->id;

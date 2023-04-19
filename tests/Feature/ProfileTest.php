@@ -12,7 +12,7 @@ class ProfileTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testCanShowProfilePage()
+    public function testCanShowProfilePage(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);
@@ -26,7 +26,7 @@ class ProfileTest extends TestCase
             ]));
     }
 
-    public function testCanUpdateName()
+    public function testCanUpdateName(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);
@@ -43,7 +43,7 @@ class ProfileTest extends TestCase
         $this->assertDatabaseHas('users', $input);
     }
 
-    public function testCanUpdateEmail()
+    public function testCanUpdateEmail(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);
@@ -60,7 +60,7 @@ class ProfileTest extends TestCase
         $this->assertDatabaseHas('users', $input);
     }
 
-    public function testCanUpdatePassword()
+    public function testCanUpdatePassword(): void
     {
         $oldPassword = 'password';
         $newPassword = 'password2';
@@ -84,7 +84,7 @@ class ProfileTest extends TestCase
             ->assertSessionHas('success', 'Profile updated.');
         $this->assertTrue(Hash::check(
             $newPassword,
-            $user->fresh()->password,
+            $user->fresh()?->password ?? '',
         ));
     }
 }

@@ -10,14 +10,14 @@ class AuthTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testRedirectToLoginIfUnauthenticated()
+    public function testRedirectToLoginIfUnauthenticated(): void
     {
         $this->assertGuest();
 
         $this->get('/admin')->assertRedirect('/admin/login');
     }
 
-    public function testRedirectToHomeIfAuthenticated()
+    public function testRedirectToHomeIfAuthenticated(): void
     {
         $user = User::factory()->make();
 
@@ -27,12 +27,12 @@ class AuthTest extends TestCase
         $this->get('/admin/login')->assertRedirect('/admin');
     }
 
-    public function testShowsLoginPage()
+    public function testShowsLoginPage(): void
     {
         $this->get('/admin/login')->assertViewIs('admin.login');
     }
 
-    public function testAbleToLoginWithValidCredentials()
+    public function testAbleToLoginWithValidCredentials(): void
     {
         $user = User::factory()->create();
 
@@ -48,7 +48,7 @@ class AuthTest extends TestCase
         $this->assertAuthenticatedAs($user);
     }
 
-    public function testUnableToLoginWithInvalidCredentials()
+    public function testUnableToLoginWithInvalidCredentials(): void
     {
         $data = [
             'email'    => 'dummy@example.com',
@@ -61,7 +61,7 @@ class AuthTest extends TestCase
         $this->assertGuest();
     }
 
-    public function testCanLogout()
+    public function testCanLogout(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);

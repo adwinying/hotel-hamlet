@@ -11,7 +11,7 @@ class CreateHotelTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testCreatesOnlyOneHotel()
+    public function testCreatesOnlyOneHotel(): void
     {
         $input = Hotel::factory()->make()->toArray();
 

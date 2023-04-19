@@ -23,7 +23,7 @@ class ReservationEditTest extends TestCase
         $this->actingAs($user);
     }
 
-    public function testCanShowPage()
+    public function testCanShowPage(): void
     {
         $hotels         = Hotel::factory()->count(3)->create();
         $expectedHotels = $hotels
@@ -60,7 +60,7 @@ class ReservationEditTest extends TestCase
                 ->where('roomTypes', $expectedRoomTypes));
     }
 
-    public function testCanUpdateRoomId()
+    public function testCanUpdateRoomId(): void
     {
         $roomType = RoomType::factory()->hasRooms()->create();
         $room     = $roomType->rooms->first();
@@ -89,7 +89,7 @@ class ReservationEditTest extends TestCase
         ]);
     }
 
-    public function testCanUpdateOtherParams()
+    public function testCanUpdateOtherParams(): void
     {
         $roomType = RoomType::factory()->hasRooms()->create();
         $room     = $roomType->rooms->first();
@@ -115,7 +115,7 @@ class ReservationEditTest extends TestCase
         $this->assertDatabaseHas('reservations', $input);
     }
 
-    public function testCanDelete()
+    public function testCanDelete(): void
     {
         $reservation   = Reservation::factory()->create();
         $reservationId = $reservation->id;
