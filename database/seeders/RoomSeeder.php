@@ -16,12 +16,10 @@ class RoomSeeder extends Seeder
 
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-        $roomTypes = RoomType::count()
+        $roomTypes = RoomType::query()->count()
             ? RoomType::all()
             : RoomType::factory()->count(5)->create();
 

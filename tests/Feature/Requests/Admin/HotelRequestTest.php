@@ -13,7 +13,7 @@ class HotelRequestTest extends ValidationTestCase
 {
     use RefreshDatabase;
 
-    protected static $hotelName = 'foobar';
+    protected static string $hotelName = 'foobar';
 
     protected function setUp(): void
     {
@@ -37,7 +37,7 @@ class HotelRequestTest extends ValidationTestCase
         ];
     }
 
-    public static function formData()
+    public static function formData(): array
     {
         return [
             'All OK' => [

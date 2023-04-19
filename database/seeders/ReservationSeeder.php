@@ -10,12 +10,10 @@ class ReservationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-        $rooms = Room::count()
+        $rooms = Room::query()->count()
             ? Room::all()->random(15)
             : Room::factory()->count(15)->create();
 
