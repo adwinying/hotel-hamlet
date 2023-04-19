@@ -2,25 +2,20 @@
 
 namespace Database\Factories;
 
-use App\Models\Hotel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Hotel>
+ */
 class HotelFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = Hotel::class;
-
-    /**
      * Define the model's default state.
      *
-     * @return array
+     * @return array<string,mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'name'      => 'Hotel ' . Str::ucfirst($this->faker->unique()->word),
