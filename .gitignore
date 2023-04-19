@@ -8,6 +8,7 @@
 /public/mix-manifest.json
 /storage/*.key
 /vendor
+/resources/js/generated.d.ts
 .env
 .env.testing
 .env.backup

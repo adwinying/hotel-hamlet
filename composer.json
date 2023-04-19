@@ -67,6 +67,7 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
+        "ts": "@php artisan typescript:transform --output js/generated.d.ts",
         "phpcs": "phpcs --standard=phpcs.xml",
         "phpcbf": "phpcbf --standard=phpcs.xml",
         "pint": "pint -v",

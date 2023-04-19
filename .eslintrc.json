@@ -30,6 +30,7 @@
     "extraFileExtensions": [".vue"]
   },
   "rules": {
+    "no-undef": "off",
     "semi": ["error", "never"],
     "@typescript-eslint/semi": ["error", "never"],
     "vue/html-closing-bracket-newline": ["error", {
