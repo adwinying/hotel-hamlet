@@ -22,7 +22,7 @@ class RoomEditTest extends TestCase
         $this->actingAs($user);
     }
 
-    public function testCanShowPage()
+    public function testCanShowPage(): void
     {
         $hotels = Hotel::factory()->count(3)->create()
             ->map
@@ -42,14 +42,14 @@ class RoomEditTest extends TestCase
                 ->component('Room/Form')
                 ->has('room', fn (Assert $page) => $page
                     ->where('id', $room->id)
-                    ->where('hotel_id', $room->roomType->hotel_id)
+                    ->where('hotel_id', $room->roomType?->hotel_id)
                     ->where('room_type_id', $room->room_type_id)
                     ->where('room_no', $room->room_no))
                 ->where('hotels', $hotels)
                 ->where('roomTypes', $roomTypes));
     }
 
-    public function testCanUpdateRoomTypeId()
+    public function testCanUpdateRoomTypeId(): void
     {
         $room   = Room::factory()->create();
         $roomId = $room->id;
@@ -73,7 +73,7 @@ class RoomEditTest extends TestCase
         ]);
     }
 
-    public function testCanUpdateRoomNo()
+    public function testCanUpdateRoomNo(): void
     {
         $room   = Room::factory()->create();
         $roomId = $room->id;
@@ -96,7 +96,7 @@ class RoomEditTest extends TestCase
         ]);
     }
 
-    public function testCanDelete()
+    public function testCanDelete(): void
     {
         $room   = Room::factory()->create();
         $roomId = $room->id;

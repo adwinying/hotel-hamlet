@@ -23,7 +23,7 @@ class ReservationCreateTest extends TestCase
         $this->actingAs($user);
     }
 
-    public function testCanShowPage()
+    public function testCanShowPage(): void
     {
         $hotels = Hotel::factory()->count(3)->create()
             ->map
@@ -41,7 +41,7 @@ class ReservationCreateTest extends TestCase
                 ->where('roomTypes', $roomTypes));
     }
 
-    public function testCanCreateReservation()
+    public function testCanCreateReservation(): void
     {
         $room  = Room::factory()->forRoomType()->create();
         $input = Reservation::factory()->make([
@@ -56,7 +56,7 @@ class ReservationCreateTest extends TestCase
         $this->assertDatabaseHas('reservations', $input);
     }
 
-    public function testReturnsErrorWhenRoomUnavailable()
+    public function testReturnsErrorWhenRoomUnavailable(): void
     {
         $room  = Room::factory()->forRoomType()->create();
         $input = Reservation::factory()->create([

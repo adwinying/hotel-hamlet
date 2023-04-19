@@ -20,7 +20,7 @@ class RoomAvailabilityCheckTest extends TestCase
         $this->actingAs($user);
     }
 
-    public function testReturnsErrorWhenRoomTypeIdNotSpecified()
+    public function testReturnsErrorWhenRoomTypeIdNotSpecified(): void
     {
         $checkInDate  = today()->addMonth();
         $checkOutDate = today()->addMonth()->addDays(5);
@@ -32,7 +32,7 @@ class RoomAvailabilityCheckTest extends TestCase
             ]);
     }
 
-    public function testReturnsErrorWhenCheckInDateNotSpecified()
+    public function testReturnsErrorWhenCheckInDateNotSpecified(): void
     {
         $roomTypeId   = mt_rand(1, 10);
         $checkOutDate = today()->addMonth()->addDays(5);
@@ -44,7 +44,7 @@ class RoomAvailabilityCheckTest extends TestCase
             ]);
     }
 
-    public function testReturnsErrorWhenCheckOutDateNotSpecified()
+    public function testReturnsErrorWhenCheckOutDateNotSpecified(): void
     {
         $roomTypeId  = mt_rand(1, 10);
         $checkInDate = today()->addMonth();
@@ -56,7 +56,7 @@ class RoomAvailabilityCheckTest extends TestCase
             ]);
     }
 
-    public function testReturnsErrorWhenRoomTypeIdDoesNotExist()
+    public function testReturnsErrorWhenRoomTypeIdDoesNotExist(): void
     {
         $roomTypeId   = mt_rand(1, 10);
         $checkInDate  = today()->addMonth();
@@ -66,7 +66,7 @@ class RoomAvailabilityCheckTest extends TestCase
             ->assertStatus(404);
     }
 
-    public function testReturnsListOfAvailableRoomsForBooking()
+    public function testReturnsListOfAvailableRoomsForBooking(): void
     {
         $roomType = RoomType::factory()->hasRooms(3)->create();
 
@@ -85,7 +85,7 @@ class RoomAvailabilityCheckTest extends TestCase
              ->assertExactJson($expected);
     }
 
-    public function testIncludesExistingRoomReservationInResults()
+    public function testIncludesExistingRoomReservationInResults(): void
     {
         $roomType = RoomType::factory()->hasRooms()->create();
         $room     = $roomType->rooms->first();

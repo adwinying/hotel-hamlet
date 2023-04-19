@@ -2,25 +2,20 @@
 
 namespace Database\Factories;
 
-use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Reservation>
+ */
 class ReservationFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = Reservation::class;
-
-    /**
      * Define the model's default state.
      *
-     * @return array
+     * @return array<string,mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         $randomDate = $this->faker->dateTimeBetween('-1 year', '1 year');
 

@@ -12,7 +12,7 @@ class HotelIndexTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testCanShowHotelIndexPage()
+    public function testCanShowHotelIndexPage(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);
@@ -29,7 +29,7 @@ class HotelIndexTest extends TestCase
             ->where('result.data', $hotels));
     }
 
-    public function testCanFilterByName()
+    public function testCanFilterByName(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);
@@ -51,7 +51,7 @@ class HotelIndexTest extends TestCase
              );
     }
 
-    public function testCanFilterByIsHidden()
+    public function testCanFilterByIsHidden(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);
@@ -74,7 +74,7 @@ class HotelIndexTest extends TestCase
              );
     }
 
-    public function testCannotFilterById()
+    public function testCannotFilterById(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);

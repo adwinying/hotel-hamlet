@@ -20,7 +20,7 @@ class HotelCreateTest extends TestCase
         $this->actingAs($user);
     }
 
-    public function testCanShowCreatePage()
+    public function testCanShowCreatePage(): void
     {
         $this->get('/admin/hotels/create')
             ->assertInertia(fn (Assert $page) => $page
@@ -28,9 +28,10 @@ class HotelCreateTest extends TestCase
                 ->missing('hotel'));
     }
 
-    public function testCanCreateHotel()
+    public function testCanCreateHotel(): void
     {
         $hotel = Hotel::factory()->make();
+        assert($hotel instanceof Hotel);
         $input = $hotel->only('name', 'is_hidden');
 
         $this->post('/admin/hotels', $input)

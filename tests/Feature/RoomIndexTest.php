@@ -22,7 +22,7 @@ class RoomIndexTest extends TestCase
         $this->actingAs($user);
     }
 
-    public function testCanShowPage()
+    public function testCanShowPage(): void
     {
         $hotels = Hotel::factory()->count(3)->create()
             ->map
@@ -46,7 +46,7 @@ class RoomIndexTest extends TestCase
             ->where('roomTypes', $roomTypes));
     }
 
-    public function testCanFilterByHotelId()
+    public function testCanFilterByHotelId(): void
     {
         $rooms = Room::factory()->count(3)->create();
 
@@ -68,7 +68,7 @@ class RoomIndexTest extends TestCase
                     ->map([$this, 'formatRoomResult'])));
     }
 
-    public function testCanFilterByRoomTypeId()
+    public function testCanFilterByRoomTypeId(): void
     {
         $rooms = Room::factory()->count(3)->create();
 
@@ -87,7 +87,7 @@ class RoomIndexTest extends TestCase
                     ->map([$this, 'formatRoomResult'])));
     }
 
-    public function testCanFilterByRoomNo()
+    public function testCanFilterByRoomNo(): void
     {
         $rooms = Room::factory()->count(3)->create();
 
@@ -106,6 +106,9 @@ class RoomIndexTest extends TestCase
                     ->map([$this, 'formatRoomResult'])));
     }
 
+    /**
+     * @return array<string,mixed>
+     */
     public function formatRoomResult(Room $room): array
     {
         return [

@@ -22,7 +22,7 @@ class RoomCreateTest extends TestCase
         $this->actingAs($user);
     }
 
-    public function testCanShowPage()
+    public function testCanShowPage(): void
     {
         $hotels = Hotel::factory()->count(3)->create()
             ->map
@@ -40,9 +40,10 @@ class RoomCreateTest extends TestCase
                 ->where('roomTypes', $roomTypes));
     }
 
-    public function testCanCreateRoom()
+    public function testCanCreateRoom(): void
     {
-        $room  = Room::factory()->make();
+        $room = Room::factory()->make();
+        assert($room instanceof Room);
         $input = $room->only('room_type_id', 'room_no');
 
         RoomType::factory()->create(['id' => $room->room_type_id]);

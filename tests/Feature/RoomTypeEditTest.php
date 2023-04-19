@@ -21,7 +21,7 @@ class RoomTypeEditTest extends TestCase
         $this->actingAs($user);
     }
 
-    public function testCanShowPage()
+    public function testCanShowPage(): void
     {
         $roomType   = RoomType::factory()->create();
         $roomTypeId = $roomType->id;
@@ -41,7 +41,7 @@ class RoomTypeEditTest extends TestCase
                 ->where('hotels', $hotels));
     }
 
-    public function testCanUpdateHotelId()
+    public function testCanUpdateHotelId(): void
     {
         $roomType   = RoomType::factory()->create();
         $roomTypeId = $roomType->id;
@@ -66,7 +66,7 @@ class RoomTypeEditTest extends TestCase
         ]);
     }
 
-    public function testCanUpdateRoomTypeName()
+    public function testCanUpdateRoomTypeName(): void
     {
         $roomType   = RoomType::factory()->create();
         $roomTypeId = $roomType->id;
@@ -90,7 +90,7 @@ class RoomTypeEditTest extends TestCase
         ]);
     }
 
-    public function testCanUpdatePrice()
+    public function testCanUpdatePrice(): void
     {
         $roomType   = RoomType::factory()->create();
         $roomTypeId = $roomType->id;
@@ -114,7 +114,7 @@ class RoomTypeEditTest extends TestCase
         ]);
     }
 
-    public function testCanDelete()
+    public function testCanDelete(): void
     {
         $roomType   = RoomType::factory()->create();
         $roomTypeId = $roomType->id;
