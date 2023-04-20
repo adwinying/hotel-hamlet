@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Exceptions\DataInvalidException;
 use App\Models\Hotel;
 use App\Models\RoomType;
 use App\Models\User;
@@ -37,7 +38,9 @@ class RoomTypeCreateTest extends TestCase
     public function testCanCreateRoomType(): void
     {
         $roomType = RoomType::factory()->make();
-        assert($roomType instanceof RoomType);
+        if (!($roomType instanceof RoomType)) {
+            throw new DataInvalidException();
+        }
         $input = $roomType->only('hotel_id', 'name', 'price');
 
         Hotel::factory()->create(['id' => $roomType->hotel_id]);
