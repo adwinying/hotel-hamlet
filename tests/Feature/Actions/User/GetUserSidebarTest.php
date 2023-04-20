@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class GetUserSidebarTest extends TestCase
 {
-    public function testGetListOfSidebarItems()
+    public function testGetListOfSidebarItems(): void
     {
         $user = new User();
 

@@ -12,7 +12,7 @@ class UpdateUserTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testCanUpdateDb()
+    public function testCanUpdateDb(): void
     {
         $user  = User::factory()->create();
         $input = ['name' => 'John Doe'];
@@ -24,7 +24,7 @@ class UpdateUserTest extends TestCase
         $this->assertDatabaseHas('users', $input);
     }
 
-    public function testHashesPasswordBeforeUpdate()
+    public function testHashesPasswordBeforeUpdate(): void
     {
         $user  = User::factory()->create();
         $input = ['password' => 'secret'];

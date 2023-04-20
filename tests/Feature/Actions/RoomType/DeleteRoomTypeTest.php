@@ -11,7 +11,7 @@ class DeleteRoomTypeTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testCanDeleteDb()
+    public function testCanDeleteDb(): void
     {
         $roomType = RoomType::factory()->create();
 

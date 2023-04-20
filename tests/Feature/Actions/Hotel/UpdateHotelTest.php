@@ -11,7 +11,7 @@ class UpdateHotelTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testCanUpdateDb()
+    public function testCanUpdateDb(): void
     {
         $hotel = Hotel::factory()->create();
         $input = [

@@ -14,7 +14,7 @@ class CreateReservationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testThrowsExceptionWhenRoomTypeHasNoAvailableRooms()
+    public function testThrowsExceptionWhenRoomTypeHasNoAvailableRooms(): void
     {
         $roomType = RoomType::factory()->create();
 
@@ -28,7 +28,7 @@ class CreateReservationTest extends TestCase
         $create->execute($input);
     }
 
-    public function testThrowsExceptionWhenRoomIsNotAvailable()
+    public function testThrowsExceptionWhenRoomIsNotAvailable(): void
     {
         $roomType = RoomType::factory()->hasRooms(1)->create();
 
@@ -50,7 +50,7 @@ class CreateReservationTest extends TestCase
         $create->execute($input);
     }
 
-    public function testSetFirstAvailableRoomIfRoomTypeIdProvided()
+    public function testSetFirstAvailableRoomIfRoomTypeIdProvided(): void
     {
         $roomType = RoomType::factory()->hasRooms(1)->create();
 
@@ -72,7 +72,7 @@ class CreateReservationTest extends TestCase
         ]);
     }
 
-    public function testRandomFourDigitPinIsGenerated()
+    public function testRandomFourDigitPinIsGenerated(): void
     {
         $roomType = RoomType::factory()->hasRooms(1)->create();
 
@@ -85,6 +85,6 @@ class CreateReservationTest extends TestCase
 
         $pin = $result->pin;
         $this->assertTrue($pin >= 0 && $pin <= 9999);
-        $this->assertTrue(Hash::check($pin, Reservation::first()->pin));
+        $this->assertTrue(Hash::check($pin, Reservation::query()->first()->pin));
     }
 }

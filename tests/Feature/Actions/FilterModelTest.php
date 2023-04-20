@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class FilterModelTest extends TestCase
 {
-    public function testFilterWithNoParams()
+    public function testFilterWithNoParams(): void
     {
         $query = User::query();
 
@@ -21,7 +21,7 @@ class FilterModelTest extends TestCase
         $this->assertEmpty($result->getBindings());
     }
 
-    public function testFilterWhenParamNull()
+    public function testFilterWhenParamNull(): void
     {
         $query  = User::query();
         $params = ['users_name' => null];
@@ -35,7 +35,7 @@ class FilterModelTest extends TestCase
         $this->assertEmpty($result->getBindings());
     }
 
-    public function testFilterWhenParamFalse()
+    public function testFilterWhenParamFalse(): void
     {
         $query  = User::query();
         $params = ['name' => false];
@@ -50,7 +50,7 @@ class FilterModelTest extends TestCase
         $this->assertEquals($expectedBindings, $result->getBindings());
     }
 
-    public function testFilterWhenParamZero()
+    public function testFilterWhenParamZero(): void
     {
         $query  = User::query();
         $params = ['name' => 0];
@@ -65,7 +65,7 @@ class FilterModelTest extends TestCase
         $this->assertEquals($expectedBindings, $result->getBindings());
     }
 
-    public function testFilterWhenParamStringNull()
+    public function testFilterWhenParamStringNull(): void
     {
         $query  = User::query();
         $params = ['name' => 'null'];
@@ -80,7 +80,7 @@ class FilterModelTest extends TestCase
         $this->assertEquals($expectedBindings, $result->getBindings());
     }
 
-    public function testFilterLikeParams()
+    public function testFilterLikeParams(): void
     {
         $query  = User::query();
         $params = [
@@ -101,7 +101,7 @@ class FilterModelTest extends TestCase
         $this->assertEquals($expectedBindings, $result->getBindings());
     }
 
-    public function testFilterExactParams()
+    public function testFilterExactParams(): void
     {
         $query  = User::query();
         $params = [
@@ -123,7 +123,7 @@ class FilterModelTest extends TestCase
         $this->assertEquals($expectedBindings, $result->getBindings());
     }
 
-    public function testFilterWithMultipleParams()
+    public function testFilterWithMultipleParams(): void
     {
         $query  = User::query();
         $params = [

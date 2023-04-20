@@ -16,7 +16,7 @@ class GetAvailableRoomsTest extends TestCase
      * Existing: |----|
      * Search  :    |----|
      */
-    public function testDontReturnRoomsWithOverlappingCheckInDate()
+    public function testDontReturnRoomsWithOverlappingCheckInDate(): void
     {
         $checkInDate  = today()->addMonths(mt_rand(1, 5));
         $checkOutDate = $checkInDate->clone()->addDays(mt_rand(1, 5));
@@ -44,7 +44,7 @@ class GetAvailableRoomsTest extends TestCase
      * Existing:   |----|
      * Search  : |----|
      */
-    public function testDontReturnRoomsWithOverlappingCheckOutDate()
+    public function testDontReturnRoomsWithOverlappingCheckOutDate(): void
     {
         $checkInDate  = today()->addMonths(mt_rand(1, 5));
         $checkOutDate = $checkInDate->clone()->addDays(mt_rand(1, 5));
@@ -72,7 +72,7 @@ class GetAvailableRoomsTest extends TestCase
      * Existing:   |----|
      * Search  : |---------|
      */
-    public function testDontReturnRoomsWithinCheckInAndCheckOutDates()
+    public function testDontReturnRoomsWithinCheckInAndCheckOutDates(): void
     {
         $checkInDate  = today()->addMonths(mt_rand(1, 5));
         $checkOutDate = $checkInDate->clone()->addDays(5);
@@ -100,7 +100,7 @@ class GetAvailableRoomsTest extends TestCase
      * Existing: |---------|
      * Search  :   |----|
      */
-    public function testDontReturnRoomsOutsideCheckInAndCheckOutDates()
+    public function testDontReturnRoomsOutsideCheckInAndCheckOutDates(): void
     {
         $checkInDate  = today()->addMonths(mt_rand(1, 5));
         $checkOutDate = $checkInDate->clone()->addDays(5);
@@ -128,7 +128,7 @@ class GetAvailableRoomsTest extends TestCase
      * Existing: |-----|
      * Search  :       |----|
      */
-    public function testReturnRoomsBeforeCheckInDate()
+    public function testReturnRoomsBeforeCheckInDate(): void
     {
         $checkInDate  = today()->addMonths(mt_rand(1, 5));
         $checkOutDate = $checkInDate->clone()->addDays(5);
@@ -159,7 +159,7 @@ class GetAvailableRoomsTest extends TestCase
      * Existing:      |-----|
      * Search  : |----|
      */
-    public function testReturnRoomsAfterCheckOutDate()
+    public function testReturnRoomsAfterCheckOutDate(): void
     {
         $checkInDate  = today()->addMonths(mt_rand(1, 5));
         $checkOutDate = $checkInDate->clone()->addDays(5);
@@ -186,7 +186,7 @@ class GetAvailableRoomsTest extends TestCase
         );
     }
 
-    public function testEmptyReservations()
+    public function testEmptyReservations(): void
     {
         $checkInDate  = today()->addMonths(mt_rand(1, 5));
         $checkOutDate = $checkInDate->clone()->addDays(5);
@@ -206,7 +206,7 @@ class GetAvailableRoomsTest extends TestCase
         );
     }
 
-    public function testIncludesExistingReservation()
+    public function testIncludesExistingReservation(): void
     {
         $roomType = RoomType::factory()->hasRooms()->create();
         $room     = $roomType->rooms->first();

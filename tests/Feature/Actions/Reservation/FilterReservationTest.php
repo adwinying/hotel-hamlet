@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class FilterReservationTest extends TestCase
 {
-    public function testFilterGuestNameParam()
+    public function testFilterGuestNameParam(): void
     {
         $query  = Reservation::query();
         $params = ['guest_name' => 'foobar'];
@@ -23,7 +23,7 @@ class FilterReservationTest extends TestCase
         $this->assertEquals($expectedBindings, $result->getBindings());
     }
 
-    public function testFilterGuestEmailParam()
+    public function testFilterGuestEmailParam(): void
     {
         $query  = Reservation::query();
         $params = ['guest_email' => 'foo@bar.com'];
@@ -38,7 +38,7 @@ class FilterReservationTest extends TestCase
         $this->assertEquals($expectedBindings, $result->getBindings());
     }
 
-    public function testFilterRoomIdParam()
+    public function testFilterRoomIdParam(): void
     {
         $query  = Reservation::query();
         $params = ['room_id' => mt_rand(1, 10)];
@@ -53,7 +53,7 @@ class FilterReservationTest extends TestCase
         $this->assertEquals($expectedBindings, $result->getBindings());
     }
 
-    public function testFilterCheckInDateParam()
+    public function testFilterCheckInDateParam(): void
     {
         $query  = Reservation::query();
         $params = ['check_in_date' => '2020-01-01'];
@@ -68,7 +68,7 @@ class FilterReservationTest extends TestCase
         $this->assertEquals($expectedBindings, $result->getBindings());
     }
 
-    public function testFilterCheckOutDateParam()
+    public function testFilterCheckOutDateParam(): void
     {
         $query  = Reservation::query();
         $params = ['check_out_date' => '2020-01-01'];
@@ -83,7 +83,7 @@ class FilterReservationTest extends TestCase
         $this->assertEquals($expectedBindings, $result->getBindings());
     }
 
-    public function testFilterHotelIdParam()
+    public function testFilterHotelIdParam(): void
     {
         $query  = Reservation::query();
         $params = ['hotel_id' => mt_rand(1, 99)];
@@ -98,7 +98,7 @@ class FilterReservationTest extends TestCase
         $this->assertEquals($expectedBindings, $result->getBindings());
     }
 
-    public function testFilterRoomTypeIdParam()
+    public function testFilterRoomTypeIdParam(): void
     {
         $query  = Reservation::query();
         $params = ['room_type_id' => mt_rand(1, 99)];
@@ -113,7 +113,7 @@ class FilterReservationTest extends TestCase
         $this->assertEquals($expectedBindings, $result->getBindings());
     }
 
-    public function testFilterMultipleParams()
+    public function testFilterMultipleParams(): void
     {
         $query  = Reservation::query();
         $params = [

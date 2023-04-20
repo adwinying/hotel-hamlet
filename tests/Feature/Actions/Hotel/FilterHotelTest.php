@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class FilterHotelTest extends TestCase
 {
-    public function testFilterNameParam()
+    public function testFilterNameParam(): void
     {
         $query  = Hotel::query();
         $params = ['name' => 'foo'];
@@ -23,7 +23,7 @@ class FilterHotelTest extends TestCase
         $this->assertEquals($expectedBindings, $result->getBindings());
     }
 
-    public function testFilterIsHiddenParam()
+    public function testFilterIsHiddenParam(): void
     {
         $query  = Hotel::query();
         $params = ['is_hidden' => true];
@@ -38,7 +38,7 @@ class FilterHotelTest extends TestCase
         $this->assertEquals($expectedBindings, $result->getBindings());
     }
 
-    public function testFilterMultipleParams()
+    public function testFilterMultipleParams(): void
     {
         $query  = Hotel::query();
         $params = [
