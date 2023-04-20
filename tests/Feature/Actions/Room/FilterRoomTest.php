@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class FilterRoomTest extends TestCase
 {
-    public function testFilterRoomNoParam()
+    public function testFilterRoomNoParam(): void
     {
         $query  = Room::query();
         $params = ['room_no' => mt_rand(100, 999)];
@@ -23,7 +23,7 @@ class FilterRoomTest extends TestCase
         $this->assertEquals($expectedBindings, $result->getBindings());
     }
 
-    public function testFilterRoomTypeIdParam()
+    public function testFilterRoomTypeIdParam(): void
     {
         $query  = Room::query();
         $params = ['room_type_id' => mt_rand(1, 99)];
@@ -38,7 +38,7 @@ class FilterRoomTest extends TestCase
         $this->assertEquals($expectedBindings, $result->getBindings());
     }
 
-    public function testFilterHotelIdParam()
+    public function testFilterHotelIdParam(): void
     {
         $query  = Room::query();
         $params = ['hotel_id' => mt_rand(1, 99)];
@@ -53,7 +53,7 @@ class FilterRoomTest extends TestCase
         $this->assertEquals($expectedBindings, $result->getBindings());
     }
 
-    public function testFilterMultipleParams()
+    public function testFilterMultipleParams(): void
     {
         $query  = Room::query();
         $params = [

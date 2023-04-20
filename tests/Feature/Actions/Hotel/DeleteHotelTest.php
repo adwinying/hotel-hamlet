@@ -11,7 +11,7 @@ class DeleteHotelTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testCanDeleteDb()
+    public function testCanDeleteDb(): void
     {
         $hotel = Hotel::factory()->create();
 

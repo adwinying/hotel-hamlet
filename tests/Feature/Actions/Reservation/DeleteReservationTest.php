@@ -11,7 +11,7 @@ class DeleteReservationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testCanDeleteDb()
+    public function testCanDeleteDb(): void
     {
         $reservation = Reservation::factory()->create();
 

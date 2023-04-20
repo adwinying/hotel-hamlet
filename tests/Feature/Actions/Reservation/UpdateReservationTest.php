@@ -15,7 +15,7 @@ class UpdateReservationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testSkipAvailabilityCheckIfRoomIdAndDatesUnchanged()
+    public function testSkipAvailabilityCheckIfRoomIdAndDatesUnchanged(): void
     {
         $reservation = Reservation::factory()->create();
 
@@ -30,7 +30,7 @@ class UpdateReservationTest extends TestCase
         $update->execute($reservation, $input);
     }
 
-    public function testCheckAvailabilityWhenRoomIdChanged()
+    public function testCheckAvailabilityWhenRoomIdChanged(): void
     {
         $roomType    = RoomType::factory()->hasRooms()->create();
         $room        = $roomType->rooms->first();
@@ -46,7 +46,7 @@ class UpdateReservationTest extends TestCase
                 $reservation->check_out_date,
                 $reservation,
             )
-            ->willReturn(Room::limit(0)->get());
+            ->willReturn(Room::query()->limit(0)->get());
         $this->instance(GetAvailableRooms::class, $getAvailableRooms);
 
         $input = ['room_id' => $room->id];
@@ -57,7 +57,7 @@ class UpdateReservationTest extends TestCase
         $update->execute($reservation, $input);
     }
 
-    public function testCheckAvailabilityWhenCheckInDateChanged()
+    public function testCheckAvailabilityWhenCheckInDateChanged(): void
     {
         $input = ['check_in_date' => today()->format('Y-m-d')];
 
@@ -84,7 +84,7 @@ class UpdateReservationTest extends TestCase
         $update->execute($reservation, $input);
     }
 
-    public function testCheckAvailabilityWhenCheckOutDateChanged()
+    public function testCheckAvailabilityWhenCheckOutDateChanged(): void
     {
         $input = ['check_out_date' => today()->format('Y-m-d')];
 
@@ -111,7 +111,7 @@ class UpdateReservationTest extends TestCase
         $update->execute($reservation, $input);
     }
 
-    public function testCanUpdateRoomId()
+    public function testCanUpdateRoomId(): void
     {
         $roomType    = RoomType::factory()->hasRooms()->create();
         $room        = $roomType->rooms->first();
@@ -128,7 +128,7 @@ class UpdateReservationTest extends TestCase
         ]);
     }
 
-    public function testCanUpdateCheckInDate()
+    public function testCanUpdateCheckInDate(): void
     {
         $roomType    = RoomType::factory()->hasRooms()->create();
         $room        = $roomType->rooms->first();
@@ -145,7 +145,7 @@ class UpdateReservationTest extends TestCase
         ]);
     }
 
-    public function testCanUpdateCheckOutDate()
+    public function testCanUpdateCheckOutDate(): void
     {
         $roomType    = RoomType::factory()->hasRooms()->create();
         $room        = $roomType->rooms->first();
@@ -162,7 +162,7 @@ class UpdateReservationTest extends TestCase
         ]);
     }
 
-    public function testCanUpdateOtherFields()
+    public function testCanUpdateOtherFields(): void
     {
         $reservation = Reservation::factory()->create();
 

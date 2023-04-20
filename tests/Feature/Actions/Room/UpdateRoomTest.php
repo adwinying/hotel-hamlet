@@ -11,7 +11,7 @@ class UpdateRoomTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testCanUpdateDb()
+    public function testCanUpdateDb(): void
     {
         $room  = Room::factory()->create();
         $input = [

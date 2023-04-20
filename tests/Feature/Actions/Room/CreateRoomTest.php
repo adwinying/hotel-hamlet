@@ -11,7 +11,7 @@ class CreateRoomTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testCreatesOnlyOneRoom()
+    public function testCreatesOnlyOneRoom(): void
     {
         $input = Room::factory()->make()->toArray();
 
