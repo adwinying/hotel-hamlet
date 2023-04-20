@@ -76,41 +76,40 @@ import ResultTable from '@/components/ResultTable.vue'
 import useIndexSearch from '@/composables/useIndexSearch'
 import usePagination from '@/composables/usePagination'
 import DropdownOption from '@/types/DropdownOption'
-import Hotel from '@/types/Models/Hotel'
 import Reservation from '@/types/Models/Reservation'
-import RoomType from '@/types/Models/RoomType'
 import ResultTableField from '@/types/ResultTableField'
 import ResultTableFormatter from '@/types/ResultTableFormatter'
 
+type PageProps = App.Http.Responses.ReservationIndexResponse
 const props = defineProps({
   query: {
-    type: Object,
+    type: Object as PropType<PageProps['query']>,
     required: true,
   },
 
   result: {
-    type: Object,
+    type: Object as PropType<PageProps['result']>,
     required: true,
   },
 
   hotels: {
-    type: Array as PropType<Hotel[]>,
+    type: Array as PropType<PageProps['hotels']>,
     required: true,
   },
 
   roomTypes: {
-    type: Array as PropType<RoomType[]>,
+    type: Array as PropType<PageProps['roomTypes']>,
     required: true,
   },
 })
 
 const fields: ResultTableField[] = [
   {
-    key: 'hotel',
+    key: 'hotel_name',
     label: 'Hotel',
   },
   {
-    key: 'room_type',
+    key: 'room_type_name',
     label: 'Room Type',
   },
   {
@@ -128,8 +127,6 @@ const fields: ResultTableField[] = [
 ]
 
 const formatter: ResultTableFormatter<Reservation> = {
-  hotel: (_, rowData) => rowData.room?.room_type?.hotel?.name ?? '',
-  room_type: (_, rowData) => rowData.room?.room_type?.name ?? '',
   check_in_date: (date) => (date as string).replace(/-/g, '/'),
   check_out_date: (date) => (date as string).replace(/-/g, '/'),
 }
@@ -165,14 +162,14 @@ const hotelOptions: ComputedRef<DropdownOption[]> = computed(() =>
   ),
 )
 
-const filteredRoomTypes: ComputedRef<RoomType[]> = computed(() =>
+const filteredRoomTypes = computed(() =>
   searchParams.hotel_id
     ? props.roomTypes.filter(
         (roomType) => roomType.hotel_id === parseInt(searchParams.hotel_id, 10),
       )
     : props.roomTypes,
 )
-const roomTypeOptions: ComputedRef<DropdownOption[]> = computed(() =>
+const roomTypeOptions = computed(() =>
   filteredRoomTypes.value.reduce(
     (acc, roomType) => [
       ...acc,

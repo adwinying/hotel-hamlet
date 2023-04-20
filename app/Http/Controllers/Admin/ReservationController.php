@@ -8,6 +8,7 @@ use App\Actions\Reservation\UpdateReservation;
 use App\Exceptions\RoomUnavailableException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ReservationRequest;
+use App\Http\Responses\ReservationIndexResponse;
 use App\Models\Hotel;
 use App\Models\Reservation;
 use App\Models\RoomType;
@@ -38,7 +39,7 @@ class ReservationController extends Controller
             'room_type_id',
         ];
 
-        return Inertia::render('Reservation/Index', [
+        return Inertia::render('Reservation/Index', ReservationIndexResponse::from([
             'query'  => request()->all($queryParams),
             'result' => Reservation::query()
                 ->filter(request()->only($queryParams))
@@ -56,9 +57,9 @@ class ReservationController extends Controller
                     'guest_name',
                     'guest_email',
                 ]),
-            'hotels'    => fn ()    => Hotel::all(['id', 'name']),
-            'roomTypes' => fn () => RoomType::all(['id', 'hotel_id', 'name']),
-        ]);
+            'hotels'    => Hotel::all(['id', 'name']),
+            'roomTypes' => RoomType::all(['id', 'hotel_id', 'name']),
+        ]));
     }
 
     /**
