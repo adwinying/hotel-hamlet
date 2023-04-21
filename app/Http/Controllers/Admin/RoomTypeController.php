@@ -7,6 +7,7 @@ use App\Actions\RoomType\DeleteRoomType;
 use App\Actions\RoomType\UpdateRoomType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\RoomTypeRequest;
+use App\Http\Responses\RoomTypeIndexResponse;
 use App\Models\Hotel;
 use App\Models\RoomType;
 use Illuminate\Http\RedirectResponse;
@@ -32,7 +33,7 @@ class RoomTypeController extends Controller
             'name',
         ];
 
-        return Inertia::render('RoomType/Index', [
+        return Inertia::render('RoomType/Index', RoomTypeIndexResponse::from([
             'query'  => request()->all($queryParams),
             'result' => RoomType::query()
                 ->filter(request()->only($queryParams))
@@ -43,8 +44,8 @@ class RoomTypeController extends Controller
                     'hotel_id',
                     'name',
                 ]),
-            'hotels' => fn () => Hotel::all(['id', 'name']),
-        ]);
+            'hotels' => Hotel::all(['id', 'name']),
+        ]));
     }
 
     /**

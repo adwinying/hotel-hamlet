@@ -26,7 +26,6 @@
 
     <ResultTable
       :fields="fields"
-      :formatter="formatter"
       :data="result.data" />
 
     <ResultPagination :pagination-params="paginationParams" />
@@ -48,30 +47,29 @@ import ResultPagination from '@/components/ResultPagination.vue'
 import ResultTable from '@/components/ResultTable.vue'
 import useIndexSearch from '@/composables/useIndexSearch'
 import usePagination from '@/composables/usePagination'
-import DropdownOption from '@/types/DropdownOption'
-import Hotel from '@/types/Models/Hotel'
 import ResultTableField from '@/types/ResultTableField'
 
+type PageProps = App.Http.Responses.RoomTypeIndexResponse
 const props = defineProps({
   query: {
-    type: Object,
+    type: Object as PropType<PageProps['query']>,
     required: true,
   },
 
   result: {
-    type: Object,
+    type: Object as PropType<PageProps['result']>,
     required: true,
   },
 
   hotels: {
-    type: Array as PropType<Hotel[]>,
+    type: Array as PropType<PageProps['hotels']>,
     required: true,
   },
 })
 
 const fields: ResultTableField[] = [
   {
-    key: 'hotel',
+    key: 'hotel_name',
     label: 'Hotel',
   },
   {
@@ -80,11 +78,7 @@ const fields: ResultTableField[] = [
   },
 ]
 
-const formatter = {
-  hotel: (data: Hotel) => data.name,
-}
-
-const hotelOptions = computed<DropdownOption[]>(() =>
+const hotelOptions = computed(() =>
   props.hotels.reduce(
     (acc, hotel) => [
       ...acc,

@@ -27,8 +27,9 @@ class RoomTypeIndexTest extends TestCase
             ->map
             ->only('id', 'name');
 
-        $roomTypes = RoomType::factory()->count(3)->create()
-            ->map([$this, 'formatRoomTypeResult']);
+        $roomTypes = RoomType::factory()->count(3)->create([
+            'hotel_id' => $hotels->random()['id'],
+        ])->map($this->formatRoomTypeResult(...));
 
         $this->get('/admin/room_types')->assertInertia(fn (Assert $page) => $page
             ->component('RoomType/Index')
@@ -44,6 +45,9 @@ class RoomTypeIndexTest extends TestCase
         $roomTypes = RoomType::factory()->count(3)->create();
 
         $roomType = $roomTypes->random();
+        Hotel::factory()->create([
+            'id' => $roomType->hotel_id,
+        ]);
 
         $this->get("/admin/room_types?hotel_id={$roomType->hotel_id}")
             ->assertInertia(fn (Assert $page) => $page
@@ -54,7 +58,7 @@ class RoomTypeIndexTest extends TestCase
                 ->where('result.data', $roomTypes
                     ->where('hotel_id', $roomType->hotel_id)
                     ->values()
-                    ->map([$this, 'formatRoomTypeResult'])));
+                    ->map($this->formatRoomTypeResult(...))));
     }
 
     public function testCanFilterByName(): void
@@ -62,6 +66,9 @@ class RoomTypeIndexTest extends TestCase
         $roomTypes = RoomType::factory()->count(3)->create();
 
         $roomType = $roomTypes->random();
+        Hotel::factory()->create([
+            'id' => $roomType->hotel_id,
+        ]);
 
         $this->get("/admin/room_types?name={$roomType->name}")
             ->assertInertia(fn (Assert $page) => $page
@@ -72,7 +79,7 @@ class RoomTypeIndexTest extends TestCase
                 ->where('result.data', $roomTypes
                     ->where('name', $roomType->name)
                     ->values()
-                    ->map([$this, 'formatRoomTypeResult'])));
+                    ->map($this->formatRoomTypeResult(...))));
     }
 
     /**
@@ -81,15 +88,10 @@ class RoomTypeIndexTest extends TestCase
     public function formatRoomTypeResult(RoomType $roomType): array
     {
         return [
-            'id'    => $roomType->id,
-            'hotel' => $roomType->hotel
-                ? [
-                    'id'   => $roomType->hotel->id,
-                    'name' => $roomType->hotel->name,
-                ]
-                : null,
-            'hotel_id' => $roomType->hotel_id,
-            'name'     => $roomType->name,
+            'id'         => $roomType->id,
+            'hotel_id'   => $roomType->hotel_id,
+            'name'       => $roomType->name,
+            'hotel_name' => $roomType->hotel?->name,
         ];
     }
 }
