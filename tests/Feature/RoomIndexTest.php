@@ -28,12 +28,13 @@ class RoomIndexTest extends TestCase
             ->map
             ->only('id', 'name');
 
-        $roomTypes = RoomType::factory()->count(3)->create()
-            ->map
-            ->only('id', 'hotel_id', 'name');
+        $roomTypes = RoomType::factory()->count(3)->create([
+            'hotel_id' => $hotels->random()['id'],
+        ])->map->only('id', 'hotel_id', 'name');
 
-        $rooms = Room::factory()->count(3)->create()
-            ->map([$this, 'formatRoomResult']);
+        $rooms = Room::factory()->count(3)->create([
+            'room_type_id' => $roomTypes->random()['id'],
+        ])->map($this->formatRoomResult(...));
 
         $this->get('/admin/rooms')->assertInertia(fn (Assert $page) => $page
             ->component('Room/Index')
@@ -54,6 +55,9 @@ class RoomIndexTest extends TestCase
         $roomType = RoomType::factory()->create([
             'id' => $room->room_type_id,
         ]);
+        Hotel::factory()->create([
+            'id' => $roomType->hotel_id,
+        ]);
 
         $this->get("/admin/rooms?hotel_id={$roomType->hotel_id}")
             ->assertInertia(fn (Assert $page) => $page
@@ -65,14 +69,20 @@ class RoomIndexTest extends TestCase
                 ->where('result.data', $rooms
                     ->where('room_type_id', $room->room_type_id)
                     ->values()
-                    ->map([$this, 'formatRoomResult'])));
+                    ->map($this->formatRoomResult(...))));
     }
 
     public function testCanFilterByRoomTypeId(): void
     {
         $rooms = Room::factory()->count(3)->create();
 
-        $room = $rooms->random();
+        $room     = $rooms->random();
+        $roomType = RoomType::factory()->create([
+            'id' => $room->room_type_id,
+        ]);
+        Hotel::factory()->create([
+            'id' => $roomType->hotel_id,
+        ]);
 
         $this->get("/admin/rooms?room_type_id={$room->room_type_id}")
             ->assertInertia(fn (Assert $page) => $page
@@ -84,14 +94,20 @@ class RoomIndexTest extends TestCase
                 ->where('result.data', $rooms
                     ->where('room_type_id', $room->room_type_id)
                     ->values()
-                    ->map([$this, 'formatRoomResult'])));
+                    ->map($this->formatRoomResult(...))));
     }
 
     public function testCanFilterByRoomNo(): void
     {
         $rooms = Room::factory()->count(3)->create();
 
-        $room = $rooms->random();
+        $room     = $rooms->random();
+        $roomType = RoomType::factory()->create([
+            'id' => $room->room_type_id,
+        ]);
+        Hotel::factory()->create([
+            'id' => $roomType->hotel_id,
+        ]);
 
         $this->get("/admin/rooms?room_no={$room->room_no}")
             ->assertInertia(fn (Assert $page) => $page
@@ -103,7 +119,7 @@ class RoomIndexTest extends TestCase
                 ->where('result.data', $rooms
                     ->where('room_no', $room->room_no)
                     ->values()
-                    ->map([$this, 'formatRoomResult'])));
+                    ->map($this->formatRoomResult(...))));
     }
 
     /**
@@ -112,22 +128,11 @@ class RoomIndexTest extends TestCase
     public function formatRoomResult(Room $room): array
     {
         return [
-            'id'           => $room->id,
-            'room_type_id' => $room->room_type_id,
-            'room_no'      => $room->room_no,
-            'room_type'    => $room->roomType
-                ? [
-                    'id'       => $room->roomType->id,
-                    'hotel_id' => $room->roomType->hotel_id,
-                    'name'     => $room->roomType->name,
-                    'hotel'    => $room->roomType->hotel
-                        ? [
-                            'id'   => $room->roomType->hotel->id,
-                            'name' => $room->roomType->hotel->name,
-                        ]
-                        : null,
-                ]
-                : null,
+            'id'             => $room->id,
+            'room_type_id'   => $room->room_type_id,
+            'room_no'        => $room->room_no,
+            'room_type_name' => $room->roomType?->name,
+            'hotel_name'     => $room->roomType?->hotel?->name,
         ];
     }
 }
