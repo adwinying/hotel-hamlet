@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import { PlusIcon } from '@heroicons/vue/solid'
-import { PropType, toRef } from 'vue'
+import { PropType, computed } from 'vue'
 import route from 'ziggy-js'
 
 import IndexSearchWrapper from '@/components/IndexSearchWrapper.vue'
@@ -94,7 +94,7 @@ const hiddenOptions: DropdownOption[] = [
   },
 ]
 
-const { paginationParams } = usePagination(toRef(props, 'result'))
+const { paginationParams } = usePagination(computed(() => props.result.meta))
 
 const { searchParams } = useIndexSearch(props.query, {
   is_hidden: '',

@@ -80,10 +80,9 @@
 <script setup lang="ts">
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/solid'
 import { usePage } from '@inertiajs/vue3'
-import { toRefs } from '@vueuse/core'
 import { computed, PropType } from 'vue'
 
-import PaginationParams from '@/types/PaginationParams'
+import { PaginationParams } from '@/composables/usePagination'
 
 const props = defineProps({
   paginationParams: {
@@ -97,7 +96,8 @@ const props = defineProps({
   },
 })
 
-const { lastPage, currentPage } = toRefs(props.paginationParams)
+const lastPage = computed(() => props.paginationParams.lastPage)
+const currentPage = computed(() => props.paginationParams.currentPage)
 
 const pagesToShow = computed(() => {
   if (lastPage.value <= 1) return []

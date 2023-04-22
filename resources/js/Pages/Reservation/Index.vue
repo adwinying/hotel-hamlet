@@ -62,7 +62,7 @@
 
 <script setup lang="ts">
 import { PlusIcon } from '@heroicons/vue/solid'
-import { computed, ComputedRef, PropType, toRef, watch } from 'vue'
+import { computed, ComputedRef, PropType, watch } from 'vue'
 import route from 'ziggy-js'
 
 import IndexSearchWrapper from '@/components/IndexSearchWrapper.vue'
@@ -131,7 +131,7 @@ const formatter: ResultTableFormatter<Reservation> = {
   check_out_date: (date) => (date as string).replace(/-/g, '/'),
 }
 
-const { paginationParams } = usePagination(toRef(props, 'result'))
+const { paginationParams } = usePagination(computed(() => props.result.meta))
 
 const { searchParams } = useIndexSearch(props.query, {
   hotel_id: '',

@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import { PlusIcon } from '@heroicons/vue/solid'
-import { computed, PropType, toRef } from 'vue'
+import { computed, PropType } from 'vue'
 import route from 'ziggy-js'
 
 import IndexSearchWrapper from '@/components/IndexSearchWrapper.vue'
@@ -91,7 +91,7 @@ const hotelOptions = computed(() =>
   ),
 )
 
-const { paginationParams } = usePagination(toRef(props, 'result'))
+const { paginationParams } = usePagination(computed(() => props.result.meta))
 
 const { searchParams } = useIndexSearch(props.query, {
   hotel_id: '',
