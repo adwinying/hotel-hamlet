@@ -19,7 +19,7 @@ COPY . /var/www/html
 RUN composer install --optimize-autoloader \
     && mkdir -p storage/logs \
     && php artisan optimize:clear \
-    && php artisan typescript:transform \
+    && php artisan typescript:transform --force \
     && chown -R www-data:www-data /var/www/html \
     && sed -i 's/protected \$proxies/protected \$proxies = "*"/g' app/Http/Middleware/TrustProxies.php \
     && echo "MAILTO=\"\"\n* * * * * www-data /usr/bin/php /var/www/html/artisan schedule:run" > /etc/cron.d/laravel \
