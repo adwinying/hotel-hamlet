@@ -18,7 +18,7 @@ import { computed } from 'vue'
 
 const props = defineProps({
   as: {
-    type: String,
+    type: [Object, String],
     default: 'button',
   },
 
