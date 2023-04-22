@@ -8,6 +8,7 @@ use App\Actions\Room\GetAvailableRooms;
 use App\Actions\Room\UpdateRoom;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\RoomRequest;
+use App\Http\Responses\RoomIndexResponse;
 use App\Models\Hotel;
 use App\Models\Reservation;
 use App\Models\Room;
@@ -37,7 +38,7 @@ class RoomController extends Controller
             'room_no',
         ];
 
-        return Inertia::render('Room/Index', [
+        return Inertia::render('Room/Index', RoomIndexResponse::from([
             'query'  => request()->all($queryParams),
             'result' => Room::query()
                 ->filter(request()->only($queryParams))
@@ -51,9 +52,9 @@ class RoomController extends Controller
                     'room_type_id',
                     'room_no',
                 ]),
-            'hotels'    => fn ()    => Hotel::all(['id', 'name']),
-            'roomTypes' => fn () => RoomType::all(['id', 'hotel_id', 'name']),
-        ]);
+            'hotels'    => Hotel::all(['id', 'name']),
+            'roomTypes' => RoomType::all(['id', 'hotel_id', 'name']),
+        ]));
     }
 
     /**

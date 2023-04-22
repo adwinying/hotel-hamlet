@@ -30,12 +30,17 @@ class ReservationIndexTest extends TestCase
             ->map
             ->only('id', 'name');
 
-        $roomTypes = RoomType::factory()->count(3)->create()
-            ->map
-            ->only('id', 'hotel_id', 'name');
+        $roomTypes = RoomType::factory()->count(3)->create([
+            'hotel_id' => $hotels->random()['id'],
+        ])->map->only('id', 'hotel_id', 'name');
 
-        $reservations = Reservation::factory()->count(3)->create()
-            ->map([$this, 'formatReservationResult']);
+        $room = Room::factory()->create([
+            'room_type_id' => $roomTypes->random()['id'],
+        ]);
+
+        $reservations = Reservation::factory()->count(3)->create([
+            'room_id' => $room->id,
+        ])->map($this->formatReservationResult(...));
 
         $this->get('/admin/reservations')->assertInertia(fn (Assert $page) => $page
             ->component('Reservation/Index')
@@ -62,6 +67,9 @@ class ReservationIndexTest extends TestCase
         $roomType = RoomType::factory()->create([
             'id' => $room->room_type_id,
         ]);
+        Hotel::factory()->create([
+            'id' => $roomType->hotel_id,
+        ]);
 
         $this->get("/admin/reservations?hotel_id={$roomType->hotel_id}")
             ->assertInertia(fn (Assert $page) => $page
@@ -77,7 +85,7 @@ class ReservationIndexTest extends TestCase
                     'hotel_id' => $roomType->hotel_id,
                 ])
                 ->get()
-                ->map([$this, 'formatReservationResult'])));
+                ->map($this->formatReservationResult(...))));
     }
 
     public function testCanFilterByRoomTypeId(): void
@@ -87,6 +95,12 @@ class ReservationIndexTest extends TestCase
 
         $room = Room::factory()->create([
             'id' => $reservation->room_id,
+        ]);
+        $roomType = RoomType::factory()->create([
+            'id' => $room->room_type_id,
+        ]);
+        Hotel::factory()->create([
+            'id' => $roomType->hotel_id,
         ]);
 
         $this->get("/admin/reservations?room_type_id={$room->room_type_id}")
@@ -113,6 +127,16 @@ class ReservationIndexTest extends TestCase
         $checkInDate  = Carbon::parse($reservation->check_in_date)
             ->format('Y-m-d');
 
+        $room = Room::factory()->create([
+            'id' => $reservation->room_id,
+        ]);
+        $roomType = RoomType::factory()->create([
+            'id' => $room->room_type_id,
+        ]);
+        Hotel::factory()->create([
+            'id' => $roomType->hotel_id,
+        ]);
+
         $this->get("/admin/reservations?check_in_date={$checkInDate}")
             ->assertInertia(fn (Assert $page) => $page
                 ->component('Reservation/Index')
@@ -137,6 +161,16 @@ class ReservationIndexTest extends TestCase
         $checkOutDate = Carbon::parse($reservation->check_out_date)
             ->format('Y-m-d');
 
+        $room = Room::factory()->create([
+            'id' => $reservation->room_id,
+        ]);
+        $roomType = RoomType::factory()->create([
+            'id' => $room->room_type_id,
+        ]);
+        Hotel::factory()->create([
+            'id' => $roomType->hotel_id,
+        ]);
+
         $this->get("/admin/reservations?check_out_date={$checkOutDate}")
             ->assertInertia(fn (Assert $page) => $page
                 ->component('Reservation/Index')
@@ -158,6 +192,16 @@ class ReservationIndexTest extends TestCase
     {
         $reservations = Reservation::factory()->count(3)->create();
         $reservation  = $reservations->random();
+
+        $room = Room::factory()->create([
+            'id' => $reservation->room_id,
+        ]);
+        $roomType = RoomType::factory()->create([
+            'id' => $room->room_type_id,
+        ]);
+        Hotel::factory()->create([
+            'id' => $roomType->hotel_id,
+        ]);
 
         $this->get("/admin/reservations?guest_name={$reservation->guest_name}")
             ->assertInertia(fn (Assert $page) => $page
@@ -182,6 +226,16 @@ class ReservationIndexTest extends TestCase
         $reservation  = $reservations->random();
         $guestEmail   = urlencode($reservation->guest_email);
 
+        $room = Room::factory()->create([
+            'id' => $reservation->room_id,
+        ]);
+        $roomType = RoomType::factory()->create([
+            'id' => $room->room_type_id,
+        ]);
+        Hotel::factory()->create([
+            'id' => $roomType->hotel_id,
+        ]);
+
         $this->get("/admin/reservations?guest_email={$guestEmail}")
             ->assertInertia(fn (Assert $page) => $page
                 ->component('Reservation/Index')
@@ -199,6 +253,9 @@ class ReservationIndexTest extends TestCase
                 ->map([$this, 'formatReservationResult'])));
     }
 
+    /**
+     * @return array<string,mixed>
+     */
     public function formatReservationResult(Reservation $reservation): array
     {
         return [
@@ -208,41 +265,9 @@ class ReservationIndexTest extends TestCase
             'check_out_date' => $reservation->check_out_date->format('Y-m-d'),
             'guest_name'     => $reservation->guest_name,
             'guest_email'    => $reservation->guest_email,
-            'room'           => $reservation->room
-                ? $this->formatRoom($reservation->room)
-                : null,
-        ];
-    }
-
-    protected function formatRoom(Room $room): array
-    {
-        return [
-            'id'           => $room->id,
-            'room_no'      => $room->room_no,
-            'room_type_id' => $room->room_type_id,
-            'room_type'    => $room->roomType
-                ? $this->formatRoomType($room->roomType)
-                : null,
-        ];
-    }
-
-    protected function formatRoomType(RoomType $roomType): array
-    {
-        return [
-            'id'       => $roomType->id,
-            'hotel_id' => $roomType->hotel_id,
-            'name'     => $roomType->name,
-            'hotel'    => $roomType->hotel
-                ? $this->formatHotel($roomType->hotel)
-                : null,
-        ];
-    }
-
-    protected function formatHotel(Hotel $hotel): array
-    {
-        return [
-            'id'   => $hotel->id,
-            'name' => $hotel->name,
+            'room_no'        => $reservation->room->room_no,
+            'room_type_name' => $reservation->room->roomType->name,
+            'hotel_name'     => $reservation->room->roomType->hotel->name,
         ];
     }
 }

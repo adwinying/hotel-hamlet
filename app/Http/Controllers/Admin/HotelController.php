@@ -7,6 +7,7 @@ use App\Actions\Hotel\DeleteHotel;
 use App\Actions\Hotel\UpdateHotel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\HotelRequest;
+use App\Http\Responses\HotelIndexResponse;
 use App\Models\Hotel;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -31,7 +32,7 @@ class HotelController extends Controller
             'is_hidden',
         ];
 
-        return Inertia::render('Hotel/Index', [
+        return Inertia::render('Hotel/Index', HotelIndexResponse::from([
             'query'  => request()->all($queryParams),
             'result' => Hotel::query()
                 ->filter(request()->only($queryParams))
@@ -41,7 +42,7 @@ class HotelController extends Controller
                     'name',
                     'is_hidden',
                 ]),
-        ]);
+        ]));
     }
 
     /**

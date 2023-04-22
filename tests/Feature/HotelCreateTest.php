@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Exceptions\DataInvalidException;
 use App\Models\Hotel;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -31,7 +32,9 @@ class HotelCreateTest extends TestCase
     public function testCanCreateHotel(): void
     {
         $hotel = Hotel::factory()->make();
-        assert($hotel instanceof Hotel);
+        if (!($hotel instanceof Hotel)) {
+            throw new DataInvalidException();
+        }
         $input = $hotel->only('name', 'is_hidden');
 
         $this->post('/admin/hotels', $input)
