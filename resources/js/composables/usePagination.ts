@@ -1,36 +1,40 @@
-import { reactive, Ref, watch } from 'vue'
+import { ComputedRef, computed } from 'vue'
 
-import PaginationParams from '@/types/PaginationParams'
+export interface PaginationParams {
+  from: number
+  to: number
+  total: number
+  currentPage: number
+  lastPage: number
+  perPage: number
+}
 
 interface UsePagination {
-  paginationParams: PaginationParams
+  paginationParams: ComputedRef<PaginationParams>
 }
 export default function usePagination(
-  results: Ref<Record<string, unknown>>,
+  paginationData: ComputedRef<{
+    current_page: number
+    first_page_url: string
+    from: number | null
+    last_page: number
+    last_page_url: string
+    next_page_url: string | null
+    path: string
+    per_page: number
+    prev_page_url: string | null
+    to: number | null
+    total: number
+  }>,
 ): UsePagination {
-  const paginationParams = reactive({
-    from: 0,
-    to: 0,
-    total: 0,
-    currentPage: 0,
-    lastPage: 0,
-    perPage: 0,
-  })
-
-  watch(
-    results,
-    () => {
-      const res = results.value
-
-      paginationParams.from = res.from as number
-      paginationParams.to = res.to as number
-      paginationParams.total = res.total as number
-      paginationParams.currentPage = res.current_page as number
-      paginationParams.lastPage = res.last_page as number
-      paginationParams.perPage = res.per_page as number
-    },
-    { deep: true, immediate: true },
-  )
+  const paginationParams = computed(() => ({
+    from: paginationData.value.from ?? 0,
+    to: paginationData.value.to ?? 0,
+    total: paginationData.value.total,
+    currentPage: paginationData.value.current_page,
+    lastPage: paginationData.value.last_page,
+    perPage: paginationData.value.per_page,
+  }))
 
   return {
     paginationParams,
