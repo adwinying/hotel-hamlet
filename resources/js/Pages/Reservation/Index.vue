@@ -44,7 +44,7 @@
 
     <ResultCtaWrapper>
       <LoadingButton
-        as="inertia-link"
+        :as="Link"
         :href="createUrl">
         <PlusIcon class="w-6" />
         New Reservation
@@ -62,6 +62,7 @@
 
 <script setup lang="ts">
 import { PlusIcon } from '@heroicons/vue/solid'
+import { Link } from '@inertiajs/vue3'
 import { computed, ComputedRef, PropType, watch } from 'vue'
 import route from 'ziggy-js'
 
