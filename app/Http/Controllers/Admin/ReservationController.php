@@ -7,8 +7,8 @@ use App\Actions\Reservation\DeleteReservation;
 use App\Actions\Reservation\UpdateReservation;
 use App\Exceptions\RoomUnavailableException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ReservationFormRequest;
 use App\Http\Requests\Admin\ReservationIndexRequest;
-use App\Http\Requests\Admin\ReservationRequest;
 use App\Http\Responses\Admin\ReservationFormResponse;
 use App\Http\Responses\Admin\ReservationIndexResponse;
 use App\Models\Hotel;
@@ -74,14 +74,11 @@ class ReservationController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(
-        ReservationRequest $request,
+        ReservationFormRequest $request,
         CreateReservation $create,
     ): RedirectResponse {
-        /** @var array<string, mixed> */
-        $input = $request->validated();
-
         try {
-            $reservation = $create->execute($input);
+            $reservation = $create->execute($request->toArray());
         } catch (RoomUnavailableException $e) {
             return redirect()->back()->withErrors([
                 'room_id' => 'Selected room is unavailable.',
@@ -108,15 +105,12 @@ class ReservationController extends Controller
      * Update the specified resource in storage.
      */
     public function update(
-        ReservationRequest $request,
+        ReservationFormRequest $request,
         Reservation $reservation,
         UpdateReservation $updateReservation
     ): RedirectResponse {
-        /** @var array<string, mixed> */
-        $input = $request->validated();
-
         try {
-            $updateReservation->execute($reservation, $input);
+            $updateReservation->execute($reservation, $request->toArray());
         } catch (RoomUnavailableException $e) {
             return redirect()->back()->withErrors([
                 'room_id' => 'Selected room is unavailable.',

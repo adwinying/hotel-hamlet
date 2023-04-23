@@ -2,13 +2,13 @@
 
 namespace Tests\Feature\Requests\Admin;
 
-use App\Http\Requests\Admin\ReservationRequest;
+use App\Http\Requests\Admin\ReservationFormRequest;
 use App\Models\Room;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\ValidationTestCase;
 
-class ReservationRequestTest extends ValidationTestCase
+class ReservationFormRequestTest extends ValidationTestCase
 {
     use RefreshDatabase;
 
@@ -23,9 +23,9 @@ class ReservationRequestTest extends ValidationTestCase
         ]);
     }
 
-    protected function request(): FormRequest
+    protected function request(): FormRequest|string
     {
-        return new ReservationRequest();
+        return ReservationFormRequest::class;
     }
 
     protected function baseInput(): array
