@@ -7,6 +7,7 @@ use App\Actions\Reservation\DeleteReservation;
 use App\Actions\Reservation\UpdateReservation;
 use App\Exceptions\RoomUnavailableException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ReservationIndexRequest;
 use App\Http\Requests\Admin\ReservationRequest;
 use App\Http\Responses\ReservationFormResponse;
 use App\Http\Responses\ReservationIndexResponse;
@@ -24,33 +25,28 @@ class ReservationController extends Controller
      */
     public function index(): Response
     {
-        /** @var string */
-        $sort = request()->input('sort', 'id');
-        /** @var 'asc'|'desc' */
-        $order = request()->input('order', 'asc');
-        /** @var int */
-        $count = request()->input('count', 20);
+        $request = ReservationIndexRequest::from(request()->all());
 
-        $queryParams = [
-            'check_in_date',
-            'check_out_date',
-            'guest_name',
-            'guest_email',
-            'hotel_id',
-            'room_type_id',
+        $query = [
+            'check_in_date'  => $request->check_in_date,
+            'check_out_date' => $request->check_out_date,
+            'guest_name'     => $request->guest_name,
+            'guest_email'    => $request->guest_email,
+            'hotel_id'       => $request->hotel_id,
+            'room_type_id'   => $request->room_type_id,
         ];
 
         return Inertia::render('Reservation/Index', ReservationIndexResponse::from([
-            'query'  => request()->all($queryParams),
+            'query'  => $query,
             'result' => Reservation::query()
-                ->filter(request()->only($queryParams))
+                ->filter($query)
                 ->with([
                     'room:id,room_no,room_type_id',
                     'room.roomType:id,hotel_id,name',
                     'room.roomType.hotel:id,name',
                 ])
-                ->orderBy($sort, $order)
-                ->paginate($count, [
+                ->orderBy($request->sort, $request->order)
+                ->paginate($request->count, [
                     'id',
                     'room_id',
                     'check_in_date',
