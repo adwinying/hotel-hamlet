@@ -7,8 +7,8 @@ use App\Actions\Room\DeleteRoom;
 use App\Actions\Room\GetAvailableRooms;
 use App\Actions\Room\UpdateRoom;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\RoomFormRequest;
 use App\Http\Requests\Admin\RoomIndexRequest;
-use App\Http\Requests\Admin\RoomRequest;
 use App\Http\Responses\Admin\RoomFormResponse;
 use App\Http\Responses\Admin\RoomIndexResponse;
 use App\Models\Hotel;
@@ -69,13 +69,10 @@ class RoomController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(
-        RoomRequest $request,
+        RoomFormRequest $request,
         CreateRoom $createRoom
     ): RedirectResponse {
-        /** @var array<string, mixed> */
-        $input = $request->validated();
-
-        $room = $createRoom->execute($input);
+        $room = $createRoom->execute($request->toArray());
 
         return redirect()->route('rooms.show', [$room])
             ->with('success', 'Room created.');
@@ -97,14 +94,11 @@ class RoomController extends Controller
      * Update the specified resource in storage.
      */
     public function update(
-        RoomRequest $request,
+        RoomFormRequest $request,
         Room $room,
         UpdateRoom $updateRoom
     ): RedirectResponse {
-        /** @var array<string, mixed> */
-        $input = $request->validated();
-
-        $updateRoom->execute($room, $input);
+        $updateRoom->execute($room, $request->toArray());
 
         return redirect()->back()->with('success', 'Room updated.');
     }
