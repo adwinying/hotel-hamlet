@@ -6,8 +6,8 @@ use App\Actions\RoomType\CreateRoomType;
 use App\Actions\RoomType\DeleteRoomType;
 use App\Actions\RoomType\UpdateRoomType;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\RoomTypeFormRequest;
 use App\Http\Requests\Admin\RoomTypeIndexRequest;
-use App\Http\Requests\Admin\RoomTypeRequest;
 use App\Http\Responses\Admin\RoomTypeFormResponse;
 use App\Http\Responses\Admin\RoomTypeIndexResponse;
 use App\Models\Hotel;
@@ -59,13 +59,10 @@ class RoomTypeController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(
-        RoomTypeRequest $request,
+        RoomTypeFormRequest $request,
         CreateRoomType $createRoomType
     ): RedirectResponse {
-        /** @var array<string, mixed> */
-        $input = $request->validated();
-
-        $roomType = $createRoomType->execute($input);
+        $roomType = $createRoomType->execute($request->toArray());
 
         return redirect()->route('room_types.show', [$roomType])
             ->with('success', 'Room type created.');
@@ -86,14 +83,11 @@ class RoomTypeController extends Controller
      * Update the specified resource in storage.
      */
     public function update(
-        RoomTypeRequest $request,
+        RoomTypeFormRequest $request,
         RoomType $roomType,
         UpdateRoomType $updateRoomType
     ): RedirectResponse {
-        /** @var array<string, mixed> */
-        $input = $request->validated();
-
-        $updateRoomType->execute($roomType, $input);
+        $updateRoomType->execute($roomType, $request->toArray());
 
         return redirect()->back()->with('success', 'Room type updated.');
     }
