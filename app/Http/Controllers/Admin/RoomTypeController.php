@@ -7,6 +7,7 @@ use App\Actions\RoomType\DeleteRoomType;
 use App\Actions\RoomType\UpdateRoomType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\RoomTypeRequest;
+use App\Http\Responses\RoomTypeFormResponse;
 use App\Http\Responses\RoomTypeIndexResponse;
 use App\Models\Hotel;
 use App\Models\RoomType;
@@ -53,9 +54,9 @@ class RoomTypeController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('RoomType/Form', [
-            'hotels' => fn () => Hotel::all(['id', 'name']),
-        ]);
+        return Inertia::render('RoomType/Form', RoomTypeFormResponse::from([
+            'hotels' => Hotel::all(['id', 'name']),
+        ]));
     }
 
     /**
@@ -79,15 +80,10 @@ class RoomTypeController extends Controller
      */
     public function show(RoomType $roomType): Response
     {
-        return Inertia::render('RoomType/Form', [
-            'roomType' => [
-                'id'       => $roomType->id,
-                'hotel_id' => $roomType->hotel_id,
-                'name'     => $roomType->name,
-                'price'    => $roomType->price,
-            ],
-            'hotels' => fn () => Hotel::all(['id', 'name']),
-        ]);
+        return Inertia::render('RoomType/Form', RoomTypeFormResponse::from([
+            'roomType' => $roomType,
+            'hotels'   => Hotel::all(['id', 'name']),
+        ]));
     }
 
     /**
