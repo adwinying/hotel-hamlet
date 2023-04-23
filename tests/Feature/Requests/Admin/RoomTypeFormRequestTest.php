@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Requests\Admin;
 
-use App\Http\Requests\Admin\RoomTypeRequest;
+use App\Http\Requests\Admin\RoomTypeFormRequest;
 use App\Models\Hotel;
 use App\Models\RoomType;
 use Illuminate\Foundation\Http\FormRequest;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\ValidationTestCase;
 
-class RoomTypeRequestTest extends ValidationTestCase
+class RoomTypeFormRequestTest extends ValidationTestCase
 {
     use RefreshDatabase;
 
@@ -32,9 +32,9 @@ class RoomTypeRequestTest extends ValidationTestCase
         ]);
     }
 
-    protected function request(): FormRequest
+    protected function request(): FormRequest|string
     {
-        return new RoomTypeRequest();
+        return RoomTypeFormRequest::class;
     }
 
     protected function baseInput(): array

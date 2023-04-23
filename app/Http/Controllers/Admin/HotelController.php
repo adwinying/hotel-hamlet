@@ -6,8 +6,8 @@ use App\Actions\Hotel\CreateHotel;
 use App\Actions\Hotel\DeleteHotel;
 use App\Actions\Hotel\UpdateHotel;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\HotelFormRequest;
 use App\Http\Requests\Admin\HotelIndexRequest;
-use App\Http\Requests\Admin\HotelRequest;
 use App\Http\Responses\Admin\HotelFormResponse;
 use App\Http\Responses\Admin\HotelIndexResponse;
 use App\Models\Hotel;
@@ -54,13 +54,10 @@ class HotelController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(
-        HotelRequest $request,
+        HotelFormRequest $request,
         CreateHotel $createHotel,
     ): RedirectResponse {
-        /** @var array<string, mixed> */
-        $input = $request->validated();
-
-        $hotel = $createHotel->execute($input);
+        $hotel = $createHotel->execute($request->toArray());
 
         return redirect()->route('hotels.show', [$hotel])
             ->with('success', 'Hotel created.');
@@ -80,14 +77,11 @@ class HotelController extends Controller
      * Update the specified resource in storage.
      */
     public function update(
-        HotelRequest $request,
+        HotelFormRequest $request,
         Hotel $hotel,
         UpdateHotel $updateHotel
     ): RedirectResponse {
-        /** @var array<string, mixed> */
-        $input = $request->validated();
-
-        $updateHotel->execute($hotel, $input);
+        $updateHotel->execute($hotel, $request->toArray());
 
         return redirect()->back()->with('success', 'Hotel updated.');
     }

@@ -5,6 +5,7 @@ namespace Tests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 abstract class ValidationTestCase extends TestCase
 {
@@ -13,7 +14,10 @@ abstract class ValidationTestCase extends TestCase
      */
     abstract protected function baseInput(): array;
 
-    abstract protected function request(): FormRequest;
+    /**
+     * @return FormRequest|class-string
+     */
+    abstract protected function request(): FormRequest|string;
 
     /**
      * @return array<string, mixed>
@@ -43,10 +47,16 @@ abstract class ValidationTestCase extends TestCase
      */
     public function testFormValidation(bool $expected, ?array $input = null, ?string $exceptKey = null): void
     {
-        $request = $this->request();
-        $rules   = $request->rules();
         $input   = $this->makeInput($input ?? [], $exceptKey);
+        $request = $this->request();
 
+        if (!($request instanceof FormRequest)) {
+            $this->validateData($expected, $input);
+
+            return;
+        }
+
+        $rules = $request->rules();
         $request->merge($input);
 
         $validator = Validator::make($input, $rules);
@@ -59,6 +69,29 @@ abstract class ValidationTestCase extends TestCase
 
         if ($expected !== $result) {
             dump($validator->errors());
+        }
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @param array<string,mixed> $input
+     */
+    protected function validateData(bool $expected, array $input): void
+    {
+        $request = $this->request();
+        if ($request instanceof FormRequest) {
+            return;
+        }
+
+        try {
+            $request::validate($input);
+            $result = true;
+        } catch (ValidationException $e) {
+            $result = false;
+            if ($expected !== $result) {
+                dump($e->errors());
+            }
         }
 
         $this->assertEquals($expected, $result);

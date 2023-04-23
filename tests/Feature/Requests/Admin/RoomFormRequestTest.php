@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Requests\Admin;
 
-use App\Http\Requests\Admin\RoomRequest;
+use App\Http\Requests\Admin\RoomFormRequest;
 use App\Models\Room;
 use App\Models\RoomType;
 use Illuminate\Foundation\Http\FormRequest;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\ValidationTestCase;
 
-class RoomRequestTest extends ValidationTestCase
+class RoomFormRequestTest extends ValidationTestCase
 {
     use RefreshDatabase;
 
@@ -32,9 +32,9 @@ class RoomRequestTest extends ValidationTestCase
         ]);
     }
 
-    protected function request(): FormRequest
+    protected function request(): FormRequest|string
     {
-        return new RoomRequest();
+        return RoomFormRequest::class;
     }
 
     protected function baseInput(): array
@@ -69,7 +69,10 @@ class RoomRequestTest extends ValidationTestCase
             ],
 
             'room_no + room_type_id combo is not unique' => [
-                false, ['room_no' => self::$roomNo],
+                false, [
+                    'room_type_id' => self::$roomTypeId,
+                    'room_no'      => self::$roomNo,
+                ],
             ],
         ];
     }

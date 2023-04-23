@@ -2,14 +2,14 @@
 
 namespace Tests\Feature\Requests\Admin;
 
-use App\Http\Requests\Admin\HotelRequest;
+use App\Http\Requests\Admin\HotelFormRequest;
 use App\Models\Hotel;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\ValidationTestCase;
 
-class HotelRequestTest extends ValidationTestCase
+class HotelFormRequestTest extends ValidationTestCase
 {
     use RefreshDatabase;
 
@@ -24,9 +24,9 @@ class HotelRequestTest extends ValidationTestCase
         ]);
     }
 
-    protected function request(): FormRequest
+    protected function request(): FormRequest|string
     {
-        return new HotelRequest();
+        return HotelFormRequest::class;
     }
 
     protected function baseInput(): array
