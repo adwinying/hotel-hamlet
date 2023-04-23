@@ -26,7 +26,7 @@ class HotelCreateTest extends TestCase
         $this->get('/admin/hotels/create')
             ->assertInertia(fn (Assert $page) => $page
                 ->component('Hotel/Form')
-                ->missing('hotel'));
+                ->where('hotel', null));
     }
 
     public function testCanCreateHotel(): void
