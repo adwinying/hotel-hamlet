@@ -58,7 +58,7 @@ import usePagination from '@/composables/usePagination'
 import DropdownOption from '@/types/DropdownOption'
 import ResultTableField from '@/types/ResultTableField'
 
-type PageProps = App.Http.Responses.RoomIndexResponse
+type PageProps = App.Http.Responses.Admin.RoomIndexResponse
 const props = defineProps({
   query: {
     type: Object as PropType<PageProps['query']>,

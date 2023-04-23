@@ -52,7 +52,7 @@ import LoadingButton from '@/components/LoadingButton.vue'
 import Page from '@/components/Page.vue'
 import useForm from '@/composables/useForm'
 
-type PageProps = App.Http.Responses.HotelFormResponse
+type PageProps = App.Http.Responses.Admin.HotelFormResponse
 const props = defineProps({
   hotel: {
     type: Object as PropType<PageProps['hotel']>,

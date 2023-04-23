@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Responses;
+namespace App\Http\Responses\Admin;
 
 use Spatie\LaravelData\Data;
 
-class RoomFormResponseHotel extends Data
+class RoomTypeIndexResponseHotel extends Data
 {
     public function __construct(
         public int $id,

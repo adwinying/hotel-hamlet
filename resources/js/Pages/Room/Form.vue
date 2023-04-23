@@ -63,7 +63,7 @@ import Page from '@/components/Page.vue'
 import useForm from '@/composables/useForm'
 import DropdownOption from '@/types/DropdownOption'
 
-type PageProps = App.Http.Responses.RoomFormResponse
+type PageProps = App.Http.Responses.Admin.RoomFormResponse
 const props = defineProps({
   room: {
     type: Object as PropType<PageProps['room']>,
