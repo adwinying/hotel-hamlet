@@ -6,6 +6,7 @@ use App\Actions\RoomType\CreateRoomType;
 use App\Actions\RoomType\DeleteRoomType;
 use App\Actions\RoomType\UpdateRoomType;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\RoomTypeIndexRequest;
 use App\Http\Requests\Admin\RoomTypeRequest;
 use App\Http\Responses\RoomTypeFormResponse;
 use App\Http\Responses\RoomTypeIndexResponse;
@@ -22,25 +23,20 @@ class RoomTypeController extends Controller
      */
     public function index(): Response
     {
-        /** @var string */
-        $sort = request()->input('sort', 'id');
-        /** @var 'asc'|'desc' */
-        $order = request()->input('order', 'asc');
-        /** @var int */
-        $count = request()->input('count', 20);
+        $request = RoomTypeIndexRequest::from(request()->all());
 
-        $queryParams = [
-            'hotel_id',
-            'name',
+        $query = [
+            'hotel_id' => $request->hotel_id,
+            'name'     => $request->name,
         ];
 
         return Inertia::render('RoomType/Index', RoomTypeIndexResponse::from([
-            'query'  => request()->all($queryParams),
+            'query'  => $query,
             'result' => RoomType::query()
-                ->filter(request()->only($queryParams))
+                ->filter($query)
                 ->with('hotel:id,name')
-                ->orderBy($sort, $order)
-                ->paginate($count, [
+                ->orderBy($request->sort, $request->order)
+                ->paginate($request->count, [
                     'id',
                     'hotel_id',
                     'name',
