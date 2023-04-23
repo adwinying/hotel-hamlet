@@ -8,6 +8,7 @@ use App\Actions\Room\GetAvailableRooms;
 use App\Actions\Room\UpdateRoom;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\RoomRequest;
+use App\Http\Responses\RoomFormResponse;
 use App\Http\Responses\RoomIndexResponse;
 use App\Models\Hotel;
 use App\Models\Reservation;
@@ -62,10 +63,10 @@ class RoomController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Room/Form', [
-            'hotels'    => fn ()    => Hotel::all(['id', 'name']),
-            'roomTypes' => fn () => RoomType::all(['id', 'hotel_id', 'name']),
-        ]);
+        return Inertia::render('Room/Form', RoomFormResponse::from([
+            'hotels'    => Hotel::all(['id', 'name']),
+            'roomTypes' => RoomType::all(['id', 'hotel_id', 'name']),
+        ]));
     }
 
     /**
@@ -89,16 +90,11 @@ class RoomController extends Controller
      */
     public function show(Room $room): Response
     {
-        return Inertia::render('Room/Form', [
-            'room' => [
-                'id'           => $room->id,
-                'hotel_id'     => $room->roomType?->hotel_id,
-                'room_type_id' => $room->room_type_id,
-                'room_no'      => $room->room_no,
-            ],
-            'hotels'    => fn ()    => Hotel::all(['id', 'name']),
-            'roomTypes' => fn () => RoomType::all(['id', 'hotel_id', 'name']),
-        ]);
+        return Inertia::render('Room/Form', RoomFormResponse::from([
+            'room'      => $room,
+            'hotels'    => Hotel::all(['id', 'name']),
+            'roomTypes' => RoomType::all(['id', 'hotel_id', 'name']),
+        ]));
     }
 
     /**
