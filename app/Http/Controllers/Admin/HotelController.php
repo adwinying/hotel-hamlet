@@ -6,6 +6,7 @@ use App\Actions\Hotel\CreateHotel;
 use App\Actions\Hotel\DeleteHotel;
 use App\Actions\Hotel\UpdateHotel;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\HotelIndexRequest;
 use App\Http\Requests\Admin\HotelRequest;
 use App\Http\Responses\HotelFormResponse;
 use App\Http\Responses\HotelIndexResponse;
@@ -21,24 +22,19 @@ class HotelController extends Controller
      */
     public function index(): Response
     {
-        /** @var string */
-        $sort = request()->input('sort', 'id');
-        /** @var 'asc'|'desc' */
-        $order = request()->input('order', 'asc');
-        /** @var int */
-        $count = request()->input('count', 20);
+        $request = HotelIndexRequest::from(request()->all());
 
-        $queryParams = [
-            'name',
-            'is_hidden',
+        $query = [
+            'name'      => $request->name,
+            'is_hidden' => $request->is_hidden,
         ];
 
         return Inertia::render('Hotel/Index', HotelIndexResponse::from([
-            'query'  => request()->all($queryParams),
+            'query'  => $query,
             'result' => Hotel::query()
-                ->filter(request()->only($queryParams))
-                ->orderBy($sort, $order)
-                ->paginate($count, [
+                ->filter($query)
+                ->orderBy($request->sort, $request->order)
+                ->paginate($request->count, [
                     'id',
                     'name',
                     'is_hidden',
