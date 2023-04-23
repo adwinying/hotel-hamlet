@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Responses;
+namespace App\Http\Responses\Admin;
 
 use Spatie\LaravelData\Data;
 
-class HotelIndexResponseQuery extends Data
+class RoomTypeIndexResponseQuery extends Data
 {
     public function __construct(
+        public ?string $hotel_id,
         public ?string $name,
-        public ?string $is_hidden,
     ) {
     }
 }

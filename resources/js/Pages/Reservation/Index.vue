@@ -81,7 +81,7 @@ import Reservation from '@/types/Models/Reservation'
 import ResultTableField from '@/types/ResultTableField'
 import ResultTableFormatter from '@/types/ResultTableFormatter'
 
-type PageProps = App.Http.Responses.ReservationIndexResponse
+type PageProps = App.Http.Responses.Admin.ReservationIndexResponse
 const props = defineProps({
   query: {
     type: Object as PropType<PageProps['query']>,

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Responses;
+namespace App\Http\Responses\Admin;
 
 use Spatie\LaravelData\Data;
 

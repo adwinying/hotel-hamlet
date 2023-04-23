@@ -52,7 +52,7 @@ import usePagination from '@/composables/usePagination'
 import DropdownOption from '@/types/DropdownOption'
 import ResultTableField from '@/types/ResultTableField'
 
-type PageProps = App.Http.Responses.HotelIndexResponse
+type PageProps = App.Http.Responses.Admin.HotelIndexResponse
 const props = defineProps({
   query: {
     type: Object as PropType<PageProps['query']>,

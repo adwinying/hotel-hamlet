@@ -50,7 +50,7 @@ import useIndexSearch from '@/composables/useIndexSearch'
 import usePagination from '@/composables/usePagination'
 import ResultTableField from '@/types/ResultTableField'
 
-type PageProps = App.Http.Responses.RoomTypeIndexResponse
+type PageProps = App.Http.Responses.Admin.RoomTypeIndexResponse
 const props = defineProps({
   query: {
     type: Object as PropType<PageProps['query']>,

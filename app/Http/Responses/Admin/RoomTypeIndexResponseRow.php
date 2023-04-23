@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Responses;
+namespace App\Http\Responses\Admin;
 
 use App\Exceptions\DataInvalidException;
 use App\Models\RoomType;

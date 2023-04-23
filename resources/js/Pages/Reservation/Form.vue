@@ -105,7 +105,7 @@ import useForm from '@/composables/useForm'
 import DropdownOption from '@/types/DropdownOption'
 import Room from '@/types/Models/Room'
 
-type PageProps = App.Http.Responses.ReservationFormResponse
+type PageProps = App.Http.Responses.Admin.ReservationFormResponse
 const props = defineProps({
   reservation: {
     type: Object as PropType<PageProps['reservation']>,
