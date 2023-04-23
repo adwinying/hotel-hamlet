@@ -60,17 +60,16 @@ import LoadingButton from '@/components/LoadingButton.vue'
 import Page from '@/components/Page.vue'
 import useForm from '@/composables/useForm'
 import DropdownOption from '@/types/DropdownOption'
-import Hotel from '@/types/Models/Hotel'
-import RoomType from '@/types/Models/RoomType'
 
+type PageProps = App.Http.Responses.RoomTypeFormResponse
 const props = defineProps({
   roomType: {
-    type: Object as PropType<RoomType | null>,
+    type: Object as PropType<PageProps['roomType']>,
     default: null,
   },
 
   hotels: {
-    type: Array as PropType<Hotel[]>,
+    type: Array as PropType<PageProps['hotels']>,
     required: true,
   },
 })

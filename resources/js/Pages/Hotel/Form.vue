@@ -51,11 +51,11 @@ import InputText from '@/components/InputText.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 import Page from '@/components/Page.vue'
 import useForm from '@/composables/useForm'
-import Hotel from '@/types/Models/Hotel'
 
+type PageProps = App.Http.Responses.HotelFormResponse
 const props = defineProps({
   hotel: {
-    type: Object as PropType<Hotel | null>,
+    type: Object as PropType<PageProps['hotel']>,
     default: null,
   },
 })

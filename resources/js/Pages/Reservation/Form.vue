@@ -103,24 +103,22 @@ import LoadingButton from '@/components/LoadingButton.vue'
 import Page from '@/components/Page.vue'
 import useForm from '@/composables/useForm'
 import DropdownOption from '@/types/DropdownOption'
-import Hotel from '@/types/Models/Hotel'
-import Reservation from '@/types/Models/Reservation'
 import Room from '@/types/Models/Room'
-import RoomType from '@/types/Models/RoomType'
 
+type PageProps = App.Http.Responses.ReservationFormResponse
 const props = defineProps({
   reservation: {
-    type: Object as PropType<Reservation | null>,
+    type: Object as PropType<PageProps['reservation']>,
     default: null,
   },
 
   hotels: {
-    type: Array as PropType<Hotel[]>,
+    type: Array as PropType<PageProps['hotels']>,
     required: true,
   },
 
   roomTypes: {
-    type: Array as PropType<RoomType[]>,
+    type: Array as PropType<PageProps['roomTypes']>,
     required: true,
   },
 })
@@ -172,7 +170,7 @@ watch(
   },
 )
 const isRoomTypeDropdownDisabled = computed(() => form.hotel_id === 0)
-const filteredRoomTypes = computed<RoomType[]>(() =>
+const filteredRoomTypes = computed(() =>
   form.hotel_id
     ? props.roomTypes.filter((roomType) => roomType.hotel_id === form.hotel_id)
     : props.roomTypes,

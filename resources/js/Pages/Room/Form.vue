@@ -62,23 +62,21 @@ import LoadingButton from '@/components/LoadingButton.vue'
 import Page from '@/components/Page.vue'
 import useForm from '@/composables/useForm'
 import DropdownOption from '@/types/DropdownOption'
-import Hotel from '@/types/Models/Hotel'
-import Room from '@/types/Models/Room'
-import RoomType from '@/types/Models/RoomType'
 
+type PageProps = App.Http.Responses.RoomFormResponse
 const props = defineProps({
   room: {
-    type: Object as PropType<Room | null>,
+    type: Object as PropType<PageProps['room']>,
     default: null,
   },
 
   hotels: {
-    type: Array as PropType<Hotel[]>,
+    type: Array as PropType<PageProps['hotels']>,
     required: true,
   },
 
   roomTypes: {
-    type: Array as PropType<RoomType[]>,
+    type: Array as PropType<PageProps['roomTypes']>,
     required: true,
   },
 })
@@ -122,7 +120,7 @@ const hotelOptions: ComputedRef<DropdownOption[]> = computed(() =>
   ),
 )
 
-const filteredRoomTypes: ComputedRef<RoomType[]> = computed(() =>
+const filteredRoomTypes = computed(() =>
   form.hotel_id
     ? props.roomTypes.filter((roomType) => roomType.hotel_id === form.hotel_id)
     : props.roomTypes,

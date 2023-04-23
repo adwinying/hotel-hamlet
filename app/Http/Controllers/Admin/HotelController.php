@@ -7,6 +7,7 @@ use App\Actions\Hotel\DeleteHotel;
 use App\Actions\Hotel\UpdateHotel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\HotelRequest;
+use App\Http\Responses\HotelFormResponse;
 use App\Http\Responses\HotelIndexResponse;
 use App\Models\Hotel;
 use Illuminate\Http\RedirectResponse;
@@ -50,7 +51,7 @@ class HotelController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Hotel/Form');
+        return Inertia::render('Hotel/Form', HotelFormResponse::from([]));
     }
 
     /**
@@ -74,13 +75,9 @@ class HotelController extends Controller
      */
     public function show(Hotel $hotel): Response
     {
-        return Inertia::render('Hotel/Form', [
-            'hotel' => [
-                'id'        => $hotel->id,
-                'name'      => $hotel->name,
-                'is_hidden' => $hotel->is_hidden,
-            ],
-        ]);
+        return Inertia::render('Hotel/Form', HotelFormResponse::from([
+            'hotel' => $hotel,
+        ]));
     }
 
     /**
