@@ -193,12 +193,12 @@ const availableRooms = ref<Room[]>([])
 const isLoadingAvailableRooms = ref(false)
 const updateAvailableRooms = () => {
   isLoadingAvailableRooms.value = true
-  fetchAvailableRooms(
-    form.room_type_id,
-    form.check_in_date,
-    form.check_out_date,
-    props.reservation?.id,
-  )
+  fetchAvailableRooms({
+    room_type_id: form.room_type_id,
+    check_in_date: form.check_in_date,
+    check_out_date: form.check_out_date,
+    reservation_id: props.reservation?.id ?? null,
+  })
     .then((rooms) => {
       availableRooms.value = rooms
       isLoadingAvailableRooms.value = false

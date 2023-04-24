@@ -7,8 +7,10 @@ use App\Actions\Room\DeleteRoom;
 use App\Actions\Room\GetAvailableRooms;
 use App\Actions\Room\UpdateRoom;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\RoomAvailabilityCheckRequest;
 use App\Http\Requests\Admin\RoomFormRequest;
 use App\Http\Requests\Admin\RoomIndexRequest;
+use App\Http\Responses\Admin\RoomAvailabilityCheckResponseRoom;
 use App\Http\Responses\Admin\RoomFormResponse;
 use App\Http\Responses\Admin\RoomIndexResponse;
 use App\Models\Hotel;
@@ -120,38 +122,23 @@ class RoomController extends Controller
      * Get list of available rooms available on specified dates
      */
     public function getAvailableRooms(
+        RoomAvailabilityCheckRequest $request,
         GetAvailableRooms $getAvailableRooms,
     ): JsonResponse {
-        /** @var ?int */
-        $roomTypeId = request()->input('room_type_id');
-        /** @var ?string */
-        $checkInDate = request()->input('check_in_date');
-        /** @var ?string */
-        $checkOutDate = request()->input('check_out_date');
-        /** @var ?int */
-        $reservationId = request()->input('reservation_id');
-
-        if ($roomTypeId === null
-            || $checkInDate === null
-            || $checkOutDate === null) {
-            return response()->json([
-                'errors' => 'room_type_id, check_in_date, check_out_date query params must be specified.',
-            ], 422);
-        }
-
-        $reservation = Reservation::find($reservationId);
+        $reservation = Reservation::query()->find($request->reservation_id);
+        $roomType    = RoomType::query()->findOrFail($request->room_type_id);
 
         $availableRooms = $getAvailableRooms->execute(
-            RoomType::findOrFail($roomTypeId),
-            $checkInDate,
-            $checkOutDate,
+            $roomType,
+            $request->check_in_date,
+            $request->check_out_date,
             $reservation
         );
 
-        return response()->json($availableRooms->map(fn (Room $room) => [
-            'id'           => $room->id,
-            'room_type_id' => $room->room_type_id,
-            'room_no'      => $room->room_no,
-        ]));
+        return response()->json(
+            RoomAvailabilityCheckResponseRoom::collection(
+                $availableRooms->toArray(),
+            ),
+        );
     }
 }
