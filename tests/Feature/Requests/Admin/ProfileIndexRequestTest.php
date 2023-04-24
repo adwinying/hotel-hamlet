@@ -2,13 +2,13 @@
 
 namespace Tests\Feature\Requests\Admin;
 
-use App\Http\Requests\Admin\ProfileRequest;
+use App\Http\Requests\Admin\ProfileIndexRequest;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 use Tests\ValidationTestCase;
 
-class ProfileRequestTest extends ValidationTestCase
+class ProfileIndexRequestTest extends ValidationTestCase
 {
     protected string $oldPassword = 'password';
 
@@ -26,9 +26,9 @@ class ProfileRequestTest extends ValidationTestCase
         $this->actingAs($user);
     }
 
-    protected function request(): FormRequest
+    protected function request(): FormRequest|string
     {
-        return new ProfileRequest();
+        return ProfileIndexRequest::class;
     }
 
     protected function baseInput(): array

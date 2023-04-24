@@ -62,13 +62,10 @@ import LoadingButton from '@/components/LoadingButton.vue'
 import Page from '@/components/Page.vue'
 import { showToast } from '@/composables/useAlert'
 
-interface Profile {
-  name: string
-  email: string
-}
+type PageProps = App.Http.Responses.Admin.ProfileIndexResponse
 const props = defineProps({
   profile: {
-    type: Object as PropType<Profile>,
+    type: Object as PropType<PageProps['profile']>,
     required: true,
   },
 })

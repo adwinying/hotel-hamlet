@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Actions\User\UpdateUser;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\ProfileRequest;
+use App\Http\Requests\Admin\ProfileIndexRequest;
+use App\Http\Responses\Admin\ProfileIndexResponse;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -14,25 +15,24 @@ class ProfileController extends Controller
 {
     public function edit(): Response
     {
-        return Inertia::render('Profile/Index', [
+        /** @var User */
+        $user = auth()->user();
+
+        return Inertia::render('Profile/Index', ProfileIndexResponse::from([
             'profile' => [
-                'name'  => auth()->user()?->name,
-                'email' => auth()->user()?->email,
+                'name'  => $user->name,
+                'email' => $user->email,
             ],
-        ]);
+        ]));
     }
 
     public function update(
-        ProfileRequest $request,
+        ProfileIndexRequest $request,
         UpdateUser $update,
     ): RedirectResponse {
         /** @var User */
         $user  = auth()->user();
-        $input = $request->only([
-            'name',
-            'email',
-            'password',
-        ]);
+        $input = $request->except('old_password')->toArray();
 
         $update->execute($user, $input);
 
