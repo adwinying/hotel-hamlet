@@ -1,9 +1,8 @@
-import Model from '@/types/Models/Model'
-import ResultDataFormatter from '@/types/ResultDataFormatter'
-
-type ResultTableFormatter<TModel extends Model> = Record<
-  string,
-  ResultDataFormatter<TModel>
->
+type ResultTableFormatter<TModel extends object> = {
+  [key in keyof TModel]?: (
+    data: TModel[key],
+    rowData: TModel,
+  ) => string | number
+}
 
 export default ResultTableFormatter
