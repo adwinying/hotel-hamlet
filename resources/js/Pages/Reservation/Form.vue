@@ -103,7 +103,6 @@ import LoadingButton from '@/components/LoadingButton.vue'
 import Page from '@/components/Page.vue'
 import useForm from '@/composables/useForm'
 import DropdownOption from '@/types/DropdownOption'
-import Room from '@/types/Models/Room'
 
 type PageProps = App.Http.Responses.Admin.ReservationFormResponse
 const props = defineProps({
@@ -189,7 +188,7 @@ const roomTypeOptions = computed<DropdownOption[]>(() =>
 )
 
 // room options
-const availableRooms = ref<Room[]>([])
+const availableRooms = ref<Awaited<ReturnType<typeof fetchAvailableRooms>>>([])
 const isLoadingAvailableRooms = ref(false)
 const updateAvailableRooms = () => {
   isLoadingAvailableRooms.value = true
