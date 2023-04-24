@@ -22,48 +22,59 @@ class RoomAvailabilityCheckTest extends TestCase
 
     public function testReturnsErrorWhenRoomTypeIdNotSpecified(): void
     {
-        $checkInDate  = today()->addMonth();
-        $checkOutDate = today()->addMonth()->addDays(5);
+        $checkInDate  = today()->addMonth()->format('Y-m-d');
+        $checkOutDate = today()->addMonth()->addDays(5)->format('Y-m-d');
 
         $this->json('GET', "/api/admin/room_availability?check_in_date=$checkInDate&check_out_date=$checkOutDate")
             ->assertStatus(422)
-            ->assertExactJson([
-                'errors' => 'room_type_id, check_in_date, check_out_date query params must be specified.',
+            ->assertJsonValidationErrors([
+                'room_type_id' => 'The room type id field is required.',
             ]);
     }
 
     public function testReturnsErrorWhenCheckInDateNotSpecified(): void
     {
         $roomTypeId   = mt_rand(1, 10);
-        $checkOutDate = today()->addMonth()->addDays(5);
+        $checkOutDate = today()->addMonth()->addDays(5)->format('Y-m-d');
+
+        RoomType::factory()->create([
+            'id' => $roomTypeId,
+        ]);
 
         $this->json('GET', "/api/admin/room_availability?room_type_id=$roomTypeId&check_out_date=$checkOutDate")
             ->assertStatus(422)
-            ->assertExactJson([
-                'errors' => 'room_type_id, check_in_date, check_out_date query params must be specified.',
+            ->assertJsonValidationErrors([
+                'check_in_date' => 'The check in date field is required.',
             ]);
     }
 
     public function testReturnsErrorWhenCheckOutDateNotSpecified(): void
     {
         $roomTypeId  = mt_rand(1, 10);
-        $checkInDate = today()->addMonth();
+        $checkInDate = today()->addMonth()->format('Y-m-d');
+
+        RoomType::factory()->create([
+            'id' => $roomTypeId,
+        ]);
 
         $this->json('GET', "/api/admin/room_availability?room_type_id=$roomTypeId&check_in_date=$checkInDate")
             ->assertStatus(422)
-            ->assertExactJson([
-                'errors' => 'room_type_id, check_in_date, check_out_date query params must be specified.',
+            ->assertJsonValidationErrors([
+                'check_out_date' => 'The check out date field is required.',
             ]);
     }
 
     public function testReturnsErrorWhenRoomTypeIdDoesNotExist(): void
     {
         $roomTypeId   = mt_rand(1, 10);
-        $checkInDate  = today()->addMonth();
-        $checkOutDate = today()->addMonth()->addDays(5);
+        $checkInDate  = today()->addMonth()->format('Y-m-d');
+        $checkOutDate = today()->addMonth()->addDays(5)->format('Y-m-d');
 
         $this->json('GET', "/api/admin/room_availability?room_type_id=$roomTypeId&check_in_date=$checkInDate&check_out_date=$checkOutDate")
-            ->assertStatus(404);
+            ->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'room_type_id' => 'The selected room type id is invalid.',
+            ]);
     }
 
     public function testReturnsListOfAvailableRoomsForBooking(): void
@@ -71,8 +82,8 @@ class RoomAvailabilityCheckTest extends TestCase
         $roomType = RoomType::factory()->hasRooms(3)->create();
 
         $roomTypeId   = $roomType->id;
-        $checkInDate  = today()->addMonth();
-        $checkOutDate = today()->addMonth()->addDays(5);
+        $checkInDate  = today()->addMonth()->format('Y-m-d');
+        $checkOutDate = today()->addMonth()->addDays(5)->format('Y-m-d');
 
         $expected = $roomType->rooms->map(fn ($room) => [
             'id'           => $room->id,
