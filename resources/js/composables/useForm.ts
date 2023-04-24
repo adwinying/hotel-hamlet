@@ -3,7 +3,7 @@ import { computed, ComputedRef, Ref } from 'vue'
 import route from 'ziggy-js'
 
 import { showToast } from '@/composables/useAlert'
-import Model from '@/types/Models/Model'
+import Model from '@/types/Model'
 
 interface UseForm<TForm extends Record<string, unknown>> {
   form: InertiaForm<TForm>

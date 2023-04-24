@@ -36,7 +36,7 @@ import ResultTableCell from '@/components/ResultTableCell.vue'
 import ResultTableHeader from '@/components/ResultTableHeader.vue'
 import ResultTableRow from '@/components/ResultTableRow.vue'
 import ResultTableWrapper from '@/components/ResultTableWrapper.vue'
-import Model from '@/types/Models/Model'
+import Model from '@/types/Model'
 import ResultTableField from '@/types/ResultTableField'
 
 const props = defineProps({
