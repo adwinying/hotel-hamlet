@@ -77,7 +77,6 @@ import ResultTable from '@/components/ResultTable.vue'
 import useIndexSearch from '@/composables/useIndexSearch'
 import usePagination from '@/composables/usePagination'
 import DropdownOption from '@/types/DropdownOption'
-import Reservation from '@/types/Models/Reservation'
 import ResultTableField from '@/types/ResultTableField'
 import ResultTableFormatter from '@/types/ResultTableFormatter'
 
@@ -127,9 +126,9 @@ const fields: ResultTableField[] = [
   },
 ]
 
-const formatter: ResultTableFormatter<Reservation> = {
-  check_in_date: (date) => (date as string).replace(/-/g, '/'),
-  check_out_date: (date) => (date as string).replace(/-/g, '/'),
+const formatter: ResultTableFormatter<PageProps['result']['data'][number]> = {
+  check_in_date: (date) => date.replace(/-/g, '/'),
+  check_out_date: (date) => date.replace(/-/g, '/'),
 }
 
 const { paginationParams } = usePagination(computed(() => props.result.meta))
