@@ -5,7 +5,11 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   server: {
-    host: process.env.VITE_HOST,
+    hmr: {
+      host: process.env.VITE_HOST,
+    },
+
+    host: '0.0.0.0',
     port: parseInt(process.env.VITE_PORT ?? '3000', 10),
   },
 
