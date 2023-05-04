@@ -8,36 +8,23 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-    - name: Setup PHP Environment
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.2'
-
     - name: Checkout source code
       uses: actions/checkout@v3
 
-    - name: Get composer cache directory
-      id: composer-cache
-      run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-
-    - name: Cache PHP dependencies
-      uses: actions/cache@v3
-      with:
-        path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-        restore-keys: ${{ runner.os }}-composer-
+    - name: Setup nix
+      uses: cachix/install-nix-action@v20
 
     - name: Install PHP dependencies
-      run: composer install -q --no-interaction --no-progress --no-scripts --prefer-dist
+      run: nix develop --command composer install -q --no-interaction --no-progress --no-scripts --prefer-dist
 
     - name: Run phpCS linter
-      run: vendor/bin/phpcs --standard=phpcs.xml
+      run: nix develop --command vendor/bin/phpcs --standard=phpcs.xml
 
     - name: Run pint linter
-      run: vendor/bin/pint -v --test
+      run: nix develop --command vendor/bin/pint -v --test
 
     - name: Run phpstan static analysis
-      run: vendor/bin/phpstan analyse --memory-limit=256M
+      run: nix develop --command vendor/bin/phpstan analyse --memory-limit=256M
 
 
   test:
@@ -61,48 +48,29 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v3
 
-    - name: Setup PHP Environment
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.2'
-
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-
-    - name: Get composer cache directory
-      id: composer-cache
-      run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-
-    - name: Cache PHP dependencies
-      uses: actions/cache@v3
-      with:
-        path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-        restore-keys: ${{ runner.os }}-composer-
+    - name: Setup nix
+      uses: cachix/install-nix-action@v20
 
     - name: Install PHP dependencies
-      run: composer install -q --no-interaction --no-progress --no-scripts --prefer-dist
+      run: nix develop --command composer install -q --no-interaction --no-progress --no-scripts --prefer-dist
+
+    - name: Copy .env
+      run: nix develop --command php -r "file_exists('.env') || copy('.env.example', '.env');"
 
     - name: Generate key
-      run: php artisan key:generate
+      run: nix develop --command php artisan key:generate
 
     - name: Generate typescript types
-      run: composer ts
+      run: nix develop --command composer ts
 
     - name: Directory permissions
       run: chmod -R 777 storage bootstrap/cache
 
-    - name: Setup Node.js environment
-      uses: actions/setup-node@v3
-      with:
-        node-version-file: '.nvmrc'
-        check-latest: true
-
     - name: Install node dependencies
-      run: npm ci
+      run: nix develop --command npm ci
 
     - name: Build for production
-      run: npm run build
+      run: nix develop --command npm run build
 
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
@@ -111,7 +79,7 @@ jobs:
         DB_DATABASE: hotel-hamlet
         DB_USERNAME: root
         DB_PASSWORD: secret
-      run: vendor/bin/phpunit
+      run: nix develop --command vendor/bin/phpunit
 
 
   deploy:
