@@ -12,6 +12,8 @@
     in {
       devShell = with pkgs; mkShell {
         buildInputs = [
+          envsubst
+          nginx
           php82
           php82Packages.composer
           nodejs_16
