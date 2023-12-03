@@ -1,0 +1,10 @@
+procs:
+  backend:
+    shell: "php artisan serve --host 0.0.0.0 --port 8080"
+
+  frontend:
+    shell: "npm run dev"
+
+  webdev:
+    cwd: "../webdev"
+    shell: "docker compose up -d mysql8"
