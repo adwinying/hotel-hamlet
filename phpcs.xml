@@ -76,7 +76,6 @@
     <exclude-pattern>*/*.xml</exclude-pattern>
     <exclude-pattern>*/*.sql</exclude-pattern>
     <exclude-pattern>*/*.ddl</exclude-pattern>
-    <exclude-pattern>*/*.blade.php</exclude-pattern>
     <exclude-pattern>*/autoload.php</exclude-pattern>
     <exclude-pattern>*/storage/*</exclude-pattern>
     <exclude-pattern>*/docs/*</exclude-pattern>
