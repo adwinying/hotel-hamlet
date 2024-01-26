@@ -16,14 +16,15 @@
           nginx
           php82
           php82Packages.composer
-          nodejs_16
+          nodejs_18
+          mprocs
         ];
 
         shellHook = ''
           echo "`${pkgs.php82}/bin/php --version`"
           echo "`${pkgs.php82Packages.composer}/bin/composer --version`"
-          echo "node: `${pkgs.nodejs_16}/bin/node --version`"
-          echo "npm: v`${pkgs.nodejs_16}/bin/npm --version`"
+          echo "node: `${pkgs.nodejs_18}/bin/node --version`"
+          echo "npm: v`${pkgs.nodejs_18}/bin/npm --version`"
         '';
       };
     });
