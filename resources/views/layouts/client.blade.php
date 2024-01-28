@@ -7,7 +7,7 @@
     <title>{{ $title ?? 'Hotel Hamlet' }}</title>
     @vite('resources/css/app.css')
   </head>
-  <body>
-    {{ $slot }}
+  <body class="bg-gray-50">
+    @yield('content')
   </body>
 </html>
