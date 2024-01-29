@@ -19,7 +19,7 @@
     <div class="md:hidden fixed inset-0 h-screen bg-black/80 z-40" x-show="open" x-transition @click="open = false"></div>
 
     <!-- Menu list -->
-    <div class="fixed top-0 bottom-0 right-0 translate-x-72 md:translate-x-0 w-72 h-screen z-50 p-6 bg-white shadow md:static md:w-auto md:h-14 flex flex-col md:flex-row gap-x-8 gap-y-4 md:items-center md:shadow-none" x-bind:class="open ? 'translate-x-0 transition-all' : 'transition-all'">
+    <div class="fixed top-0 bottom-0 -right-72 md:translate-x-0 duration-300 w-72 h-screen z-50 p-6 bg-white shadow md:static md:w-auto md:h-14 flex flex-col md:flex-row gap-x-8 gap-y-4 md:items-center md:shadow-none" x-bind:class="open ? '-translate-x-72 transition-all' : 'transition-all'">
       <button class="md:hidden self-end font-bold text-2xl px-2" @click="open = false">&cross;</button>
       <a class="text-gray-700 hover:text-gray-500 transition-colors font-bold text-lg md:text-md" href="/about">About</a>
       <a class="text-gray-700 hover:text-gray-500 transition-colors font-bold text-lg md:text-md" href="/hotels">Our Hotels</a>
