@@ -30,6 +30,7 @@
     <!-- Admin -->
     <div class="py-10 space-y-2">
       <a class="block text-2xl font-bold text-white hover:text-gray-100" href="/admin">Admin Login</a>
+      <a class="block text-2xl font-bold text-white hover:text-gray-100" href="//github.com/adwinying/hotel-hamlet" target="_blank">Github</a>
     </div>
   </div>
 
