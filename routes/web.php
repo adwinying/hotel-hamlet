@@ -42,3 +42,4 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::view('/about', 'client.about');
+Route::view('/hotels', 'client.hotels');
