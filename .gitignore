@@ -9,7 +9,6 @@
 /storage/*.key
 /vendor
 /resources/js/generated.d.ts
-.direnv
 .environment/runtime
 .env
 .env.testing
