@@ -11,20 +11,20 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v3
 
-    - name: Setup nix
-      uses: cachix/install-nix-action@v20
+    - name: Install tools
+      uses: jdx/mise-action@v2
 
     - name: Install PHP dependencies
-      run: nix develop --command composer install -q --no-interaction --no-progress --no-scripts --prefer-dist
+      run: composer install -q --no-interaction --no-progress --no-scripts --prefer-dist
 
     - name: Run phpCS linter
-      run: nix develop --command vendor/bin/phpcs --standard=phpcs.xml
+      run: vendor/bin/phpcs --standard=phpcs.xml
 
     - name: Run pint linter
-      run: nix develop --command vendor/bin/pint -v --test
+      run: vendor/bin/pint -v --test
 
     - name: Run phpstan static analysis
-      run: nix develop --command vendor/bin/phpstan analyse --memory-limit=256M
+      run: vendor/bin/phpstan analyse --memory-limit=256M
 
 
   test:
@@ -48,29 +48,29 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v3
 
-    - name: Setup nix
-      uses: cachix/install-nix-action@v20
+    - name: Install tools
+      uses: jdx/mise-action@v2
 
     - name: Install PHP dependencies
-      run: nix develop --command composer install -q --no-interaction --no-progress --no-scripts --prefer-dist
+      run: composer install -q --no-interaction --no-progress --no-scripts --prefer-dist
 
     - name: Copy .env
-      run: nix develop --command php -r "file_exists('.env') || copy('.env.example', '.env');"
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
     - name: Generate key
-      run: nix develop --command php artisan key:generate
+      run: php artisan key:generate
 
     - name: Generate typescript types
-      run: nix develop --command composer ts
+      run: composer ts
 
     - name: Directory permissions
       run: chmod -R 777 storage bootstrap/cache
 
     - name: Install node dependencies
-      run: nix develop --command npm ci
+      run: npm ci
 
     - name: Build for production
-      run: nix develop --command npm run build
+      run: npm run build
 
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
@@ -79,7 +79,7 @@ jobs:
         DB_DATABASE: hotel-hamlet
         DB_USERNAME: root
         DB_PASSWORD: secret
-      run: nix develop --command vendor/bin/phpunit
+      run: vendor/bin/phpunit
 
 
   deploy:
