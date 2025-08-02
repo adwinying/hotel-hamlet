@@ -1,4 +1,5 @@
 [tools]
+"gem:kamal" = "latest"
 mprocs = "latest"
 node = "18"
 "npm:figlet" = "latest"

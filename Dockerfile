@@ -1,91 +1,45 @@
-# syntax = docker/dockerfile:experimental
-
-# Default to PHP 8.2, but we attempt to match
-# the PHP version from the user (wherever `flyctl launch` is run)
-# Valid version values are PHP 7.4+
-ARG PHP_VERSION=8.2
-ARG NODE_VERSION=16
-FROM fideloper/fly-laravel:${PHP_VERSION} as base
-
-# PHP_VERSION needs to be repeated here
-# See https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
 ARG PHP_VERSION
+ARG NODE_VERSION
+ARG DB_CONNECTION
+ARG DB_DATABASE
 
-LABEL fly_launch_runtime="laravel"
+# Base Image
+FROM ghcr.io/serversideup/php:${PHP_VERSION}-fpm-nginx AS base
+ENV AUTORUN_ENABLED=1
+ENV AUTORUN_LARAVEL_MIGRATION=0
+ENV PHP_OPCACHE_ENABLE=1
 
-# copy application code, skipping files based on .dockerignore
-COPY . /var/www/html
+# Copy files
+WORKDIR /var/www/html
+COPY --chown=www-data:www-data . /var/www/html
 
-RUN composer install --optimize-autoloader \
-    && mkdir -p storage/logs \
-    && php artisan optimize:clear \
-    && php artisan typescript:transform --force --output js/generated.d.ts \
-    && chown -R www-data:www-data /var/www/html \
-    && sed -i 's/protected \$proxies/protected \$proxies = "*"/g' app/Http/Middleware/TrustProxies.php \
-    && echo "MAILTO=\"\"\n* * * * * www-data /usr/bin/php /var/www/html/artisan schedule:run" > /etc/cron.d/laravel \
-    && cp .fly/entrypoint.sh /entrypoint \
-    && chmod +x /entrypoint
+# Install Composer dependencies
+RUN composer install --optimize-autoloader && composer ts
 
-# If we're using Octane...
-RUN if grep -Fq "laravel/octane" /var/www/html/composer.json; then \
-        rm -rf /etc/supervisor/conf.d/fpm.conf; \
-        if grep -Fq "spiral/roadrunner" /var/www/html/composer.json; then \
-            mv /etc/supervisor/octane-rr.conf /etc/supervisor/conf.d/octane-rr.conf; \
-            if [ -f ./vendor/bin/rr ]; then ./vendor/bin/rr get-binary; fi; \
-            rm -f .rr.yaml; \
-        else \
-            mv .fly/octane-swoole /etc/services.d/octane; \
-            mv /etc/supervisor/octane-swoole.conf /etc/supervisor/conf.d/octane-swoole.conf; \
-        fi; \
-        rm /etc/nginx/sites-enabled/default; \
-        ln -sf /etc/nginx/sites-available/default-octane /etc/nginx/sites-enabled/default; \
-    fi
-
-# Multi-stage build: Build static assets
-# This allows us to not include Node within the final container
-FROM node:${NODE_VERSION} as node_modules_go_brrr
-
-RUN mkdir /app
-
-RUN mkdir -p  /app
+# Build Frontend Assets
+FROM node:${NODE_VERSION}-alpine AS node
 WORKDIR /app
-COPY . .
-COPY --from=base /var/www/html/vendor /app/vendor
-COPY --from=base /var/www/html/resources/js/generated.d.ts /app/resources/js/generated.d.ts
+COPY --from=base /var/www/html .
+RUN npm ci --no-audit && npm run quick-build
 
-# Use yarn or npm depending on what type of
-# lock file we might find. Defaults to
-# NPM if no lock file is found.
-# Note: We run "production" for Mix and "build" for Vite
-RUN if [ -f "vite.config.ts" ]; then \
-        ASSET_CMD="build"; \
-    else \
-        ASSET_CMD="production"; \
-    fi; \
-    if [ -f "yarn.lock" ]; then \
-        yarn install --frozen-lockfile; \
-        yarn $ASSET_CMD; \
-    elif [ -f "package-lock.json" ]; then \
-        npm ci --no-audit; \
-        npm run $ASSET_CMD; \
-    else \
-        npm install; \
-        npm run $ASSET_CMD; \
-    fi;
-
-# From our base container created above, we
-# create our final image, adding in static
-# assets that we generated above
+# Copy the built assets to base image
 FROM base
+COPY --chown=www-data:www-data --from=node /app/public /var/www/html/public
+RUN chmod -R 755 /var/www/html/public
 
-# Packages like Laravel Nova may have added assets to the public directory
-# or maybe some custom assets were added manually! Either way, we merge
-# in the assets we generated above rather than overwrite them
-COPY --from=node_modules_go_brrr /app/public /var/www/html/public-npm
-RUN rsync -ar /var/www/html/public-npm/ /var/www/html/public/ \
-    && rm -rf /var/www/html/public-npm \
-    && chown -R www-data:www-data /var/www/html/public
+# Create the SQLite directory and set the owner to www-data
+USER root
+ARG DB_CONNECTION
+ARG DB_DATABASE
+ENV DB_CONNECTION=$DB_CONNECTION
+ENV DB_DATABASE=$DB_DATABASE
+RUN mkdir -p /data \
+    && touch "$DB_DATABASE" \
+    && chown -R www-data:www-data "$DB_DATABASE" \
+    && chmod -R 777 "$DB_DATABASE" \
+    && php artisan migrate --force --seed
 
-EXPOSE 8080
+# Switch back to unprivileged user
+USER www-data
 
-ENTRYPOINT ["/entrypoint"]
+LABEL org.opencontainers.image.source=https://github.com/adwinying/hotel-hamlet

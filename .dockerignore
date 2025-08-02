@@ -25,3 +25,5 @@ fly.toml
 **/.DS_Store
 **/Thumbs.db
 public/hot
+config/deploy.yml
+.kamal/*
