@@ -3,6 +3,7 @@
 mprocs = "latest"
 node = "18"
 "npm:figlet" = "latest"
+ruby = "latest"
 "ubi:adwinying/php" = "8.2"
 "ubi:composer/composer" = "latest"
 
