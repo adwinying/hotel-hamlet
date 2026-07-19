@@ -2,7 +2,8 @@
 service: hotel-hamlet
 
 # Name of the container image.
-image: ghcr.io/adwinying/hotel-hamlet
+# Kamal prepends registry.server (ghcr.io) automatically, so do not include it here.
+image: adwinying/hotel-hamlet
 
 # Deploy to these servers.
 servers:
